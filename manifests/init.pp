@@ -4,6 +4,8 @@ class supervisord(
   $package_name         = $supervisord::params::package_name,
   $package_provider     = $supervisord::params::package_provider,
   $install_init         = false,
+  $install_pip          = false,
+  $setuptools_url       = $supervisord::params::setuptools_url
 
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
@@ -45,14 +47,19 @@ class supervisord(
 
 ) inherits supervisord::params {
 
-  if $package_provider == 'pip' {
-    exec { 'easy_install pip':
-      command => 'easy_install pip',
+  if $install_pip {
+    exec { 'install_setuptools':
+      command => "python < <(curl ${setuptools_url})",
+      cwd     => '/tmp'
       path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
-      unless  => 'which pip',
-      require => Package['python-setuptools']
+      unless  => 'which easy_install',
     }
-    package { 'python-setuptools': ensure => installed }
+    
+    exec { 'install_pip':
+      command     => 'easy_install pip',
+      refreshonly => true,
+      subscribe   => Exec['install_setuptools']
+    }
   }
 
   package { $package_name:
@@ -73,7 +80,7 @@ class supervisord(
       order   => 01
     }
   }
-  
+
   if $inet_socket {
     concat::fragment { 'supervisord_inet':
       target  => $configfile,
@@ -87,6 +94,4 @@ class supervisord(
     content => template('supervisord/supervisord_main.erb'),
     order   => 02
   }
-
-
 }

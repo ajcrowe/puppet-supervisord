@@ -23,6 +23,8 @@ class supervisord::params {
     }
   }
 
+  $setuptools_url       = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
+
   $unix_socket          = true
   $unix_socket_mode     = '0700'
   $unix_socket_owner    = 'nobody'
