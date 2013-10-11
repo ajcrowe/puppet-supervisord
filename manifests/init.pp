@@ -5,7 +5,7 @@ class supervisord(
   $package_provider     = $supervisord::params::package_provider,
   $install_init         = false,
   $install_pip          = false,
-  $setuptools_url       = $supervisord::params::setuptools_url
+  $setuptools_url       = $supervisord::params::setuptools_url,
 
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
@@ -50,11 +50,11 @@ class supervisord(
   if $install_pip {
     exec { 'install_setuptools':
       command => "python < <(curl ${setuptools_url})",
-      cwd     => '/tmp'
+      cwd     => '/tmp',
       path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
-      unless  => 'which easy_install',
+      unless  => 'which easy_install'
     }
-    
+
     exec { 'install_pip':
       command     => 'easy_install pip',
       refreshonly => true,
