@@ -62,7 +62,7 @@ class supervisord(
     }
 
     exec { 'pip_provider_bugfix':
-      command     => 'alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
+      command     => '/usr/sbin/alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
       refreshonly => true,
       subscribe   => Exec['install_pip']
     }
