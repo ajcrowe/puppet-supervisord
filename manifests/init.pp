@@ -49,7 +49,7 @@ class supervisord(
 
   if $install_pip {
     exec { 'install_setuptools':
-      command => "python < <(curl ${setuptools_url})",
+      command => "curl ${setuptools_url} | python",
       cwd     => '/tmp',
       path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
       unless  => 'which easy_install'
