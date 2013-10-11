@@ -2,7 +2,8 @@
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
   $package_name         = $supervisord::params::package_name,
-  $package_provider     = $supervisord::params::package_provider,
+  $package_provider     = $supervisord::params::package_provider,#
+  $install_init         = false,
 
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
