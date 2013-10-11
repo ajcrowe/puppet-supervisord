@@ -1,1 +1,3 @@
 [group:<%= @name %>]
+programs=<% programs.each do |program| -%><%= program %>,<%- end %>
+priority=<%= @priority %>

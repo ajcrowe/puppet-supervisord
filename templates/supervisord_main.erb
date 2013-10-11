@@ -17,4 +17,4 @@ strip_ansi=<% @strip_ansi %>
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [include]
-files=<%= @include_path %>
+files=<%= @include_path %>/*.conf

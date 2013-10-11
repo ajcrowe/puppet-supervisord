@@ -4,23 +4,6 @@ class supervisord(
   $package_name         = $supervisord::params::package_name,
   $package_provider     = $supervisord::params::package_provider,
 
-  $unix_socket          = $supervisord::params::unix_socket,
-  $unix_socket_file     = $supervisord::params::unix_socket_file,
-  $unix_socket_mode     = $supervisord::params::unix_socket_mode,
-  $unix_socket_owner    = $supervisord::params::unix_socket_owner,
-  $unix_scoket_group    = $supervisord::params::unix_socket_group,
-
-  $unix_auth            = false,
-  $unix_username        = undef,
-  $unix_password        = undef,
-
-  $inet_server          = $supervisord::params::inet_server,
-  $inet_server_hostname = $supervisord::params::inet_hostname,
-  $inet_server_port     = $supervisord::params::inet_port,
-  $inet_auth            = false,  
-  $inet_username        = undef,
-  $inet_password        = undef,
-
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
   $logfile_backups      = $supervisord::params::logfile_backups,
@@ -32,9 +15,27 @@ class supervisord(
   $minprocs             = $supervisord::params::minprocs,
   $configfile           = $supervisord::params::configfile,
   $nodaemon             = $supervisord::params::nodaemon,
+  $umask                = $supervisord::params::umask,
+
+  $unix_socket          = $supervisord::params::unix_socket,
+  $unix_socket_file     = $supervisord::params::unix_socket_file,
+  $unix_socket_mode     = $supervisord::params::unix_socket_mode,
+  $unix_socket_owner    = $supervisord::params::unix_socket_owner,
+  $unix_scoket_group    = $supervisord::params::unix_socket_group,
+
+  $inet_server          = $supervisord::params::inet_server,
+  $inet_server_hostname = $supervisord::params::inet_hostname,
+  $inet_server_port     = $supervisord::params::inet_port,
+
+  $unix_auth            = false,
+  $unix_username        = undef,
+  $unix_password        = undef,
+
+  $inet_auth            = false,  
+  $inet_username        = undef,
+  $inet_password        = undef,
 
   $user                 = undef,
-  $umask                = undef,
   $identifier           = undef,
   $childlogdir          = undef,
   $environment          = undef,
