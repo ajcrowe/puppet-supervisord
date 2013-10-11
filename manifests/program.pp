@@ -28,7 +28,7 @@ define supervisord::program(
   $environment             = undef,
   $directory               = undef,
   $umask                   = undef,
-  $serverurl               = undef,
+  $serverurl               = undef
 ) {
 
   $programconf = "${supervisord::params::include_path}/${name}-program.conf"

@@ -25,7 +25,7 @@ class supervisord {
 
 ```ruby
 supervisord::program { 'myprogram':
-  command  => 'my_executable',
+  command  => 'command --args',
   numprocs => '2',
   priority => '100'
 }

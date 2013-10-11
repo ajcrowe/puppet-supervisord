@@ -2,13 +2,13 @@
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
   $package_name         = $supervisord::params::package_name,
-  $package_provider     = $supervisord::params::package_provider,#
+  $package_provider     = $supervisord::params::package_provider,
   $install_init         = false,
 
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
   $logfile_backups      = $supervisord::params::logfile_backups,
-  $loglevel             = $supervisord::params::loglevel,
+  $log_level            = $supervisord::params::log_level,
 
   $pidfile              = $supervisord::params::pidfile,
   $nodaemon             = $supervisord::params::nodaemon,
@@ -41,20 +41,13 @@ class supervisord(
   $childlogdir          = undef,
   $environment          = undef,
   $strip_ansi           = false,
-  $nocleanup            = false,
+  $nocleanup            = false
 
 ) inherits supervisord::params {
 
-  if $unix_socket and $inet_server {
-    fail('Cannot use both unix_socket or inet_server')
-  }
-  elsif $unix_socket != true or $inet_server != true {
-    fail('Please select either unix_socket or inet_server')
-  }
-
   package { $package_name:
     ensure   => "$package_ensure",
-    provider => "$package_provider",
+    provider => "$package_provider"
   }
   
   concat { $configfile:
@@ -84,5 +77,4 @@ class supervisord(
     content => template('supervisord/supervisord.conf.erb'),
     order   => 02
   }
-
 }

@@ -29,7 +29,7 @@ class supervisord::params {
     }
   }
 
-  $unix_socket          = false
+  $unix_socket          = true
   $unix_socket_mode     = '0700'
   $unix_socket_owner    = 'nobody'
   $unix_scoket_group    = 'nogroup'
@@ -41,7 +41,7 @@ class supervisord::params {
 
   $logfile_maxbytes     = '50MB'
   $logfile_backups      = '10'
-  $loglevel             = 'info'
+  $log_level             = 'info'
 
   $nodaemon             = false
   $minfds               = '1024'

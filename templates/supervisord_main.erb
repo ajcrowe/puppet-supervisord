@@ -7,7 +7,7 @@ minfds=<%= @minprocs %>
 umask=<%= @umask %>
 <% if @user %>user=<%= @user %><% end %>
 <% if @identifier %>indentifier=<%= @identifier %><% end %>
-;directory=/tmp
+<% if @directory %>directory=<%= @directory %><% end %>
 <% if @nocleanup %>nocleanup=true<% end %>
 <% if childlogdir %>childlogdir=<%= @childlogdir %><% end %>
 ;environment=KEY="value"
