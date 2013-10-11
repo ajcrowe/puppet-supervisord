@@ -72,9 +72,9 @@ class supervisord(
     }
   }
 
-  concat::fragment { 'supervisord_main_config':
+  concat::fragment { 'supervisord_main':
     target  => $configfile,
-    content => template('supervisord/supervisord.conf.erb'),
+    content => template('supervisord/supervisord_main.erb'),
     order   => 02
   }
 }
