@@ -6,27 +6,27 @@ This module is a WIP it might not be functional currently!
 
 ## Use Cases
 
-### Install supervisord with defaults
+### Install supervisord with defaults from apt or yum
 
 ```ruby
-	include supervisord
+include supervisord
 ```
 
-### Install with pip and pip
+### Install with pip and configure an init script
 
 ```ruby
-	class supervisord {
-	  $package_provider => 'pip'
-	  $install_init     => true
-	}
+class supervisord {
+  $package_provider => 'pip'
+  $install_init     => true
+}
 ```
 
 ### Configure a program
 
 ```ruby
-	supervisord::program { 'myprogram':
-	  command  => 'my_executable',
-	  numprocs => '2',
-	  priority => '100'
-	}
+supervisord::program { 'myprogram':
+  command  => 'my_executable',
+  numprocs => '2',
+  priority => '100'
+}
 ```
