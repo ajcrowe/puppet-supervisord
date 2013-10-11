@@ -1,0 +1,10 @@
+name    'ajcrowe-supervisord'
+version '0.0.1'
+source 'git@github.com/ajcrowe/puppet-supervisord.git'
+author 'Alex Crowe'
+license 'Apache License, Version 2.0'
+summary 'supervisord class and types'
+description 'supervisord class and types'
+project_page 'https://github.com/ajcrowe/puppet-supervisord'
+
+dependency 'puppetlabs/concat', '>= 1.0.0 <2.0.0'
