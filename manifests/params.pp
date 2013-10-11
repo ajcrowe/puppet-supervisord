@@ -2,15 +2,9 @@ class supervisord::params {
   $package_ensure    = 'installed'
   $package_name      = 'supervisor'
   case $::osfamily {
-    'Redhat': {
-      $package_provider = 'yum'
-    }
-    'Debian': {
-      $package_provider = 'apt'
-    }
-    default: {
-      $package_provider = 'pip'
-    }
+    'RedHat': { $package_provider = 'pip' }
+    'Debian': { $package_provider = 'apt' }
+    default:  { $package_provider = 'pip' }
   }
   case $package_provider {
     'pip': {

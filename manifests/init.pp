@@ -45,11 +45,21 @@ class supervisord(
 
 ) inherits supervisord::params {
 
+  if package_provider == 'pip' {
+    exec { 'easy_install pip':
+      command => 'easy_install pip',
+      path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
+      unless  => 'which pip',
+      before  => Package['python-setuptools']
+    }
+    package { 'python-setuptools': ensure => installed }
+  }
+
   package { $package_name:
     ensure   => "$package_ensure",
     provider => "$package_provider"
-  }
-  
+  }  
+
   concat { $configfile:
     owner => 'root',
     group => 'root',
