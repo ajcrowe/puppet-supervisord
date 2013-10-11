@@ -50,7 +50,7 @@ class supervisord(
       command => 'easy_install pip',
       path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
       unless  => 'which pip',
-      before  => Package['python-setuptools']
+      require => Package['python-setuptools']
     }
     package { 'python-setuptools': ensure => installed }
   }
