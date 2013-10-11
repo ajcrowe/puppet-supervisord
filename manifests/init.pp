@@ -56,7 +56,7 @@ class supervisord(
     }
 
     exec { 'install_pip':
-      command     => 'easy_install pip',
+      command     => '/usr/bin/easy_install pip',
       refreshonly => true,
       subscribe   => Exec['install_setuptools']
     }
