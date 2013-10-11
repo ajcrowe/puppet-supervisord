@@ -45,7 +45,7 @@ class supervisord(
 
 ) inherits supervisord::params {
 
-  if package_provider == 'pip' {
+  if $package_provider == 'pip' {
     exec { 'easy_install pip':
       command => 'easy_install pip',
       path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
@@ -87,4 +87,6 @@ class supervisord(
     content => template('supervisord/supervisord_main.erb'),
     order   => 02
   }
+
+
 }
