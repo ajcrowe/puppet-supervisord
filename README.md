@@ -12,12 +12,12 @@ This module is a WIP it might not be functional currently!
 include supervisord
 ```
 
-### Install with pip and configure an init script
+### Install pip, configure an init script (only includes Debian and RedHat families)
 
 ```ruby
 class supervisord {
-  $package_provider => 'pip'
-  $install_init     => true
+  $install_init => true,
+  $install_pip  => true,
 }
 ```
 
@@ -30,3 +30,15 @@ supervisord::program { 'myprogram':
   priority => '100'
 }
 ```
+
+## Configure a group
+
+```ruby
+supervisord::group { 'mygroup':
+  priority => 100
+}
+```
+### Credits
+
+* Debian init script sourced from the system package.
+* RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts 

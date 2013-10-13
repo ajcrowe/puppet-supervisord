@@ -2,7 +2,19 @@ class supervisord::params {
   $package_ensure       = 'installed'
   $package_name         = 'supervisor'
 
-  $run_path              = '/var/run'
+  case ::osfamily {
+    'RedHat': {
+      $init_extras       = '/etc/sysconfig/supervisord'
+    }
+    'Debian': {
+      $init_extras       = '/etc/default/supervisor'
+    }
+    default: {
+      $init_extras       = undef
+    }
+  }
+
+  $run_path             = '/var/run'
   $pid_file             = "${run_path}/supervisord.pid"
   $log_path             = '/var/log/supervisor'
   $log_file             = "{log_path}/supervisord.log"

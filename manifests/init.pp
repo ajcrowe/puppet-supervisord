@@ -5,18 +5,18 @@ class supervisord(
   $install_pip          = false,
   $setuptools_url       = $supervisord::params::setuptools_url,
 
-  $logpath              = $supervisord::params::logpath,
-  $logfile              = $supervisord::params::logfile,
+  $log_path             = $supervisord::params::logpath,
+  $log_file             = $supervisord::params::logfile,
+  $log_level            = $supervisord::params::log_level,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
   $logfile_backups      = $supervisord::params::logfile_backups,
-  $log_level            = $supervisord::params::log_level,
 
-  $runpath              = $supervisord::params::runpath,
-  $pidfile              = $supervisord::params::pidfile,
+  $run_path             = $supervisord::params::run_path,
+  $pid_file             = $supervisord::params::pid_file,
   $nodaemon             = $supervisord::params::nodaemon,
   $minfds               = $supervisord::params::minfds,
   $minprocs             = $supervisord::params::minprocs,
-  $configfile           = $supervisord::params::configfile,
+  $config_file          = $supervisord::params::config_file,
   $nodaemon             = $supervisord::params::nodaemon,
   $umask                = $supervisord::params::umask,
 
@@ -51,7 +51,8 @@ class supervisord(
     include supervisord::pip
     Class['supervisord::pip'] -> Class['supervisord::install']
   }
-  include supervisord::install supervisord::config
+  include supervisord::install, supervisord::config
 
-  Class['supervisord::install'] -> Class['supervisord::config'] ~> Config['supervisord::service']
+  Class['supervisord::install'] -> Class['supervisord::config'] ~> Class['supervisord::service']
+
 }

@@ -1,5 +1,6 @@
 define supervisord::program(
   $command,
+  $ensure                  = present,
   $process_name            = undef,
   $numprocs                = undef,
   $numprocs_start          = undef,
@@ -31,12 +32,12 @@ define supervisord::program(
   $serverurl               = undef
 ) {
 
-  $program_conf = "${supervisord::params::include_path}/${name}-program.conf"
+  $conf = "${supervisord::params::include_path}/program_${name}.conf"
 
-  file { "$program_conf":
-    ensure  => present,
+  file { "$conf":
+    ensure  => $ensure,
     owner   => 'root',
-    group   => 'root',
-    content => template('supervisord/conf.d/gprogram.erb')
+    mode    => '0755',
+    content => template('supervisord/conf/program.erb')
   }
 }

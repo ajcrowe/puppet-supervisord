@@ -18,8 +18,8 @@ DESC=supervisor
 
 test -x $DAEMON || exit 0
 
-LOGDIR=<% @logpath %>
-PIDFILE=<% @runpath %>/<% @pidfile %>
+LOGDIR=<% @log_path %>
+PIDFILE=<% @pid_file %>
 DODTIME=5                   # Time to wait for the server to die, in seconds
                             # If this value is set too low you might not
                             # let some servers to die gracefully and
@@ -49,19 +49,6 @@ running()
     pid=`cat $PIDFILE`
     running_pid $pid $DAEMON || return 1
     return 0
-}
-
-start() {
-
-}
-
-stop() {
-
-}
-
-restart(){
-    stop
-    start
 }
 
 force_stop() {
@@ -113,10 +100,10 @@ case "$1" in
   restart)
     echo -n "Restarting $DESC: "
 	start-stop-daemon --stop --quiet --pidfile \
-		/var/run/$NAME.pid --exec $DAEMON
+		$PIDFILE --exec $DAEMON
 	[ -n "$DODTIME" ] && sleep $DODTIME
 	start-stop-daemon --start --quiet --pidfile \
-		/var/run/$NAME.pid --exec $DAEMON -- $DAEMON_OPTS
+		$PIDFILE --exec $DAEMON -- $DAEMON_OPTS
 	echo "$NAME."
 	;;
   status)

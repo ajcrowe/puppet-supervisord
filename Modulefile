@@ -8,3 +8,4 @@ description 'supervisord class and functions'
 project_page 'https://github.com/ajcrowe/puppet-supervisord'
 
 dependency 'puppetlabs/concat', '>= 1.0.0 <2.0.0'
+dependency 'puppetlabs/stdlib', '>= 4.1.0'

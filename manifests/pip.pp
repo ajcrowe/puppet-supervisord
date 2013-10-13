@@ -14,10 +14,10 @@ class supervisord::pip {
   }
 
   if ::osfamily == 'RedHat' {
-    exec { 'pip_provider_bugfix':
+    exec { 'pip_provider_name_fix':
       command     => '/usr/sbin/alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
       refreshonly => true,
-      subscribe   => Exec['install_pip']
+      subscribe   => Exec['install_pip'],
       unless      => 'which pip-python'
     }
   }
