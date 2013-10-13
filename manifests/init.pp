@@ -1,17 +1,17 @@
 # This class installs supervisord and configured it to run on boot
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
-  $package_name         = $supervisord::params::package_name,
-  $package_provider     = $supervisord::params::package_provider,
   $install_init         = false,
   $install_pip          = false,
   $setuptools_url       = $supervisord::params::setuptools_url,
 
+  $logpath              = $supervisord::params::logpath,
   $logfile              = $supervisord::params::logfile,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
   $logfile_backups      = $supervisord::params::logfile_backups,
   $log_level            = $supervisord::params::log_level,
 
+  $runpath              = $supervisord::params::runpath,
   $pidfile              = $supervisord::params::pidfile,
   $nodaemon             = $supervisord::params::nodaemon,
   $minfds               = $supervisord::params::minfds,
@@ -48,56 +48,10 @@ class supervisord(
 ) inherits supervisord::params {
 
   if $install_pip {
-    exec { 'install_setuptools':
-      command => "curl ${setuptools_url} | python",
-      cwd     => '/tmp',
-      path    => '/sbin:/bin:/usr/sbin:/usr/bin:/root/bin',
-      unless  => 'which easy_install'
-    }
-
-    exec { 'install_pip':
-      command     => '/usr/bin/easy_install pip',
-      refreshonly => true,
-      subscribe   => Exec['install_setuptools']
-    }
-
-    exec { 'pip_provider_bugfix':
-      command     => '/usr/sbin/alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
-      refreshonly => true,
-      subscribe   => Exec['install_pip']
-    }
+    include supervisord::pip
+    Class['supervisord::pip'] -> Class['supervisord::install']
   }
+  include supervisord::install supervisord::config
 
-  package { $package_name:
-    ensure   => "$package_ensure",
-    provider => "$package_provider"
-  }  
-
-  concat { $configfile:
-    owner => 'root',
-    group => 'root',
-    mode  => '0755'
-  }
-
-  if $unix_socket {
-    concat::fragment { 'supervisord_unix':
-      target  => $configfile,
-      content => template('supervisord/supervisord_unix.erb'),
-      order   => 01
-    }
-  }
-
-  if $inet_socket {
-    concat::fragment { 'supervisord_inet':
-      target  => $configfile,
-      content => template('supervisord/supervisord_inet.erb'),
-      order   => 01
-    }
-  }
-
-  concat::fragment { 'supervisord_main':
-    target  => $configfile,
-    content => template('supervisord/supervisord_main.erb'),
-    order   => 02
-  }
+  Class['supervisord::install'] -> Class['supervisord::config'] ~> Config['supervisord::service']
 }

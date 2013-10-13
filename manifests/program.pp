@@ -31,12 +31,12 @@ define supervisord::program(
   $serverurl               = undef
 ) {
 
-  $programconf = "${supervisord::params::include_path}/${name}-program.conf"
+  $program_conf = "${supervisord::params::include_path}/${name}-program.conf"
 
-  file { "$programconf":
+  file { "$program_conf":
     ensure  => present,
     owner   => 'root',
     group   => 'root',
-    content => template('supervisord/program.erb')
+    content => template('supervisord/conf.d/gprogram.erb')
   }
 }

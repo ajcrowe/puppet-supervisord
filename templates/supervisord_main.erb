@@ -5,13 +5,13 @@ nodaemon=<%= @nodaemon %>
 minfds=<%= @minfds %>
 minfds=<%= @minprocs %>
 umask=<%= @umask %>
-<% if @user %>user=<%= @user %><% end %>
-<% if @identifier %>indentifier=<%= @identifier %><% end %>
-<% if @directory %>directory=<%= @directory %><% end %>
-<% if @nocleanup %>nocleanup=true<% end %>
-<% if @childlogdir %>childlogdir=<%= @childlogdir %><% end %>
-;environment=KEY="value"
 strip_ansi=<% @strip_ansi %>
+<% if @user -%>user=<%= @user %><% end %>
+<% if @identifier -%>indentifier=<%= @identifier %><% end %>
+<% if @directory -%>directory=<%= @directory %><% end %>
+<% if @nocleanup -%>nocleanup=true<% end %>
+<% if @childlogdir -%>childlogdir=<%= @childlogdir %><% end %>
+;environment=KEY="value"
 
 [rpcinterface:supervisor]
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
