@@ -54,8 +54,10 @@ class supervisord(
   if $install_pip {
     include supervisord::pip
     Class['supervisord::pip'] -> Class['supervisord::install']
-  } include supervisord::install, supervisord::config, supervisord::service
+  } 
 
+  include supervisord::install, supervisord::config, supervisord::service
+  
   Class['supervisord::install'] -> Class['supervisord::config'] ~> Class['supervisord::service']
 
 }
