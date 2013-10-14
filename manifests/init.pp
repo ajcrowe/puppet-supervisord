@@ -1,12 +1,15 @@
 # This class installs supervisord and configured it to run on boot
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
+  $service_ensure       = $supervisord::params::service_ensure,
   $install_init         = false,
   $install_pip          = false,
+  $init_extras          = $supervisord::params::init_extras,
   $setuptools_url       = $supervisord::params::setuptools_url,
-
-  $log_path             = $supervisord::params::logpath,
-  $log_file             = $supervisord::params::logfile,
+  $executable           = $supervisord::params::executable,
+  
+  $log_path             = $supervisord::params::log_path,
+  $log_file             = $supervisord::params::log_file,
   $log_level            = $supervisord::params::log_level,
   $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
   $logfile_backups      = $supervisord::params::logfile_backups,
@@ -16,8 +19,9 @@ class supervisord(
   $nodaemon             = $supervisord::params::nodaemon,
   $minfds               = $supervisord::params::minfds,
   $minprocs             = $supervisord::params::minprocs,
+  $config_path          = $supervisord::params::config_path,
+  $config_include       = $supervisord::params::config_include,
   $config_file          = $supervisord::params::config_file,
-  $nodaemon             = $supervisord::params::nodaemon,
   $umask                = $supervisord::params::umask,
 
   $unix_socket          = $supervisord::params::unix_socket,
@@ -50,8 +54,7 @@ class supervisord(
   if $install_pip {
     include supervisord::pip
     Class['supervisord::pip'] -> Class['supervisord::install']
-  }
-  include supervisord::install, supervisord::config
+  } include supervisord::install, supervisord::config, supervisord::service
 
   Class['supervisord::install'] -> Class['supervisord::config'] ~> Class['supervisord::service']
 

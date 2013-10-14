@@ -32,7 +32,7 @@ define supervisord::program(
   $serverurl               = undef
 ) {
 
-  $conf = "${supervisord::params::include_path}/program_${name}.conf"
+  $conf = "${supervisord::include_path}/program_${name}.conf"
 
   file { "$conf":
     ensure  => $ensure,

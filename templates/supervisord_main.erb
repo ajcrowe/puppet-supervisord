@@ -1,20 +1,30 @@
 [supervisord]
-logfile=<% @logfile %>
-pidfile=<% @pidfile %>
+logfile=<%= @log_file %>
+pidfile=<%= @pid_file %>
 nodaemon=<%= @nodaemon %>
 minfds=<%= @minfds %>
 minfds=<%= @minprocs %>
 umask=<%= @umask %>
-strip_ansi=<% @strip_ansi %>
-<% if @user -%>user=<%= @user %><% end %>
-<% if @identifier -%>indentifier=<%= @identifier %><% end %>
-<% if @directory -%>directory=<%= @directory %><% end %>
-<% if @nocleanup -%>nocleanup=true<% end %>
-<% if @childlogdir -%>childlogdir=<%= @childlogdir %><% end %>
+strip_ansi=<%= @strip_ansi %>
+<% if @user -%>
+user=<%= @user %>
+<%- end %>
+<% if @identifier -%>
+indentifier=<%= @identifier %>
+<% end %>
+<% if @directory -%>
+directory=<%= @directory %>
+<%- end %>
+<% if @nocleanup -%>
+nocleanup=true
+<%- end %>
+<% if @childlogdir -%>
+childlogdir=<%= @childlogdir %>
+<%- end %>
 ;environment=KEY="value"
 
 [rpcinterface:supervisor]
 supervisor.rpcinterface_factory = supervisor.rpcinterface:make_main_rpcinterface
 
 [include]
-files=<%= @include_path %>/*.conf
+files=<%= @config_include %>/*.conf

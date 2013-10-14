@@ -4,7 +4,7 @@ define supervisord::group (
   $priority = undef
 ) {
 
-  $conf = "${supervisord::params::include_path}/group_${name}.conf"
+  $conf = "${supervisord::config_include}/group_${name}.conf"
 
   file { "$conf":
     ensure  => $ensure,

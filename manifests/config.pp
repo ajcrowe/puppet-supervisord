@@ -1,39 +1,40 @@
-class supervisord::config inherits supervisord::params { 
-  file { ["${config_path}", "${include_path}", "${run_path}", "${log_path}"]:
+class supervisord::config inherits supervisord { 
+  file { ["${config_include}", "${run_path}", "${log_path}"]:
     ensure => directory,
-    owner  => "$user",
-    mode   => '0750'
+    owner  => 'root',
+    mode   => '0755'
   }
 
   if $install_init {
 
-    $supported = $::osfamily ? {
+    $init_supported = $::osfamily ? {
       'RedHat' => 'redhat',
       'Debian' => 'debian',
       default  => false,
     }
 
-    unless $supported {
+    unless $init_supported {
       fail("No init script for osfamily: ${::osfamily}")
     }
-  
-    file { "$supervisord::params::init_extras":
-      ensure  => present,
-      owner   => 'root',
-      mode    => '0755',
-      content => template("supervisord/init/${os_lower}_extra.erb")
-    }      
+    if $init_extras {
+      file { "$init_extras":
+        ensure  => present,
+        owner   => 'root',
+        mode    => '0755',
+        content => template("supervisord/init/${init_supported}_extra.erb")
+      }      
+    }
 
     file { '/etc/init.d/supervisord':
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${os_lower}_init")
+      content => template("supervisord/init/${init_supported}_init.erb")
     }
   }
 
   concat { $config_file:
-    owner => "$user",
+    owner => 'root',
     group => 'root',
     mode  => '0755'
   }
