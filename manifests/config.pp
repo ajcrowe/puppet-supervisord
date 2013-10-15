@@ -7,30 +7,24 @@ class supervisord::config inherits supervisord {
 
   if $install_init {
 
-    $init_supported = $::osfamily ? {
-      'RedHat' => 'redhat',
-      'Debian' => 'debian',
-      default  => false,
-    }
-
-    unless $init_supported {
-      fail("No init script for osfamily: ${::osfamily}")
-    }
-    if $init_extras {
-      file { "$init_extras":
-        ensure  => present,
-        owner   => 'root',
-        mode    => '0755',
-        content => template("supervisord/init/${init_supported}_extra.erb")
-      }      
-    }
+    $osname = downcase($::osfamily)
 
     file { '/etc/init.d/supervisord':
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${init_supported}_init.erb")
+      content => template("supervisord/init/${osname}_init.erb")
     }
+
+    if $init_extras {
+      file { "$init_extras":
+        ensure  => present,
+        owner   => 'root',
+        mode    => '0755',
+        content => template("supervisord/init/${osname}_extra.erb")
+      }      
+    }
+
   }
 
   concat { $config_file:

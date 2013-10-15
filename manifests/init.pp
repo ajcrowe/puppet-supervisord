@@ -2,7 +2,7 @@
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
   $service_ensure       = $supervisord::params::service_ensure,
-  $install_init         = false,
+  $install_init         = $supervisord::params::install_init,
   $install_pip          = false,
   $init_extras          = $supervisord::params::init_extras,
   $setuptools_url       = $supervisord::params::setuptools_url,

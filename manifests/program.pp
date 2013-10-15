@@ -1,6 +1,7 @@
 define supervisord::program(
   $command,
   $ensure                  = present,
+  $env_var                 = undef,
   $process_name            = undef,
   $numprocs                = undef,
   $numprocs_start          = undef,
@@ -32,12 +33,23 @@ define supervisord::program(
   $serverurl               = undef
 ) {
 
-  $conf = "${supervisord::include_path}/program_${name}.conf"
+  include supervisord
+
+  if $env_var {
+    $env_hash = hiera($env_var)
+    $env_string = hash2csv($env_hash)
+  }
+  else {
+    $env_string = hash2csv($environment)
+  }
+
+  $conf = "${supervisord::config_include}/program_${name}.conf"
 
   file { "$conf":
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',
-    content => template('supervisord/conf/program.erb')
+    content => template('supervisord/conf/program.erb'),
+    notify  => Class['supervisord::service']
   }
 }

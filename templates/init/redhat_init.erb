@@ -12,59 +12,64 @@
 # description:  supervisor is a process control utility.  It has a web based
 #               xmlrpc interface as well as a few other nifty features.
 # processname:  supervisord
-# config: /etc/supervisord.conf
-# pidfile: /var/run/supervisord.pid
+# config: <%= @config_file %>
+# pidfile: <%= @pid_file %>
 #
 
 # source function library
 . /etc/rc.d/init.d/functions
 
 # source system settings
-[ -e /etc/sysconfig/supervisord ] && . /etc/sysconfig/supervisord
+[ -e <%= @init_extras %> ] && . <%= @init_extras %>
 
 RETVAL=0
+DAEMON=/usr/bin/supervisord
+DESC=supervisord
+
+running_pid()
+{
+    # Check if a given process pid's cmdline matches a given name
+    pid=$1
+    name=$2
+    [ -z "$pid" ] && return 1
+    [ ! -d /proc/$pid ] &&  return 1
+    (cat /proc/$pid/cmdline | tr "\000" "\n"|grep -q $name) || return 1
+    return 0
+}
+
+running()
+{
+# Check if the process is running looking at /proc
+# (works for all users)
+
+    # No pidfile, probably no daemon present
+    [ ! -f "$PIDFILE" ] && return 1
+    # Obtain the pid and check it against the binary name
+    pid=`cat $PIDFILE`
+    running_pid $pid $DAEMON || return 1
+    return 0
+}
 
 start() {
-    echo "Starting supervisord: "
-	if [ -e $PIDFILE ]; then 
-		echo "ALREADY STARTED"
-		return 1
-	fi
-
-	# start supervisord with options from sysconfig (stuff like -c)
-    /usr/bin/supervisord $OPTIONS
-	
-	# show initial startup status
-	/usr/bin/supervisorctl $OPTIONS status
-	
-	# only create the subsyslock if we created the PIDFILE
-    [ -e $PIDFILE ] && touch /var/lock/subsys/supervisord
+    echo -n "Starting $DESC: "
+    if [ -e $PIDFILE ]; then 
+        echo "ALREADY STARTED"
+        return 1
+    else
+        # start supervisord with options from sysconfig (stuff like -c)
+        daemon $DAEMON $OPTIONS
+        # only create the subsyslock if we created the PIDFILE
+        [ -e $PIDFILE ] && touch /var/lock/subsys/supervisord
+        return 0
+    fi
 }
 
 stop() {
     echo -n "Stopping supervisord: "
-    /usr/bin/supervisorctl $OPTIONS shutdown
-	if [ -n "$WAIT_FOR_SUBPROCESSES" ]; then 
-        echo "Waiting roughly 60 seconds for $PIDFILE to be removed after child processes exit"
-        for sleep in  2 2 2 2 4 4 4 4 8 8 8 8 last; do
-            if [ ! -e $PIDFILE ] ; then
-                echo "Supervisord exited as expected in under $total_sleep seconds"
-                break
-            else
-                if [[ $sleep -eq "last" ]] ; then
-                    echo "Supervisord still working on shutting down. We've waited roughly 60 seconds, we'll let it do its thing from here"
-                    return 1
-                else
-                    sleep $sleep
-                    total_sleep=$(( $total_sleep + $sleep ))
-                fi
-
-            fi
-        done
-    fi
-
+    killproc -p $PIDFILE $DESC 
     # always remove the subsys.  we might have waited a while, but just remove it at this point.
     rm -f /var/lock/subsys/supervisord
+    return 0
 }
 
 restart() {
@@ -75,15 +80,12 @@ restart() {
 case "$1" in
     start)
         start
-        RETVAL=$?
         ;;
     stop)
         stop
-        RETVAL=$?
         ;;
     restart|force-reload)
         restart
-        RETVAL=$?
         ;;
     reload)
         /usr/bin/supervisorctl $OPTIONS reload
@@ -94,9 +96,14 @@ case "$1" in
         RETVAL=$?
         ;;
     status)
-        /usr/bin/supervisorctl status
-        RETVAL=$?
-        ;;
+        echo -n "supervisord is "
+        if running ;  then
+            echo "running"
+        else
+            echo "not running."
+            exit 1
+    fi
+    ;;
     *)
         echo $"Usage: $0 {start|stop|status|restart|reload|force-reload|condrestart}"
         exit 1

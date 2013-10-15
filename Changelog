@@ -1,0 +1,18 @@
+2013-10-15 - Version 0.1.0
+
+Summary:
+
+Completed basic module functionality for
+
+- Install with pip
+- Configure programs
+- Configure groups
+- Install init scripts for RedHat and Debian families 
+
+ToDo:
+
+- Complete fgcipragram functions and templates
+- Complete eventlistener functions and templates
+- Write spec tests
+
+

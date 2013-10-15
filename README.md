@@ -1,43 +1,79 @@
 # puppet-supervisord
 
-Puppet module to manage supervisord programs [supervisord](http://supervisord.org/) monitoring tool.
+Puppet module to manage the [supervisord](http://supervisord.org/) process control system.
 
-This module is a WIP it might not be functional currently!
+Functions available to configure 
 
-## Use Cases
+* [programs](http://supervisord.org/configuration.html#program-x-section-settings)
+* [groups](http://supervisord.org/configuration.html#group-x-section-settings)
+* [fcgi-programs](http://supervisord.org/configuration.html#fcgi-program-x-section-settings)
+* [eventlisteners](http://supervisord.org/configuration.html#eventlistener-x-section-settings)
 
-### Install supervisord with defaults from apt or yum
+## Examples
+
+### Configuring supervisord with defaults
+
+Install supervisord with pip and install an init script if available
 
 ```ruby
 include supervisord
 ```
 
-### Install pip, configure an init script (only includes Debian and RedHat families)
+### Install supervisord and pip
+
+Install supervisord and install pip if not available.
 
 ```ruby
 class supervisord {
-  $install_init => true,
   $install_pip  => true,
 }
 ```
+
+This will download [setuptool](https://bitbucket.org/pypa/setuptools) and install pip with easy_install. 
+
+You can pass a specific url with `$setuptools_url = 'url'`
+
+* Only Debian and RedHat families have an init script currently.
 
 ### Configure a program
 
 ```ruby
 supervisord::program { 'myprogram':
-  command  => 'command --args',
-  numprocs => '2',
-  priority => '100'
+  command     => 'command --args',
+  priority    => '100'
+  environment => {
+    HOME   => '/home/myuser',
+    PATH   => '/bin:/sbin:/usr/bin:/usr/sbin',
+    SECRET => 'mysecret'
+  }
 }
 ```
 
-## Configure a group
+You may also specify a variable for a hiera lookup to retreive your environment hash. This allows you to reuse existing environment variable hashes.
+
+```ruby
+supervisord::program { 'myprogram':
+  command  => 'command --args',
+  priority => '100'
+  env_var  => 'my_common_envs'
+}
+```
+
+### Configure a group
 
 ```ruby
 supervisord::group { 'mygroup':
-  priority => 100
+  priority => 100,
+  program  => ['program1', 'program2', 'program3']
 }
 ```
+
+### ToDo
+
+* eventlistener template and function
+* fcgiprogram template and function
+* Write spec tests for custom functions
+
 ### Credits
 
 * Debian init script sourced from the system package.

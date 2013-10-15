@@ -23,7 +23,6 @@ class supervisord::params {
   $unix_socket_file     = "${run_path}/supervisor.sock"
   $unix_socket_mode     = '0700'
   $unix_socket_owner    = 'nobody'
-  $unix_socket_group    = 'nogroup'
 
   $inet_server          = false
   $inet_server_hostname = '127.0.0.1'
@@ -31,8 +30,20 @@ class supervisord::params {
   $inet_auth            = false
 
   case $::osfamily {
-    'RedHat': { $init_extras = '/etc/sysconfig/supervisord' }
-    'Debian': { $init_extras = '/etc/default/supervisor' }
-    default:  { $init_extras = false }
+    'RedHat': { 
+      $init_extras       = '/etc/sysconfig/supervisord' 
+      $unix_socket_group = 'nobody'
+      $install_init      = true
+    }
+    'Debian': { 
+      $init_extras       = '/etc/default/supervisor' 
+      $unix_socket_group = 'nogroup'
+      $install_init      = true
+    }
+    default:  { 
+      $init_extras       = false 
+      $unix_socket_group = 'nogroup'
+      $install_init      = false
+    }
   }
 }

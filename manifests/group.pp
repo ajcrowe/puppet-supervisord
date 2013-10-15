@@ -4,6 +4,9 @@ define supervisord::group (
   $priority = undef
 ) {
 
+  include supervisord
+
+  $progstring = array2csv($programs)
   $conf = "${supervisord::config_include}/group_${name}.conf"
 
   file { "$conf":

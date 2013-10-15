@@ -15,7 +15,7 @@
 
 module Puppet::Parser::Functions
   newfunction(:hash2csv, :type => :rvalue, :doc => <<-'EOS'
-    Returns a csv formatted string from a hash in the form
+    Returns a csv formatted string from an hash in the form
     KEY=VALUE,KEY2=VALUE2,KEY3=VALUE3
     EOS
   ) do |args|
@@ -25,18 +25,17 @@ module Puppet::Parser::Functions
 
     hash = args[0]
 
-    unless hash.is_a(Hash)
+    unless hash.is_a?(Hash)
       raise(Puppet::ParseError, 'hash2csv(): Requires an Hash')
     end
 
     result = ''
 
     hash.each {|key, value|
-      result += "#{key}=#{value},"
+      result += "#{key}='#{value}',"
     }
 
-    result.chop!
+    return result.chop!
 
-    return result
   end
 end
