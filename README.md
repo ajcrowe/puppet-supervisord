@@ -68,12 +68,6 @@ supervisord::group { 'mygroup':
 }
 ```
 
-### ToDo
-
-* eventlistener template and function
-* fcgiprogram template and function
-* Write spec tests for custom functions
-
 ### Credits
 
 * Debian init script sourced from the system package.
