@@ -1,13 +1,17 @@
 [program:<%= @name %>]
 command=<%= @command %>
+<% if @process_name -%>
 process_name=<%= @process_name %>
+<% end -%>
 <% if @numprocs -%>
 numprocs=<%= @numprocs %>
 <% end -%>
 <% if @numprocs_start -%>
 numprocs_start=<%= @numprocs_start %>
 <% end -%>
+<% if @priority -%>
 priority=<%= @priority %>
+<% end -%>
 <% if @autostart -%>
 autostart=<%= @autostart %>
 <% end -%>
