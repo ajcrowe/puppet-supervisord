@@ -39,7 +39,7 @@ define supervisord::program(
     $env_hash = hiera($env_var)
     $env_string = hash2csv($env_hash)
   }
-  else {
+  elsif $environment {
     $env_string = hash2csv($environment)
   }
 
