@@ -33,7 +33,7 @@ This will download [setuptool](https://bitbucket.org/pypa/setuptools) and instal
 
 You can pass a specific url with `$setuptools_url = 'url'`
 
-*Only Debian and RedHat families have an init script currently.
+Note: Only Debian and RedHat families have an init script currently.
 
 ### Configure a program
 
