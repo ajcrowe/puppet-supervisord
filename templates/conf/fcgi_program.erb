@@ -1,5 +1,12 @@
-[eventlistener:<%= @name %>]
+[fgci-program:<%= @name %>]
 command=<%= @command %>
+socket=<%= @socket %>
+<% if @socket_owner -%>
+socket_owner=<%= @socket_owner %>
+<% end -%>
+<% if @socket_mode -%>
+socket_mode=<%= @socket_mode %>
+<% end -%>
 <% if @process_name -%>
 process_name=<%= @process_name %>
 <% end -%>
@@ -8,15 +15,6 @@ numprocs=<%= @numprocs %>
 <% end -%>
 <% if @numprocs_start -%>
 numprocs_start=<%= @numprocs_start %>
-<% end -%>
-<% if @events_string -%>
-events=<%= @events_string %>
-<% end -%>
-<% if @buffer_size -%>
-buffer_size=<%= @buffer_size %>
-<% end -%>
-<% if @result_handler -%>
-result_handler=<%= @result_handler %>
 <% end -%>
 <% if @priority -%>
 priority=<%= @priority %>
@@ -63,6 +61,9 @@ stdout_logfile_maxbytes=<%= @stdout_logfile_maxbytes %>
 <% if @stdout_logfile_backups -%>
 stdout_logfile_backups=<%= @stdout_logfile_backups %>
 <% end -%>
+<% if @stdout_capture_maxbytes -%>
+stdout_capture_maxbytes=<%= @stdout_capture_maxbytes %>
+<% end -%>
 <% if @stdout_events_enabled -%>
 stdout_events_enabled=<%= @stdout_events_enabled %>
 <% end -%>
@@ -74,6 +75,9 @@ stderr_logfile_maxbytes=<%= @stderr_logfile_maxbytes %>
 <% end -%>
 <% if @stderr_logfile_backups -%>
 stderr_logfile_backups=<%= @stderr_logfile_backups %>
+<% end -%>
+<% if @stderr_capture_maxbytes -%>
+stderr_capture_maxbytes=<%= @stderr_capture_maxbytes %>
 <% end -%>
 <% if @stderr_events_enabled -%>
 stderr_events_enabled=<%= @stderr_events_enabled %>
