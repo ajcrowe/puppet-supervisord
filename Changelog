@@ -1,4 +1,13 @@
-2013-10-15 - Version 0.1.0
+2013-10-15 - v0.1.1
+
+Fixes:
+
+- Missing '=' in template tags when using certain parameters
+- Added log file default to program define to avoid /tmp being used when not specified
+- Fixed logic when not using environment variables in program
+
+
+2013-10-15 - v0.1.0
 
 Summary:
 
@@ -8,11 +17,3 @@ Completed basic module functionality for
 - Configure programs
 - Configure groups
 - Install init scripts for RedHat and Debian families 
-
-ToDo:
-
-- Complete fgcipragram functions and templates
-- Complete eventlistener functions and templates
-- Write spec tests
-
-

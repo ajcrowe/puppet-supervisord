@@ -1,5 +1,3 @@
-require 'puppetlabs_spec_helper'
-require 'rspec-puppet'
 require 'spec_helper'
 
 describe 'hash2csv' do
