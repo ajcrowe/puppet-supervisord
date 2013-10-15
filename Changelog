@@ -1,3 +1,12 @@
+2013-10-15 - v0.2.0
+
+Feature complete release
+
+- Added Eventlistener template and function
+- Added FGCI-Program template and function
+- More consistent log naming and fixed missing new lines
+
+
 2013-10-15 - v0.1.1
 
 Fixes:
