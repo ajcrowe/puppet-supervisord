@@ -1,3 +1,11 @@
+2013-10-16 - v0.2.1
+
+Fixes:
+
+- Fixed user params in templates
+- Added missing environment support in main supervisord.conf
+
+
 2013-10-15 - v0.2.0
 
 Feature complete release
