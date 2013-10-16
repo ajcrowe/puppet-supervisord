@@ -46,10 +46,19 @@ class supervisord(
   $identifier           = undef,
   $childlogdir          = undef,
   $environment          = undef,
+  $env_var              = undef,
   $strip_ansi           = false,
   $nocleanup            = false
 
 ) inherits supervisord::params {
+
+  if $env_var {
+    $env_hash = hiera($env_var)
+    $env_string = hash2csv($env_hash)
+  }
+  elsif $environment {
+    $env_string = hash2csv($environment)
+  }
 
   if $install_pip {
     include supervisord::pip
