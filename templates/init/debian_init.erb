@@ -78,53 +78,56 @@ force_stop() {
 
 case "$1" in
   start)
-	echo -n "Starting $DESC: "
-	start-stop-daemon --start --quiet --pidfile $PIDFILE \
-		--exec $DAEMON -- $DAEMON_OPTS
-	test -f $PIDFILE || sleep 1
+    if [ -e $PIDFILE ]; then
+        echo "$DESC already running with pid: `cat $PIDFILE`"
+        exit 0
+    fi
+    echo -n "Starting $DESC: "
+    start-stop-daemon --start --quiet --pidfile $PIDFILE \
+        --exec $DAEMON -- $DAEMON_OPTS
+    test -f $PIDFILE || sleep 1
         if running ; then
             echo "$NAME."
         else
             echo " ERROR."
         fi
-	;;
-  stop)
-	echo -n "Stopping $DESC: "
-	start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE 
-	echo "$NAME."
-	;;
-  force-stop)
-	echo -n "Forcefully stopping $DESC: "
+    ;;
+    stop)
+        echo -n "Stopping $DESC: "
+        start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE 
+        echo "$NAME."
+    ;;
+    force-stop)
+        echo -n "Forcefully stopping $DESC: "
         force_stop
         if ! running ; then
             echo "$NAME."
         else
             echo " ERROR."
         fi
-	;;
-  restart)
-    echo -n "Restarting $DESC: "
-	start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
-	[ -n "$DODTIME" ] && sleep $DODTIME
-	start-stop-daemon --start --quiet --pidfile \
-		$PIDFILE --exec $DAEMON -- $DAEMON_OPTS
-	echo "$NAME."
-	;;
-  status)
-    echo -n "$DESC is "
-    if running ;  then
-        echo "running"
-    else
-        echo "not running."
-        exit 1
-    fi
     ;;
-  *)
-	N=/etc/init.d/$NAME
-	# echo "Usage: $N {start|stop|restart|reload|force-reload}" >&2
-	echo "Usage: $N {start|stop|restart|status|force-stop}" >&2
-	exit 1
-	;;
+    restart)
+        echo -n "Restarting $DESC: "
+        start-stop-daemon --stop --quiet --oknodo --pidfile $PIDFILE
+        [ -n "$DODTIME" ] && sleep $DODTIME
+        start-stop-daemon --start --quiet --pidfile \
+            $PIDFILE --exec $DAEMON -- $DAEMON_OPTS
+        echo "$NAME."
+    ;;
+    status)
+        echo -n "$DESC is "
+        if running ;  then
+            echo "running"
+        else
+            echo "not running."
+            exit 1
+        fi
+    ;;
+    *)
+        N=/etc/init.d/$NAME
+        echo "Usage: $N {start|stop|restart|status|force-stop}" >&2
+        exit 1
+    ;;
 esac
 
 exit 0
