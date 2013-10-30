@@ -40,11 +40,11 @@ Note: Only Debian and RedHat families have an init script currently.
 ```ruby
 supervisord::program { 'myprogram':
   command     => 'command --args',
-  priority    => '100'
+  priority    => '100',
   environment => {
-    HOME   => '/home/myuser',
-    PATH   => '/bin:/sbin:/usr/bin:/usr/sbin',
-    SECRET => 'mysecret'
+    'HOME'   => '/home/myuser',
+    'PATH'   => '/bin:/sbin:/usr/bin:/usr/sbin',
+    'SECRET' => 'mysecret'
   }
 }
 ```
@@ -54,7 +54,7 @@ You may also specify a variable for a hiera lookup to retreive your environment 
 ```ruby
 supervisord::program { 'myprogram':
   command  => 'command --args',
-  priority => '100'
+  priority => '100',
   env_var  => 'my_common_envs'
 }
 ```

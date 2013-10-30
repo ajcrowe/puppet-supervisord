@@ -1,11 +1,9 @@
-supervisord::program { 'test':
-  command      => '/testcmd',
-  process_name => '%(process_num)s',
-  numprocs     => '3',
-  priority     => '100',
-  environment  => {
-    env1 => 'env1',
-    env2 => 'env2',
-    env3 => 'env3'
+supervisord::program { 'myprogram':
+  command     => 'command --args',
+  priority    => '100',
+  environment => {
+    'HOME'   => '/home/myuser',
+    'PATH'   => '/bin:/sbin:/usr/bin:/usr/sbin',
+    'SECRET' => 'mysecret'
   }
 }

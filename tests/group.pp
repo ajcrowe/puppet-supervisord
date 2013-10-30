@@ -1,4 +1,4 @@
-supervisord::group { 'test':
-  priority => '100',
-  programs => ['program1', 'program2', 'program3']
+supervisord::group { 'mygroup':
+  priority => 100,
+  program  => ['program1', 'program2', 'program3']
 }
