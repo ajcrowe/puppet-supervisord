@@ -1,8 +1,16 @@
 class supervisord::config inherits supervisord { 
-  file { ["${config_include}", "${run_path}", "${log_path}"]:
+  file { ["${config_include}", "${log_path}"]:
     ensure => directory,
     owner  => 'root',
     mode   => '0755'
+  }
+
+  unless $run_path == '/var/run' {
+    file { $run_path:
+      ensure => directory,
+      owner  => 'root',
+      mode   => '0755'
+    }
   }
 
   if $install_init {
