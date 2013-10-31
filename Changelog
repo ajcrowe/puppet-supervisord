@@ -1,3 +1,11 @@
+2013-10-31 - v0.2.3
+
+Fixes:
+
+- Fixed large bug on debian wheezy where /var/run is changed from a symlink to a 
+  directory causing all pids to be inaccessible breaking lots of services
+
+
 2013-10-30 - v0.2.2
 
 Fixes:
