@@ -6,7 +6,7 @@ class supervisord::config inherits supervisord {
     mode   => '0755'
   }
 
-  unless $supervisord::run_path == '/var/run' {
+  if $supervisord::run_path != '/var/run' {
     file { $supervisord::run_path:
       ensure => directory,
       owner  => 'root',

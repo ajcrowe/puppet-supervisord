@@ -28,11 +28,11 @@ describe 'supervisord' do
       it { should contain_class('supervisord').without_env_hash }
       it { should contain_class('supervisord').without_env_string }
     end
-    context 'is specified' do
-      let(:params) {{ :env_var => 'foovars' }}
-      let(:hiera_data) {{ :foovars => { 'key1' => 'value1', 'key2' => 'value2' } }}
-      it { should contain_concat__fragment('supervisord_main').with_content(/environment=key1='value1',key2='value2'/) }
-    end
+    #context 'is specified' do
+    #  let(:params) {{ :env_var => 'foovars' }}
+    #  let(:hiera_data) {{ :foovars => { 'key1' => 'value1', 'key2' => 'value2' } }}
+    #  it { should contain_concat__fragment('supervisord_main').with_content(/environment=key1='value1',key2='value2'/) }
+    #end
   end
 
   describe '#environment' do
@@ -83,6 +83,16 @@ describe 'supervisord' do
     context 'true' do
       let(:params) {{ :inet_server => true }}
       it { should contain_concat__fragment('supervisord_inet')}
+    end
+  end
+
+  describe '#run_path' do
+    context 'default' do
+      it { should_not contain_file('/var/run') }
+    end
+    context 'custom setting' do
+      let(:params) {{ :run_path => '/var/run/supervisord'}}
+      it { should contain_file('/var/run/supervisord') }
     end
   end
 end
