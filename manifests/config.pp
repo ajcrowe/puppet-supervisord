@@ -1,4 +1,4 @@
-class supervisord::config inherits supervisord { 
+class supervisord::config inherits supervisord {
   file { ["${config_include}", "${log_path}"]:
     ensure => directory,
     owner  => 'root',
@@ -30,7 +30,7 @@ class supervisord::config inherits supervisord {
         owner   => 'root',
         mode    => '0755',
         content => template("supervisord/init/${osname}_extra.erb")
-      }      
+      }
     }
 
   }

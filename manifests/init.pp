@@ -7,7 +7,7 @@ class supervisord(
   $init_extras          = $supervisord::params::init_extras,
   $setuptools_url       = $supervisord::params::setuptools_url,
   $executable           = $supervisord::params::executable,
-  
+
   $log_path             = $supervisord::params::log_path,
   $log_file             = $supervisord::params::log_file,
   $log_level            = $supervisord::params::log_level,
@@ -38,7 +38,7 @@ class supervisord(
   $unix_username        = undef,
   $unix_password        = undef,
 
-  $inet_auth            = false,  
+  $inet_auth            = false,
   $inet_username        = undef,
   $inet_password        = undef,
 

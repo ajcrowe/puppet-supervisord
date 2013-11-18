@@ -1,4 +1,6 @@
-# puppet-supervisord
+# Puppet Supervisord
+
+[![Build Status](https://travis-ci.org/ajcrowe/puppet-supervisord.png?branch=master)](https://travis-ci.org/ajcrowe/puppet-supervisord)
 
 Puppet module to manage the [supervisord](http://supervisord.org/) process control system.
 
@@ -67,6 +69,13 @@ supervisord::group { 'mygroup':
   program  => ['program1', 'program2', 'program3']
 }
 ```
+
+### Development
+
+If you have suggestions or improvements please file an issue or pull request, i'll try and sort them as quickly as possble.
+
+If you submit a pull please try and include tests for the new functionality. The module is tested with [Travis-CI](https://travis-ci.org/ajcrowe/puppet-supervisord).
+
 
 ### Credits
 

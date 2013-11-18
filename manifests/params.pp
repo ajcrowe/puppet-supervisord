@@ -30,18 +30,18 @@ class supervisord::params {
   $inet_auth            = false
 
   case $::osfamily {
-    'RedHat': { 
-      $init_extras       = '/etc/sysconfig/supervisord' 
+    'RedHat': {
+      $init_extras       = '/etc/sysconfig/supervisord'
       $unix_socket_group = 'nobody'
       $install_init      = true
     }
-    'Debian': { 
-      $init_extras       = '/etc/default/supervisor' 
+    'Debian': {
+      $init_extras       = '/etc/default/supervisor'
       $unix_socket_group = 'nogroup'
       $install_init      = true
     }
-    default:  { 
-      $init_extras       = false 
+    default:  {
+      $init_extras       = false
       $unix_socket_group = 'nogroup'
       $install_init      = false
     }
