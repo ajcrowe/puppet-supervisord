@@ -1,19 +1,20 @@
 class supervisord::config inherits supervisord {
-  file { ["${config_include}", "${log_path}"]:
+
+  file { [ "${supervisord::config_include}", "${supervisord::log_path}"]:
     ensure => directory,
     owner  => 'root',
     mode   => '0755'
   }
 
-  unless $run_path == '/var/run' {
-    file { $run_path:
+  unless $supervisord::run_path == '/var/run' {
+    file { $supervisord::run_path:
       ensure => directory,
       owner  => 'root',
       mode   => '0755'
     }
   }
 
-  if $install_init {
+  if $supervisord::install_init {
 
     $osname = downcase($::osfamily)
 
@@ -24,8 +25,8 @@ class supervisord::config inherits supervisord {
       content => template("supervisord/init/${osname}_init.erb")
     }
 
-    if $init_extras {
-      file { "$init_extras":
+    if $supervisord::init_extras {
+      file { $supervisord::init_extras:
         ensure  => present,
         owner   => 'root',
         mode    => '0755',
@@ -35,30 +36,30 @@ class supervisord::config inherits supervisord {
 
   }
 
-  concat { $config_file:
+  concat { $supervisord::config_file:
     owner => 'root',
     group => 'root',
     mode  => '0755'
   }
 
-  if $unix_socket {
+  if $supervisord::unix_socket {
     concat::fragment { 'supervisord_unix':
-      target  => $config_file,
+      target  => $supervisord::config_file,
       content => template('supervisord/supervisord_unix.erb'),
       order   => 01
     }
   }
 
-  if $inet_server {
+  if $supervisord::inet_server {
     concat::fragment { 'supervisord_inet':
-      target  => $config_file,
+      target  => $supervisord::config_file,
       content => template('supervisord/supervisord_inet.erb'),
       order   => 01
     }
   }
 
   concat::fragment { 'supervisord_main':
-    target  => $config_file,
+    target  => $supervisord::config_file,
     content => template('supervisord/supervisord_main.erb'),
     order   => 02
   }

@@ -45,7 +45,7 @@ define supervisord::program(
 
   $conf = "${supervisord::config_include}/program_${name}.conf"
 
-  file { "$conf":
+  file { $conf:
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',

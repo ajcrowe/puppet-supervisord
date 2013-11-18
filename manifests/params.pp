@@ -15,8 +15,8 @@ class supervisord::params {
   $minfds               = '1024'
   $minprocs             = '200'
   $umask                = '022'
-  $config_include       = "/etc/supervisor.d"
-  $config_file          = "/etc/supervisord.conf"
+  $config_include       = '/etc/supervisor.d'
+  $config_file          = '/etc/supervisord.conf'
   $setuptools_url       = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
 
   $unix_socket          = true

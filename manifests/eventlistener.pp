@@ -50,7 +50,7 @@ define supervisord::eventlistener(
 
   $conf = "${supervisord::config_include}/eventlistener_${name}.conf"
 
-  file { "$conf":
+  file { $conf:
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',

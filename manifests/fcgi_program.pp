@@ -48,7 +48,7 @@ define supervisord::fcgi_program(
 
   $conf = "${supervisord::config_include}/fcgi-program_${name}.conf"
 
-  file { "$conf":
+  file { $conf:
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',

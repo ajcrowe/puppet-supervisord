@@ -9,7 +9,7 @@ define supervisord::group (
   $progstring = array2csv($programs)
   $conf = "${supervisord::config_include}/group_${name}.conf"
 
-  file { "$conf":
+  file { $conf:
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',

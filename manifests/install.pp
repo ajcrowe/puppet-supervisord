@@ -1,6 +1,6 @@
 class supervisord::install inherits supervisord {
   package { 'supervisor':
-    ensure   => "$package_ensure",
+    ensure   => $supervisord::package_ensure,
     provider => 'pip'
   }
 }
