@@ -11,7 +11,7 @@
 
 module Puppet::Parser::Functions
   newfunction(:array2csv, :type => :rvalue, :doc => <<-'EOS'
-    Returns a csv formatted string from an array in the form
+    Returns a sorted csv formatted string from an array in the form
     VALUE1,VALUE2,VALUE3
     EOS
   ) do |args|
@@ -25,9 +25,10 @@ module Puppet::Parser::Functions
       raise(Puppet::ParseError, 'array2csv(): Requires an Array')
     end
 
+    sorted_array = array.sort
     result = ''
 
-    array.each {|value|
+    sorted_array.each {|value|
       result += "#{value},"
     }
 
