@@ -1,4 +1,4 @@
-Gemfile*
+Gemfile.lock
 Rakefile
 pkg/*
 spec/fixtures
