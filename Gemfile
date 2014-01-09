@@ -4,6 +4,7 @@ group :development, :test do
   gem 'rake'
   gem 'puppetlabs_spec_helper', :require => false
   gem 'hiera-puppet-helper'
+  gem 'rspec-system-puppet', '~> 2.0'
   gem 'puppet-lint', '~> 0.3.2'
 end
 

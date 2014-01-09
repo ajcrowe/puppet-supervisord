@@ -18,7 +18,7 @@ describe 'supervisord' do
     end
 
     context 'true' do
-      let(:params) {{ :install_pip => true }}
+      let (:params) {{ :install_pip => true }}
       it { should contain_class('supervisord::pip') }
     end
   end
