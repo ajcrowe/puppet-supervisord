@@ -12,7 +12,6 @@ class supervisord::pip inherits supervisord {
 
   exec { 'install_pip':
     command     => 'easy_install pip',
-    refreshonly => true,
     subscribe   => Exec['install_setuptools'],
     unless      => 'which pip'
   }
