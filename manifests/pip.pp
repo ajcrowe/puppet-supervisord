@@ -8,11 +8,11 @@ class supervisord::pip inherits supervisord {
     command => "curl ${supervisord::setuptools_url} | python",
     cwd     => '/tmp',
     unless  => 'which easy_install'
+    before  => Exec['install_pip'],
   }
 
   exec { 'install_pip':
     command     => 'easy_install pip',
-    subscribe   => Exec['install_setuptools'],
     unless      => 'which pip'
   }
 
