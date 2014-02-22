@@ -1,3 +1,10 @@
+# Define: supervisord::program
+#
+# This define creates an program configuration file
+#
+# Documentation on parameters available at:
+# http://supervisord.org/configuration.html#program-x-section-settings
+#
 define supervisord::program(
   $command,
   $ensure                  = present,

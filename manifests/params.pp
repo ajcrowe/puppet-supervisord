@@ -1,4 +1,9 @@
+# Class: supervisord::params
+#
+# Default parameters for supervisord
+#
 class supervisord::params {
+  # default supervisord params
   $package_ensure       = 'installed'
   $service_ensure       = 'running'
   $package_name         = 'supervisor'

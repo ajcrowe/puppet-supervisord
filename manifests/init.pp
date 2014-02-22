@@ -1,4 +1,7 @@
-# This class installs supervisord and configured it to run on boot
+# Class: supervisord
+#
+# This class installs supervisord via pip
+#
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
   $service_ensure       = $supervisord::params::service_ensure,
@@ -19,7 +22,6 @@ class supervisord(
   $nodaemon             = $supervisord::params::nodaemon,
   $minfds               = $supervisord::params::minfds,
   $minprocs             = $supervisord::params::minprocs,
-  $config_path          = $supervisord::params::config_path,
   $config_include       = $supervisord::params::config_include,
   $config_file          = $supervisord::params::config_file,
   $umask                = $supervisord::params::umask,
@@ -52,11 +54,30 @@ class supervisord(
 
 ) inherits supervisord::params {
 
+  validate_bool($install_pip)
+  validate_bool($install_init)
+  validate_bool($nodaemon)
+  validate_bool($unix_auth)
+  validate_bool($inet_auth)
+  validate_bool($strip_ansi)
+  validate_bool($nocleanup)
+
+  validate_absolute_path($config_include)
+  validate_absolute_path($config_file)
+
+  validate_absolute_path($log_path)
+  validate_absolute_path($log_file)
+  
+  validate_absolute_path($run_path)
+  validate_absolute_path($pid_file)
+
   if $env_var {
+    validate_hash($env_var)
     $env_hash = hiera($env_var)
     $env_string = hash2csv($env_hash)
   }
   elsif $environment {
+    validate_hash($environment)
     $env_string = hash2csv($environment)
   }
 

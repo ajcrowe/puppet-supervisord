@@ -1,6 +1,16 @@
+# Class: supervisord::config
+#
+# Configuration class for supervisor init and conf directories
+#
 class supervisord::config inherits supervisord {
 
-  file { [ "${supervisord::config_include}", "${supervisord::log_path}"]:
+  file { $supervisord::config_include:
+    ensure => directory,
+    owner  => 'root',
+    mode   => '0755'
+  }
+
+  file { $supervisord::log_path:
     ensure => directory,
     owner  => 'root',
     mode   => '0755'

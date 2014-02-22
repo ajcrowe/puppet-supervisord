@@ -1,3 +1,10 @@
+# Define: supervisord::group
+#
+# This define creates an group configuration file
+#
+# Documentation on parameters available at:
+# http://supervisord.org/configuration.html#group-x-section-settings
+#
 define supervisord::group (
   $programs,
   $ensure   = present,
