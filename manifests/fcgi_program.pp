@@ -2,7 +2,7 @@
 #
 # This define creates an eventlistener configuration file
 #
-# Documentation on parameters available at: 
+# Documentation on parameters available at:
 # http://supervisord.org/configuration.html#fcgi-program-x-section-settings
 #
 define supervisord::fcgi_program(
