@@ -67,7 +67,7 @@ class supervisord(
 
   validate_absolute_path($log_path)
   validate_absolute_path($log_file)
-  
+
   validate_absolute_path($run_path)
   validate_absolute_path($pid_file)
 
