@@ -3,7 +3,6 @@ require 'spec_helper'
 describe 'supervisord' do
 
   concatdir = '/var/lib/puppet/concat'
-  configfile = '/etc/supervisord.conf'
   let(:facts) {{ :concat_basedir => concatdir }}
 
   it { should contain_class('supervisord') }
@@ -18,7 +17,7 @@ describe 'supervisord' do
     end
 
     context 'true' do
-      let (:params) {{ :install_pip => true }}
+      let(:params) {{ :install_pip => true }}
       it { should contain_class('supervisord::pip') }
     end
   end
@@ -54,7 +53,7 @@ describe 'supervisord' do
       it { should_not contain_file('/etc/init.d/supervisord') }
     end
 
-    describe 'on supported OS'
+    describe 'on supported OS' do
       context 'with Debian' do
         let(:facts) {{ :osfamily => 'Debian', :concat_basedir => concatdir }}
         it { should contain_file('/etc/init.d/supervisord') }
@@ -65,6 +64,7 @@ describe 'supervisord' do
         it { should contain_file('/etc/init.d/supervisord') }
       end
     end
+  end
       
   describe '#unix_socket' do
     context 'default' do

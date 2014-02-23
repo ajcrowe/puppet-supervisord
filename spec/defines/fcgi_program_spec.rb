@@ -2,11 +2,12 @@ require 'spec_helper'
 
 describe 'supervisord::fcgi_program', :type => :define do
   let(:title) {'foo'}
-  let(:default_params) {{ :command => 'bar',
-                  :socket          => 'tcp://localhost:1000',
-                  :stdout_logfile  => '/var/log/supervisor/fcgi-program_foo.log',
-                  :stderr_logfile  => '/var/log/supervisor/fcgi-program_foo.error',
-                  :user            => 'baz'
+  let(:default_params) {{ 
+    :command        => 'bar',
+    :socket         => 'tcp://localhost:1000',
+    :stdout_logfile => '/var/log/supervisor/fcgi-program_foo.log',
+    :stderr_logfile => '/var/log/supervisor/fcgi-program_foo.error',
+    :user           => 'baz' 
   }}
   let(:params) { default_params }
   let(:facts) {{ :concat_basedir => '/var/lib/puppet/concat' }}
@@ -18,5 +19,4 @@ describe 'supervisord::fcgi_program', :type => :define do
   it { should contain_file('/etc/supervisor.d/fcgi-program_foo.conf').with_content(/user=baz/) }
   it { should contain_file('/etc/supervisor.d/fcgi-program_foo.conf').with_content(/stdout_logfile=\/var\/log\/supervisor\/fcgi-program_foo.log/) }
   it { should contain_file('/etc/supervisor.d/fcgi-program_foo.conf').with_content(/stderr_logfile=\/var\/log\/supervisor\/fcgi-program_foo.error/) }
-
 end
