@@ -26,24 +26,21 @@ class supervisord::config inherits supervisord {
 
   if $supervisord::install_init {
 
-    $osname = downcase($::osfamily)
-
     file { '/etc/init.d/supervisord':
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${osname}_init.erb")
+      content => template("supervisord/init/${::osfamily}/init.erb")
     }
 
-    if $supervisord::init_extras {
-      file { $supervisord::init_extras:
+    if $supervisord::init_defaults {
+      file { $supervisord::init_defaults:
         ensure  => present,
         owner   => 'root',
         mode    => '0755',
-        content => template("supervisord/init/${osname}_extra.erb")
+        content => template("supervisord/init/${::osfamily}/defaults.erb")
       }
     }
-
   }
 
   concat { $supervisord::config_file:

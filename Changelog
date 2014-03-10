@@ -1,3 +1,30 @@
+2014-03-11 - v0.3.0
+
+Fixes:
+
+- Fixed typo in fcgi config
+- Typo in README fixed thanks to @hopkinsth
+- Removed refreshonly from pip_install exec resource
+- Number of syntax fixes thanks to `puppet lint`
+
+Important Changes:
+
+- Changed init_extras naming to defaults and cleaned things up.
+
+Other Changes:
+
+- CSV functions now order things consistently
+- Included description for classes and functions
+- Expanded spec testing built with Travis CI
+- Added rspec-system tests
+- Added greater validation of various parameters
+- Added coverage reporting for resources
+
+To-Do:
+
+- Add support for additional OS families such as Solaris.
+
+
 2013-10-31 - v0.2.3
 
 Fixes:
