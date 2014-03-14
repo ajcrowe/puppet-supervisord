@@ -45,11 +45,8 @@ define supervisord::fcgi_program(
 
   include supervisord
 
-  validate_absolute_path($stdout_logfile)
-  validate_absolute_path(stderr_logfile)
-
   if $env_var {
-    $env_hash = hiera($env_var)
+    $env_hash = hiera_hash($env_var)
     $env_string = hash2csv($env_hash)
   }
   elsif $environment {
