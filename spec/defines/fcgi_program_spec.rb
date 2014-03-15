@@ -5,8 +5,8 @@ describe 'supervisord::fcgi_program', :type => :define do
   let(:default_params) {{ 
     :command        => 'bar',
     :socket         => 'tcp://localhost:1000',
-    :stdout_logfile => '/var/log/supervisor/fcgi-program_foo.log',
-    :stderr_logfile => '/var/log/supervisor/fcgi-program_foo.error',
+    :stdout_logfile => 'fcgi-program_foo.log',
+    :stderr_logfile => 'fcgi-program_foo.error',
     :user           => 'baz' 
   }}
   let(:params) { default_params }

@@ -1,6 +1,6 @@
 [supervisord]
-logfile=<%= @log_file %>
-pidfile=<%= @pid_file %>
+logfile=<%= @log_path %>/<%= @log_file %>
+pidfile=<%= @run_path %>/<%= @pid_file %>
 nodaemon=<%= @nodaemon %>
 minfds=<%= @minfds %>
 minfds=<%= @minprocs %>

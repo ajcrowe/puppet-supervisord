@@ -27,11 +27,11 @@ define supervisord::eventlistener(
   $killasgroup             = undef,
   $user                    = undef,
   $redirect_stderr         = undef,
-  $stdout_logfile          = "${supervisord::log_path}/eventlistener_${name}.log",
+  $stdout_logfile          = "eventlistener_${name}.log",
   $stdout_logfile_maxbytes = undef,
   $stdout_logfile_backups  = undef,
   $stdout_events_enabled   = undef,
-  $stderr_logfile          = "${supervisord::log_path}/eventlistener_${name}.error",
+  $stderr_logfile          = "eventlistener_${name}.error",
   $stderr_logfile_maxbytes = undef,
   $stderr_logfile_backups  = undef,
   $stderr_events_enabled   = undef,
@@ -43,6 +43,7 @@ define supervisord::eventlistener(
 
   include supervisord
 
+  # parameter validation
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)

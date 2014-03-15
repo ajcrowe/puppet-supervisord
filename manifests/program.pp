@@ -24,12 +24,12 @@ define supervisord::program(
   $killasgroup             = undef,
   $user                    = undef,
   $redirect_stderr         = undef,
-  $stdout_logfile          = "${supervisord::log_path}/program_${name}.log",
+  $stdout_logfile          = "program_${name}.log",
   $stdout_logfile_maxbytes = undef,
   $stdout_logfile_backups  = undef,
   $stdout_capture_maxbytes = undef,
   $stdout_events_enabled   = undef,
-  $stderr_logfile          = "${supervisord::log_path}/program_${name}.error",
+  $stderr_logfile          = "program_${name}.error",
   $stderr_logfile_maxbytes = undef,
   $stderr_logfile_backups  = undef,
   $stderr_capture_maxbytes = undef,
@@ -42,6 +42,40 @@ define supervisord::program(
 
   include supervisord
 
+  # parameter validation
+  validate_string($command)
+  if $process_name { validate_string($process_name) }
+  if $numprocs { validate_re($numprocs, '^\d+', "invalid numprocs: ${numprocs}.")}
+  if $numprocs_start { validate_re($numprocs_start, '^\d+', "invalid numprocs_start: ${numprocs_start}.")}
+  if $priority { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") }
+  if $autostart { validate_boolean($autostart) }
+  if $autorestart { validate_re($autorestart, ['true', 'false', 'unexpected'], "invalid autorestart: ${autorestart}") }
+  if $startsecs { validate_re($startsecs, '^\d+', "invalid startsecs: ${startsecs}.")}
+  if $startretries { validate_re($startretries, '^\d+', "invalid startretries: ${startretries}.")}
+  if $exitcodes { validate_string($exitcodes)}
+  if $stopsignal {
+    $stop_signals = ['TERM', 'HUP', 'INT', 'QUIT', 'KILL', 'USR1', 'USR2']
+    validate_re($stopsignal, $stop_signals, "invalid stopsignal: ${stopsignal}")
+  }
+  if $stopwaitsec { validate_re($stopwaitsec, '^\d+', "invalid stopwaitsec: ${stopwaitsec}.")}
+  if $stopasgroup { validate_boolean($stopasgroup) }
+  if $killasgroup { validate_boolean($killasgroup) }
+  if $user { validate_string($user) }
+  if $redirect_stderr { validate_boolean($redirect_stderr) }
+  validate_string($stdout_logfile)
+  if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
+  if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+', "invalid stdout_logfile_backups: ${stdout_logfile_backups}.")}
+  if $stdout_capture_maxbytes { validate_string($stdout_capture_maxbytes) }
+  if $stdout_events_enabled { validate_string($stdout_events_enabled) }
+  validate_string($stderr_logfile)
+  if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
+  if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+', "invalid stderr_logfile_backups: ${stderr_logfile_backups}.")}
+  if $stderr_capture_maxbytes { validate_string($stderr_capture_maxbytes) }
+  if $stderr_events_enabled { validate_string($stderr_events_enabled) }
+  if $directory { validate_absolute_path($directory) }
+  if $umask { validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.") }
+
+  # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)

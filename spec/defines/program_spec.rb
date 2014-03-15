@@ -4,8 +4,8 @@ describe 'supervisord::program', :type => :define do
   let(:title) {'foo'}
   let(:default_params) {{ 
     :command => 'bar',
-    :stdout_logfile  => '/var/log/supervisor/program_foo.log',
-    :stderr_logfile  => '/var/log/supervisor/program_foo.error',
+    :stdout_logfile  => 'program_foo.log',
+    :stderr_logfile  => 'program_foo.error',
     :user            => 'baz'
   }}
   let(:params) { default_params }

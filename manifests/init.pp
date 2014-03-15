@@ -33,8 +33,8 @@ class supervisord(
   $unix_scoket_group    = $supervisord::params::unix_socket_group,
 
   $inet_server          = $supervisord::params::inet_server,
-  $inet_server_hostname = $supervisord::params::inet_hostname,
-  $inet_server_port     = $supervisord::params::inet_port,
+  $inet_server_hostname = $supervisord::params::inet_server_hostname,
+  $inet_server_port     = $supervisord::params::inet_server_port,
 
   $unix_auth            = false,
   $unix_username        = undef,
@@ -65,6 +65,16 @@ class supervisord(
   validate_absolute_path($config_include)
   validate_absolute_path($log_path)
   validate_absolute_path($run_path)
+
+  $log_levels = ['^critical$', '^error$', '^warn$', '^info$', '^debug$', '^trace$', '^blather$']
+  validate_re($log_level, $log_levels, "invalid log_level: ${log_level}")
+  validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.")
+  validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
+
+  if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
+  if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
+  if ! is_integer($minprocs) { fail("invalid minprocs: ${minprocs}.")}
+  if ! is_integer($inet_server_port) { fail("invalid inet_server_port: ${inet_server_port}.")}
 
   if $env_var {
     validate_hash($env_var)

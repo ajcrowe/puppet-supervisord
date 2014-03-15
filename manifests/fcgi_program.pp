@@ -27,12 +27,12 @@ define supervisord::fcgi_program(
   $killasgroup             = undef,
   $user                    = undef,
   $redirect_stderr         = undef,
-  $stdout_logfile          = "${supervisord::log_path}/fcgi-program_${name}.log",
+  $stdout_logfile          = "fcgi-program_${name}.log",
   $stdout_logfile_maxbytes = undef,
   $stdout_logfile_backups  = undef,
   $stdout_capture_maxbytes = undef,
   $stdout_events_enabled   = undef,
-  $stderr_logfile          = "${supervisord::log_path}/fcgi-program_${name}.error",
+  $stderr_logfile          = "fcgi-program_${name}.error",
   $stderr_logfile_maxbytes = undef,
   $stderr_logfile_backups  = undef,
   $stderr_capture_maxbytes = undef,
@@ -45,11 +45,19 @@ define supervisord::fcgi_program(
 
   include supervisord
 
+  # parameter validation
+  validate_string($command)
+  validate_re($socket, ['^tcp:\/\/.*:\d+$', '^unix:\/\/\/'])
+  if $priority { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") }
+  if $umask { validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.") }
+
   if $env_var {
     $env_hash = hiera_hash($env_var)
+    validate_hash($env_hash)
     $env_string = hash2csv($env_hash)
   }
   elsif $environment {
+    validate_hash($environment)
     $env_string = hash2csv($environment)
   }
 

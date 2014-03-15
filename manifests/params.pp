@@ -10,9 +10,9 @@ class supervisord::params {
   $executable           = '/usr/local/bin/supervisord'
 
   $run_path             = '/var/run'
-  $pid_file             = "${run_path}/supervisord.pid"
+  $pid_file             = 'supervisord.pid'
   $log_path             = '/var/log/supervisor'
-  $log_file             = "${log_path}/supervisord.log"
+  $log_file             = 'supervisord.log'
   $logfile_maxbytes     = '50MB'
   $logfile_backups      = '10'
   $log_level            = 'info'
@@ -25,7 +25,7 @@ class supervisord::params {
   $setuptools_url       = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
 
   $unix_socket          = true
-  $unix_socket_file     = "${run_path}/supervisor.sock"
+  $unix_socket_file     = 'supervisor.sock'
   $unix_socket_mode     = '0700'
   $unix_socket_owner    = 'nobody'
 
