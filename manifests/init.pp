@@ -63,13 +63,8 @@ class supervisord(
   validate_bool($nocleanup)
 
   validate_absolute_path($config_include)
-  validate_absolute_path($config_file)
-
   validate_absolute_path($log_path)
-  validate_absolute_path($log_file)
-
   validate_absolute_path($run_path)
-  validate_absolute_path($pid_file)
 
   if $env_var {
     validate_hash($env_var)
