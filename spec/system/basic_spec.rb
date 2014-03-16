@@ -51,6 +51,7 @@ describe 'add a program config' do
     shell('grep "environment=" /etc/supervisor.d/program_test.conf') do |r|
       r.exit_code.should be_zero
     end
+    shell('echo /etc/supervisor.d/program_test.conf')
   end
 end 
 

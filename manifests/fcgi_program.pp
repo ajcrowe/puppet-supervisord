@@ -48,9 +48,35 @@ define supervisord::fcgi_program(
   # parameter validation
   validate_string($command)
   validate_re($socket, ['^tcp:\/\/.*:\d+$', '^unix:\/\/\/'])
-  if $priority { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") }
-  if $umask { validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.") }
+  if $process_name { validate_string($process_name) }
+  if $numprocs { validate_re($numprocs, '^\d+')}
+  if $numprocs_start { validate_re($numprocs_start, '^\d+')}
+  if $priority { validate_re($priority, '^\d+') }
+  if $autostart { validate_bool($autostart) }
+  if $autorestart { validate_re($autorestart, ['true', 'false', 'unexpected']) }
+  if $startsecs { validate_re($startsecs, '^\d+')}
+  if $startretries { validate_re($startretries, '^\d+')}
+  if $exitcodes { validate_string($exitcodes)}
+  if $stopsignal { validate_re($stopsignal, ['TERM', 'HUP', 'INT', 'QUIT', 'KILL', 'USR1', 'USR2']) }
+  if $stopwaitsec { validate_re($stopwaitsec, '^\d+')}
+  if $stopasgroup { validate_bool($stopasgroup) }
+  if $killasgroup { validate_bool($killasgroup) }
+  if $user { validate_string($user) }
+  if $redirect_stderr { validate_bool($redirect_stderr) }
+  validate_string($stdout_logfile)
+  if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
+  if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+')}
+  if $stdout_capture_maxbytes { validate_string($stdout_capture_maxbytes) }
+  if $stdout_events_enabled { validate_string($stdout_events_enabled) }
+  validate_string($stderr_logfile)
+  if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
+  if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+')}
+  if $stderr_capture_maxbytes { validate_string($stderr_capture_maxbytes) }
+  if $stderr_events_enabled { validate_string($stderr_events_enabled) }
+  if $directory { validate_absolute_path($directory) }
+  if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
 
+  # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)

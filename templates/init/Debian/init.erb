@@ -19,7 +19,7 @@ DESC=supervisor
 test -x $DAEMON || exit 0
 
 LOGDIR=<%= @log_path %>
-PIDFILE=<%= @run_path %><%= @pid_file %>
+PIDFILE=<%= @run_path %>/<%= @pid_file %>
 DODTIME=5                   # Time to wait for the server to die, in seconds
                             # If this value is set too low you might not
                             # let some servers to die gracefully and
