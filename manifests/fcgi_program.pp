@@ -9,6 +9,7 @@ define supervisord::fcgi_program(
   $command,
   $socket,
   $ensure                  = present,
+  $ensure_process          = 'running',
   $socket_owner            = undef,
   $socket_mode             = undef,
   $env_var                 = undef,
@@ -47,6 +48,7 @@ define supervisord::fcgi_program(
 
   # parameter validation
   validate_string($command)
+  validate_re($ensure_process, ['running', 'stopped', 'removed'])
   validate_re($socket, ['^tcp:\/\/.*:\d+$', '^unix:\/\/\/'])
   if $process_name { validate_string($process_name) }
   if $numprocs { validate_re($numprocs, '^\d+')}
@@ -94,6 +96,22 @@ define supervisord::fcgi_program(
     owner   => 'root',
     mode    => '0755',
     content => template('supervisord/conf/fcgi_program.erb'),
-    notify  => Class['supervisord::service']
+    notify  => Class['supervisord::reload']
+  }
+
+  case $ensure_process {
+    'stopped': {
+      supervisord::supervisorctl { "stop_${name}":
+        command => 'stop',
+        process => $name
+      }
+    }
+    'avilable': {
+      supervisord::supervisorctl { "available_${name}":
+        command => 'remove',
+        process => $name
+      }
+    }
+    default: { }
   }
 }

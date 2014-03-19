@@ -8,6 +8,7 @@
 define supervisord::program(
   $command,
   $ensure                  = present,
+  $ensure_process          = 'running',
   $env_var                 = undef,
   $process_name            = undef,
   $numprocs                = undef,
@@ -44,6 +45,7 @@ define supervisord::program(
 
   # parameter validation
   validate_string($command)
+  validate_re($ensure_process, ['running', 'stopped', 'removed'])
   if $process_name { validate_string($process_name) }
   if $numprocs { validate_re($numprocs, '^\d+')}
   if $numprocs_start { validate_re($numprocs_start, '^\d+')}
@@ -90,6 +92,22 @@ define supervisord::program(
     owner   => 'root',
     mode    => '0755',
     content => template('supervisord/conf/program.erb'),
-    notify  => Class['supervisord::service']
+    notify  => Class['supervisord::reload']
+  }
+
+  case $ensure_process {
+    'stopped': {
+      supervisord::supervisorctl { "stop_${name}":
+        command => 'stop',
+        process => $name
+      }
+    }
+    'avilable': {
+      supervisord::supervisorctl { "available_${name}":
+        command => 'remove',
+        process => $name
+      }
+    }
+    default: { }
   }
 }

@@ -10,6 +10,7 @@ describe 'supervisord' do
   it { should contain_class('supervisord::config') }
   it { should contain_class('supervisord::service') }
   it { should contain_class('supervisord::params') }
+  it { should contain_class('supervisord::supervisorctl') }
   it { should contain_service('supervisord') }
   it { should contain_package('supervisor') }
 

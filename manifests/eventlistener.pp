@@ -8,6 +8,7 @@
 define supervisord::eventlistener(
   $command,
   $ensure                  = present,
+  $ensure_process          = 'running',
   $events                  = undef,
   $buffer_size             = undef,
   $result_handler          = undef,
@@ -44,6 +45,39 @@ define supervisord::eventlistener(
   include supervisord
 
   # parameter validation
+  validate_string($command)
+  validate_re($ensure_process, ['running', 'stopped', 'removed'])
+  if $events { }
+  if $buffer_size { }
+  if $result_handler { }
+  if $numprocs { validate_re($numprocs, '^\d+')}
+  if $numprocs_start { validate_re($numprocs_start, '^\d+')}
+  if $priority { validate_re($priority, '^\d+') }
+  if $autostart { validate_bool($autostart) }
+  if $autorestart { validate_re($autorestart, ['true', 'false', 'unexpected']) }
+  if $startsecs { validate_re($startsecs, '^\d+')}
+  if $startretries { validate_re($startretries, '^\d+')}
+  if $exitcodes { validate_string($exitcodes)}
+  if $stopsignal { validate_re($stopsignal, ['TERM', 'HUP', 'INT', 'QUIT', 'KILL', 'USR1', 'USR2']) }
+  if $stopwaitsec { validate_re($stopwaitsec, '^\d+')}
+  if $stopasgroup { validate_bool($stopasgroup) }
+  if $killasgroup { validate_bool($killasgroup) }
+  if $user { validate_string($user) }
+  if $redirect_stderr { validate_bool($redirect_stderr) }
+  validate_string($stdout_logfile)
+  if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
+  if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+')}
+  if $stdout_capture_maxbytes { validate_string($stdout_capture_maxbytes) }
+  if $stdout_events_enabled { validate_string($stdout_events_enabled) }
+  validate_string($stderr_logfile)
+  if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
+  if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+')}
+  if $stderr_capture_maxbytes { validate_string($stderr_capture_maxbytes) }
+  if $stderr_events_enabled { validate_string($stderr_events_enabled) }
+  if $directory { validate_absolute_path($directory) }
+  if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
+
+  # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)
@@ -65,6 +99,22 @@ define supervisord::eventlistener(
     owner   => 'root',
     mode    => '0755',
     content => template('supervisord/conf/eventlistener.erb'),
-    notify  => Class['supervisord::service']
+    notify  => Class['supervisord::reload']
+  }
+
+  case $ensure_process {
+    'stopped': {
+      supervisord::supervisorctl { "stop_${name}":
+        command => 'stop',
+        process => $name
+      }
+    }
+    'avilable': {
+      supervisord::supervisorctl { "available_${name}":
+        command => 'remove',
+        process => $name
+      }
+    }
+    default: { }
   }
 }

@@ -24,6 +24,7 @@ define supervisord::group (
     ensure  => $ensure,
     owner   => 'root',
     mode    => '0755',
-    content => template('supervisord/conf/group.erb')
+    content => template('supervisord/conf/group.erb'),
+    notify  => Class['supervisord::reload']
   }
 }

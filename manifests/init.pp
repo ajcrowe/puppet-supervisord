@@ -91,8 +91,8 @@ class supervisord(
     Class['supervisord::pip'] -> Class['supervisord::install']
   }
 
-  include supervisord::install, supervisord::config, supervisord::service
+  include supervisord::install, supervisord::config, supervisord::service, supervisord::reload
 
   Class['supervisord::install'] -> Class['supervisord::config'] ~> Class['supervisord::service']
-
+  Class['supervisord::reload'] -> Supervisord::Supervisorctl <| |>
 }
