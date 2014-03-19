@@ -70,6 +70,18 @@ supervisord::group { 'mygroup':
 }
 ```
 
+### Run `supervisorctl` Commands
+
+Should you need to run a sequence of command with `supervisorctl` you can use the define type `supervisord::supervisorctl`
+
+```ruby
+supervisord::supervisorctl { 'restart_myapp':
+  command => 'restart',
+  process => 'myapp'
+}
+
+You can also just issue a command without specifying a process.
+
 ### Development
 
 If you have suggestions or improvements please file an issue or pull request, i'll try and sort them as quickly as possble.
