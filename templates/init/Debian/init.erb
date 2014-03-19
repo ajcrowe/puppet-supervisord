@@ -26,8 +26,8 @@ DODTIME=5                   # Time to wait for the server to die, in seconds
                             # 'restart' will not work
 
 # Include supervisor defaults if available
-if [ -f /etc/default/supervisor ] ; then
-        . /etc/default/supervisor
+if [ -f <%= @init_defaults %> ] ; then
+        . <%= @init_defaults %>
 fi
 
 set -e

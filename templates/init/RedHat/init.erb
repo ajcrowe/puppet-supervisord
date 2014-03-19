@@ -20,11 +20,12 @@
 . /etc/rc.d/init.d/functions
 
 # source system settings
-[ -e <%= @init_extras %> ] && . <%= @init_extras %>
+[ -e <%= @init_defaults %> ] && . <%= @init_defaults %>
 
 RETVAL=0
 DAEMON=/usr/bin/supervisord
 DESC=supervisord
+PIDFILE=<%= @run_path %>/<%= @pid_file %>
 
 running_pid()
 {
