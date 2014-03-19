@@ -70,7 +70,7 @@ supervisord::group { 'mygroup':
 }
 ```
 
-### Run `supervisorctl` Commands
+### Run supervisorctl Commands
 
 Should you need to run a sequence of command with `supervisorctl` you can use the define type `supervisord::supervisorctl`
 
@@ -79,6 +79,7 @@ supervisord::supervisorctl { 'restart_myapp':
   command => 'restart',
   process => 'myapp'
 }
+```
 
 You can also just issue a command without specifying a process.
 
