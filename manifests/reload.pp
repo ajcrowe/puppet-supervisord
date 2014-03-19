@@ -6,8 +6,8 @@ class supervisord::reload {
     command     => "${supervisorctl} reread",
     refreshonly => true
   }
-  exec { "supervisorctl_reread":
-    command     => "${supervisorctl} reread",
+  exec { "supervisorctl_update":
+    command     => "${supervisorctl} update",
     refreshonly => true
   }
 }
