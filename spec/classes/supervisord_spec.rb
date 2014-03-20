@@ -22,12 +22,13 @@ describe 'supervisord' do
     context 'true' do
       let(:params) {{ :install_pip => true }}
       it { should contain_class('supervisord::pip') }
+      it { should contain_exec('install_setuptools') }
+      it { should contain_exec('install_pip') }
     end
 
     context 'true and RedHat' do
       let(:params) {{ :install_pip => true }}
       let(:facts) {{ :osfamily => 'RedHat', :concat_basedir => concatdir }}
-      it { should contain_class('supervisord::pip') }
       it { should contain_exec('pip_provider_name_fix') }
     end
   end
