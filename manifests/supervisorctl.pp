@@ -13,7 +13,7 @@ define supervisord::supervisorctl(
   validate_string($process)
 
   if $process {
-    $cmd = join([$supervisorctl, $command, $process])
+    $cmd = join([$supervisorctl, $command, $process], ' ')
   }
   else {
     $cmd = join([$supervisorctl, $command])

@@ -102,8 +102,8 @@ define supervisord::program(
         process => $name
       }
     }
-    'avilable': {
-      supervisord::supervisorctl { "available_${name}":
+    'removed': {
+      supervisord::supervisorctl { "remove_${name}":
         command => 'remove',
         process => $name
       }

@@ -67,12 +67,10 @@ define supervisord::eventlistener(
   validate_string($stdout_logfile)
   if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
   if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+')}
-  if $stdout_capture_maxbytes { validate_string($stdout_capture_maxbytes) }
   if $stdout_events_enabled { validate_string($stdout_events_enabled) }
   validate_string($stderr_logfile)
   if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
   if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+')}
-  if $stderr_capture_maxbytes { validate_string($stderr_capture_maxbytes) }
   if $stderr_events_enabled { validate_string($stderr_events_enabled) }
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
@@ -109,8 +107,8 @@ define supervisord::eventlistener(
         process => $name
       }
     }
-    'avilable': {
-      supervisord::supervisorctl { "available_${name}":
+    'removed': {
+      supervisord::supervisorctl { "remove_${name}":
         command => 'remove',
         process => $name
       }
