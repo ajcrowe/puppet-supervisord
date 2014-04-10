@@ -49,6 +49,7 @@ class supervisord(
   $childlogdir          = undef,
   $environment          = undef,
   $env_var              = undef,
+  $directory            = undef,
   $strip_ansi           = false,
   $nocleanup            = false
 
@@ -65,6 +66,8 @@ class supervisord(
   validate_absolute_path($config_include)
   validate_absolute_path($log_path)
   validate_absolute_path($run_path)
+  if $childlogdir { validate_absolute_path($childlogdir) }
+  if $directory { validate_absolute_path($directory) }
 
   $log_levels = ['^critical$', '^error$', '^warn$', '^info$', '^debug$', '^trace$', '^blather$']
   validate_re($log_level, $log_levels, "invalid log_level: ${log_level}")

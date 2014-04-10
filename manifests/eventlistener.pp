@@ -9,8 +9,8 @@ define supervisord::eventlistener(
   $command,
   $ensure                  = present,
   $ensure_process          = 'running',
-  $events                  = undef,
-  $buffer_size             = undef,
+  $events                  = [],
+  $buffer_size             = 10,
   $result_handler          = undef,
   $env_var                 = undef,
   $process_name            = undef,
@@ -47,9 +47,9 @@ define supervisord::eventlistener(
   # parameter validation
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed'])
-  if $events { }
-  if $buffer_size { }
-  if $result_handler { }
+  validate_array($events)
+  validate_re($buffer_size, '^\d+')
+  if $result_handler { validate_string($result_handler) }
   if $numprocs { validate_re($numprocs, '^\d+')}
   if $numprocs_start { validate_re($numprocs_start, '^\d+')}
   if $priority { validate_re($priority, '^\d+') }
@@ -67,11 +67,11 @@ define supervisord::eventlistener(
   validate_string($stdout_logfile)
   if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
   if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+')}
-  if $stdout_events_enabled { validate_string($stdout_events_enabled) }
+  if $stdout_events_enabled { validate_bool($stdout_events_enabled) }
   validate_string($stderr_logfile)
   if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
   if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+')}
-  if $stderr_events_enabled { validate_string($stderr_events_enabled) }
+  if $stderr_events_enabled { validate_bool($stderr_events_enabled) }
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
 

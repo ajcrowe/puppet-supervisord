@@ -126,10 +126,14 @@ describe 'supervisord' do
   describe '#config_include' do
     context 'default' do
       it { should contain_file('/etc/supervisor.d') }
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/files=\/etc\/supervisor.d\/\*.conf$/) }
     end
     context 'is specified' do
       let(:params) {{ :config_include => '/opt/supervisord/conf.d' }}
       it { should contain_file('/opt/supervisord/conf.d') }
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/files=\/opt\/supervisord\/conf.d\/\*.conf$/) }
     end
   end
 
@@ -143,4 +147,135 @@ describe 'supervisord' do
     end
   end
 
+  describe '#nodaemon' do
+    context 'default' do
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/nodaemon=false$/) }
+    end
+    context 'true' do
+      let(:params) {{ :nodaemon => true }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/nodaemon=true$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :nodaemon => 'invalid' }}
+      it { expect { raise_error(Puppet::Error, /is not a boolean/) }}
+    end
+  end
+
+  describe '#minfds' do
+    context 'default' do
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/minfds=1024$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :minfds => 2048 }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/minfds=2048$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :minfds => 'string' }}
+      it { expect { raise_error(Puppet::Error, /invalid minfds/) }}
+    end
+  end
+
+  describe '#minprocs' do
+    context 'default' do
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/minprocs=200$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :minprocs => 300 }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/minprocs=300$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :minfds => 'string' }}
+      it { expect { raise_error(Puppet::Error, /invalid minprocs/) }}
+    end
+  end
+
+  describe '#strip_ansi' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/strip_ansi$/) }
+    end
+    context 'true' do
+      let(:params) {{ :strip_ansi => true }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/strip_ansi=true$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :strip_ansi => 'string' }}
+      it { expect { raise_error(Puppet::Error, /is not a boolean/) }}
+    end
+  end
+
+  describe '#user' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/user$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :user => 'myuser' }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/user=myuser$/) }
+    end
+  end
+
+  describe '#identifier' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/identifier$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :identifier => 'myidentifier' }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/identifier=myidentifier$/) }
+    end
+  end
+
+  describe '#directory' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/directory$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :directory => '/opt/supervisord' }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/directory=\/opt\/supervisord$/) }
+    end
+  end
+
+  describe '#nocleanup' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/nocleanup$/) }
+    end
+    context 'true' do
+      let(:params) {{ :nocleanup => true }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/nocleanup=true$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :nocleanup => 'string' }}
+      it { expect { raise_error(Puppet::Error, /is not a boolean/) }}
+    end
+  end
+
+  describe '#childlogdir' do
+    context 'default' do
+      it { should_not contain_concat__fragment('supervisord_main') \
+        .with_content(/childlogdir$/) }
+    end
+    context 'specified' do
+      let(:params) {{ :childlogdir => '/opt/supervisord/logdir' }}
+      it { should contain_concat__fragment('supervisord_main') \
+        .with_content(/childlogdir=\/opt\/supervisord\/logdir$/) }
+    end
+    context 'invalid' do
+      let(:params) {{ :childlogdir => 'not_a_path' }}
+      it { expect { raise_error(Puppet::Error, /is not an absolute path/) }}
+    end
+  end
 end
