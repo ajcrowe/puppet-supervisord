@@ -3,20 +3,23 @@
 Fixes:
 
 - Fixed typo in fcgi config
+- Fixed typo in supervisord config with minfds and minprocs, thanks to @peefourtee
 - Typo in README fixed thanks to @hopkinsth
 - Removed refreshonly from pip_install exec resource
 - Number of syntax fixes thanks to `puppet lint`
 
 Important Changes:
 
+- Lots of input validation has been added **PLEASE** check your config works before upgrading!
 - Changed init_extras naming to defaults and cleaned things up.
+- Starting and stopping apps is now done with supervisorctl commands to avoid service restarts
 
 Other Changes:
 
 - CSV functions now order things consistently
 - Included description for classes and functions
 - Expanded spec testing built with Travis CI
-- Added rspec-system tests
+- Added beaker acceptance tests
 - Added greater validation of various parameters
 - Added coverage reporting for resources
 

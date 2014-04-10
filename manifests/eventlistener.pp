@@ -9,8 +9,8 @@ define supervisord::eventlistener(
   $command,
   $ensure                  = present,
   $ensure_process          = 'running',
-  $events                  = [],
   $buffer_size             = 10,
+  $events                  = undef,
   $result_handler          = undef,
   $env_var                 = undef,
   $process_name            = undef,
@@ -47,8 +47,8 @@ define supervisord::eventlistener(
   # parameter validation
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed'])
-  validate_array($events)
   validate_re($buffer_size, '^\d+')
+  if $events { validate_array($events) }
   if $result_handler { validate_string($result_handler) }
   if $numprocs { validate_re($numprocs, '^\d+')}
   if $numprocs_start { validate_re($numprocs_start, '^\d+')}

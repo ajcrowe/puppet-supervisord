@@ -70,6 +70,17 @@ supervisord::group { 'mygroup':
 }
 ```
 
+### Configure a eventlistener
+
+```ruby
+supervisord::eventlistener { 'mylistener':
+  command  => 'command --args',
+  events   => ['PROCESS_STATE', 'PROCESS_STATE_START']
+  priority => '100',
+  env_var  => 'my_common_envs'
+}
+```
+
 ### Run supervisorctl Commands
 
 Should you need to run a sequence of command with `supervisorctl` you can use the define type `supervisord::supervisorctl`
@@ -81,7 +92,7 @@ supervisord::supervisorctl { 'restart_myapp':
 }
 ```
 
-You can also just issue a command without specifying a process.
+You can also issue a command without specifying a process.
 
 ### Development
 
