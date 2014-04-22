@@ -30,7 +30,7 @@ class supervisord(
   $unix_socket_file     = $supervisord::params::unix_socket_file,
   $unix_socket_mode     = $supervisord::params::unix_socket_mode,
   $unix_socket_owner    = $supervisord::params::unix_socket_owner,
-  $unix_scoket_group    = $supervisord::params::unix_socket_group,
+  $unix_socket_group    = $supervisord::params::unix_socket_group,
 
   $inet_server          = $supervisord::params::inet_server,
   $inet_server_hostname = $supervisord::params::inet_server_hostname,
