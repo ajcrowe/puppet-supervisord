@@ -1,3 +1,9 @@
+2014-04-22 - v0.3.1
+
+Fixes:
+
+- Fixed typo in unix_socket_group param, thanks to @dig412
+
 2014-03-11 - v0.3.0
 
 Fixes:
