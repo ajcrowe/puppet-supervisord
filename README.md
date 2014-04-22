@@ -70,7 +70,7 @@ supervisord::group { 'mygroup':
 }
 ```
 
-### Configure a eventlistener
+### Configure an eventlistener
 
 ```ruby
 supervisord::eventlistener { 'mylistener':
@@ -98,7 +98,7 @@ You can also issue a command without specifying a process.
 
 If you have suggestions or improvements please file an issue or pull request, i'll try and sort them as quickly as possble.
 
-If you submit a pull please try and include tests for the new functionality. The module is tested with [Travis-CI](https://travis-ci.org/ajcrowe/puppet-supervisord).
+If you submit a pull please try and include tests for the new functionality/fix. The module is tested with [Travis-CI](https://travis-ci.org/ajcrowe/puppet-supervisord).
 
 
 ### Credits
