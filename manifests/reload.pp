@@ -4,7 +4,7 @@
 #
 class supervisord::reload {
 
-  $supervisorctl = '/usr/local/bin/supervisorctl'
+  $supervisorctl = $::supervisord::executable
 
   exec { 'supervisorctl_reread':
     command     => "${supervisorctl} reread",
