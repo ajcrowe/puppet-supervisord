@@ -95,7 +95,7 @@ describe 'supervisord::group' do
       pp = <<-EOS
         include supervisord
         supervisord::group { 'test':
-          programs => ['program1', 'program2'],
+          programs => ['test'],
           priority => '100',
         }
       EOS
@@ -105,9 +105,9 @@ describe 'supervisord::group' do
     end
 
     it 'should contain the correct values' do
-      cmd='grep "programs=program1,program2" /etc/supervisor.d/group_test.conf'
+      cmd='grep "programs=test" /etc/supervisor.d/group_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
-      cmd="grep priority=100 /etc/supervisor.d/fcgi-program_test.conf"
+      cmd="grep priority=100 /etc/supervisor.d/group_test.conf"
       expect(shell(cmd).exit_code).to eq(0)
     end
   end

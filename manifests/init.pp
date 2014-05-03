@@ -10,6 +10,7 @@ class supervisord(
   $init_defaults        = $supervisord::params::init_defaults,
   $setuptools_url       = $supervisord::params::setuptools_url,
   $executable           = $supervisord::params::executable,
+  $executable_ctl       = $supervisord::params::executable_ctl,
 
   $log_path             = $supervisord::params::log_path,
   $log_file             = $supervisord::params::log_file,

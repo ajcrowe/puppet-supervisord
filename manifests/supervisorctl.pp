@@ -5,12 +5,13 @@
 define supervisord::supervisorctl(
   $command,
   $process       = undef,
-  $refreshonly   = false,
-  $supervisorctl = '/usr/local/bin/supervisorctl'
+  $refreshonly   = false
 ) {
 
   validate_string($command)
   validate_string($process)
+
+  $supervisorctl = $::supervisord::executable_ctl
 
   if $process {
     $cmd = join([$supervisorctl, $command, $process], ' ')
