@@ -1,5 +1,5 @@
 name    'ajcrowe-supervisord'
-version '0.3.2'
+version '0.3.3'
 source 'git@github.com/ajcrowe/puppet-supervisord.git'
 author 'Alex Crowe'
 license 'Apache License, Version 2.0'

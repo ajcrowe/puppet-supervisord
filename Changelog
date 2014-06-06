@@ -1,3 +1,9 @@
+2014-06-06 - v0.3.3
+
+Fixes:
+
+- Fixed typo in stopwaitsec param, should have been stopwaitsecs, thanks to @rchrd2
+
 2014-05-03 - v0.3.2
 
 Changes:
