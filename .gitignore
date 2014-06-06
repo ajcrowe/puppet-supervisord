@@ -4,3 +4,4 @@ spec/fixtures
 .rspec_system/
 .rvmrc
 .vagrant
+.bundle
