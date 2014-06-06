@@ -10,7 +10,7 @@ supervisord::program { 'myprogram':
   startretries            => '3',
   exitcodes               => '0,2',
   stopsignal              => 'TERM',
-  stopwaitsec             => '10',
+  stopwaitsecs            => '10',
   stopasgroup             => false,
   killasgroup             => false,
   redirect_stderr         => false,

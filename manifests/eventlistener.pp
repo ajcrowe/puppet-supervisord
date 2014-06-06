@@ -23,7 +23,7 @@ define supervisord::eventlistener(
   $startretries            = undef,
   $exitcodes               = undef,
   $stopsignal              = undef,
-  $stopwaitsec             = undef,
+  $stopwaitsecs            = undef,
   $stopasgroup             = undef,
   $killasgroup             = undef,
   $user                    = undef,
@@ -59,7 +59,7 @@ define supervisord::eventlistener(
   if $startretries { validate_re($startretries, '^\d+')}
   if $exitcodes { validate_string($exitcodes)}
   if $stopsignal { validate_re($stopsignal, ['TERM', 'HUP', 'INT', 'QUIT', 'KILL', 'USR1', 'USR2']) }
-  if $stopwaitsec { validate_re($stopwaitsec, '^\d+')}
+  if $stopwaitsecs { validate_re($stopwaitsecs, '^\d+')}
   if $stopasgroup { validate_bool($stopasgroup) }
   if $killasgroup { validate_bool($killasgroup) }
   if $user { validate_string($user) }
