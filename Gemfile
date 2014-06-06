@@ -6,7 +6,7 @@ group :test do
   gem 'puppet-syntax'
   gem 'puppetlabs_spec_helper'
   gem 'rspec-puppet', :git => 'https://github.com/rodjek/rspec-puppet.git' , :ref => 'c44381a240ec420d4ffda7bffc55ee4d9c08d682'
-  gem 'rspec' '2.14.1'
+  gem 'rspec', '2.14.1'
 end
 
 group :development do
