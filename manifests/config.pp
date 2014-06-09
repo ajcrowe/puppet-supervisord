@@ -44,7 +44,7 @@ class supervisord::config inherits supervisord {
 
   concat { $supervisord::config_file:
     owner => 'root',
-    group => 'root',
+    group => '0',
     mode  => '0755'
   }
 
