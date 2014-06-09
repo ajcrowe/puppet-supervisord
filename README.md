@@ -4,7 +4,7 @@
 
 Puppet module to manage the [supervisord](http://supervisord.org/) process control system.
 
-Functions available to configure 
+Functions available to configure
 
 * [programs](http://supervisord.org/configuration.html#program-x-section-settings)
 * [groups](http://supervisord.org/configuration.html#group-x-section-settings)
@@ -31,7 +31,7 @@ class supervisord {
 }
 ```
 
-This will download [setuptool](https://bitbucket.org/pypa/setuptools) and install pip with easy_install. 
+This will download [setuptool](https://bitbucket.org/pypa/setuptools) and install pip with easy_install.
 
 You can pass a specific url with `$setuptools_url = 'url'`
 
@@ -59,6 +59,20 @@ supervisord::program { 'myprogram':
   priority => '100',
   env_var  => 'my_common_envs'
 }
+```
+
+Or you can fully define your programs in hiera:
+
+```yaml
+supervisord::programs:
+  'myprogram':
+    command: 'command --args'
+    autostart: yes
+    autorestart: 'true'
+    environment:
+      HOME: '/home/myuser'
+      PATH: '/bin:/sbin:/usr/bin:/usr/sbin'
+      SECRET: 'mysecret'
 ```
 
 ### Configure a group
@@ -104,4 +118,4 @@ If you submit a pull please try and include tests for the new functionality/fix.
 ### Credits
 
 * Debian init script sourced from the system package.
-* RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts 
+* RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts

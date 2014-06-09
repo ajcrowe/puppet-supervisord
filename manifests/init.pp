@@ -52,7 +52,12 @@ class supervisord(
   $env_var              = undef,
   $directory            = undef,
   $strip_ansi           = false,
-  $nocleanup            = false
+  $nocleanup            = false,
+
+  $eventlisteners       = {},
+  $fcgi_programs        = {},
+  $groups               = {},
+  $programs             = {}
 
 ) inherits supervisord::params {
 
@@ -63,6 +68,11 @@ class supervisord(
   validate_bool($inet_auth)
   validate_bool($strip_ansi)
   validate_bool($nocleanup)
+
+  validate_hash($eventlisteners)
+  validate_hash($fcgi_programs)
+  validate_hash($groups)
+  validate_hash($programs)
 
   validate_absolute_path($config_include)
   validate_absolute_path($log_path)
@@ -89,6 +99,11 @@ class supervisord(
     validate_hash($environment)
     $env_string = hash2csv($environment)
   }
+
+  create_resources('supervisord::eventlistener', $eventlisteners)
+  create_resources('supervisord::fcgi_program', $fcgi_programs)
+  create_resources('supervisord::group', $groups)
+  create_resources('supervisord::program', $programs)
 
   if $install_pip {
     include supervisord::pip
