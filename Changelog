@@ -1,3 +1,20 @@
+2014-06-10 - v0.3.4
+
+Fixes:
+
+- Removed root as group and replaced with uid 0 to enhance system
+compatibility
+
+Enhancements:
+
+- Made package provider a user definable param see
+supervisord::package_provider
+- All define types can now be automatically pulled in from hiera see example
+https://github.com/ajcrowe/puppet-supervisord#configure-a-program
+
+Many thanks for all these from @jasperla
+
+
 2014-06-06 - v0.3.3
 
 Fixes:
