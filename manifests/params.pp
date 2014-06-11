@@ -7,6 +7,7 @@ class supervisord::params {
   $package_ensure       = 'installed'
   $package_provider     = 'pip'
   $service_ensure       = 'running'
+  $service_name         = 'supervisord'
   $package_name         = 'supervisor'
   $executable           = '/usr/local/bin/supervisord'
   $executable_ctl        = '/usr/local/bin/supervisorctl'

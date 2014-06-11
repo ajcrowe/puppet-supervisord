@@ -8,11 +8,12 @@ compatibility
 Enhancements:
 
 - Made package provider a user definable param see
-supervisord::package_provider
+supervisord::package_provider and README for details of how to change this.
 - All define types can now be automatically pulled in from hiera see example
 https://github.com/ajcrowe/puppet-supervisord#configure-a-program
 
-Many thanks for all these from @jasperla
+Many thanks for all these from @jasperla and @mvantellingen for the bug report
+on service name.
 
 
 2014-06-06 - v0.3.3

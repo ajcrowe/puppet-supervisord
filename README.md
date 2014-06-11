@@ -35,6 +35,12 @@ This will download [setuptool](https://bitbucket.org/pypa/setuptools) and instal
 
 You can pass a specific url with `$setuptools_url = 'url'`
 
+### Install without pip
+
+If you want to use your system package manager you can specify that with `supervisord::package_provider`.
+
+You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian or Redhat OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
+
 Note: Only Debian and RedHat families have an init script currently.
 
 ### Configure a program

@@ -11,8 +11,18 @@ describe 'supervisord' do
   it { should contain_class('supervisord::service') }
   it { should contain_class('supervisord::params') }
   it { should contain_class('supervisord::reload') }
-  it { should contain_service('supervisord') }
   it { should contain_package('supervisor') }
+
+  describe '#service_name' do
+    context 'default' do
+      it { should contain_service('supervisord') }
+    end
+
+    context 'specified' do
+      let(:params) {{ :service_name => 'myservicename' }}
+      it { should contain_service('myservicename') }
+    end
+  end
 
   describe '#install_pip' do
     context 'default' do
