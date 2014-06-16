@@ -27,6 +27,7 @@ class supervisord(
   $minprocs             = $supervisord::params::minprocs,
   $config_include       = $supervisord::params::config_include,
   $config_file          = $supervisord::params::config_file,
+  $config_dirs          = undef,
   $umask                = $supervisord::params::umask,
 
   $unix_socket          = $supervisord::params::unix_socket,
@@ -100,6 +101,14 @@ class supervisord(
   elsif $environment {
     validate_hash($environment)
     $env_string = hash2csv($environment)
+  }
+
+  if $config_dirs {
+    validate_array($config_dirs)
+    $config_include_string = join($config_dirs, " ")
+  }
+  else {
+    $config_include_string = "${config_include}/*.conf"
   }
 
   create_resources('supervisord::eventlistener', $eventlisteners)
