@@ -9,7 +9,7 @@ Enhancements:
 
 - Made package provider a user definable param see supervisord::package_provider and README for details of how to change this.
 - All define types can now be automatically pulled in from hiera see example https://github.com/ajcrowe/puppet-supervisord#configure-a-program
-- You can now override the default include path of `$config_include/*.conf` with your own array using `$config_dirs`. Bear in mind this would need to include whatever you set `$config_include` to be, with *.conf on the end.
+- You can now override the default include path of $config_include/*.conf with your own array using $config_dirs. Bear in mind this would need to include whatever you set $config_include to be, with *.conf on the end.
 
 Many thanks for the PRs from @jasperla, @mvantellingen for the bug report on the service name and @hasc for the enhancement ideas.
 
