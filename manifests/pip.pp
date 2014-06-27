@@ -8,16 +8,14 @@ class supervisord::pip inherits supervisord {
     path => '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'
   }
 
-  exec { 'install_setuptools':
-    command => "curl ${supervisord::setuptools_url} | python",
-    cwd     => '/tmp',
-    unless  => 'which easy_install',
-    before  => Exec['install_pip']
+  if ! defined(Package['python-setuptools']) {
+    package { 'python-setuptools': }
   }
 
   exec { 'install_pip':
-    command     => 'easy_install pip',
-    unless      => 'which pip'
+    command     => '/usr/bin/easy_install pip',
+    unless      => 'which pip',
+    require     => Package['python-setuptools'],
   }
 
   if $::osfamily == 'RedHat' {
