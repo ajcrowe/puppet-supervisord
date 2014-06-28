@@ -4,8 +4,6 @@
 #
 class supervisord::reload {
 
-  Exec { path => [ '/usr/bin/', '/usr/local/bin' ] }
-
   $supervisorctl = $::supervisord::executable_ctl
 
   exec { 'supervisorctl_reread':

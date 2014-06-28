@@ -9,8 +9,8 @@ class supervisord::params {
   $service_ensure       = 'running'
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
-  $executable           = 'supervisord'
-  $executable_ctl       = 'supervisorctl'
+  $executable           = '/usr/local/bin/supervisord'
+  $executable_ctl       = '/usr/local/bin/supervisorctl'
 
   $run_path             = '/var/run'
   $pid_file             = 'supervisord.pid'
