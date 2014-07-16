@@ -4,6 +4,7 @@
 #
 class supervisord(
   $package_ensure       = $supervisord::params::package_ensure,
+  $package_name         = $supervisord::params::package_name,
   $package_provider     = $supervisord::params::package_provider,
   $service_ensure       = $supervisord::params::service_ensure,
   $service_name         = $supervisord::params::service_name,
