@@ -30,7 +30,7 @@ class supervisord::params {
   $service_ensure       = 'running'
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
-  $executable           = "${$executable_path}/supervisord"
+  $executable           = "${executable_path}/supervisord"
   $executable_ctl       = "${executable_path}/supervisorctl"
 
   $run_path             = '/var/run'
