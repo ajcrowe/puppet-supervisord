@@ -125,6 +125,14 @@ class supervisord(
 
   include supervisord::install, supervisord::config, supervisord::service, supervisord::reload
 
-  Class['supervisord::install'] -> Class['supervisord::config'] ~> Class['supervisord::service']
+  anchor { 'supervisord::begin': }
+  anchor { 'supervisord::end': }
+
+  Anchor['supervisord::begin'] ->
+  Class['supervisord::install'] ->
+  Class['supervisord::config'] ~>
+  Class['supervisord::service'] ->
+  Anchor['supervisord::end']
+
   Class['supervisord::reload'] -> Supervisord::Supervisorctl <| |>
 }
