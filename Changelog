@@ -1,3 +1,14 @@
+2014-08-04 - v0.4.2
+
+Fixes:
+
+- Added Anchors to provide consistence resource ordering, thanks to @jbarbuto
+
+Enhancements:
+
+- Added package_name param, thanks to @jsok
+- Added executable_path param and removed hard coding in RedHat init scipt, thanks to @jtreminio
+
 2014-07-02 - v0.4.1
 
 Fixes:
