@@ -19,7 +19,7 @@ numprocs_start=<%= @numprocs_start %>
 <% if @priority -%>
 priority=<%= @priority %>
 <% end -%>
-<% if @autostart -%>
+<% if @autostart != nil -%>
 autostart=<%= @autostart %>
 <% end -%>
 <% if @autorestart -%>
@@ -40,16 +40,16 @@ stopsignal=<%= @stopsignal %>
 <% if @stopwaitsecs -%>
 stopwaitsecs=<%= @stopwaitsecs %>
 <% end -%>
-<% if @stopasgroup -%>
+<% if @stopasgroup != nil -%>
 stopasgroup=<%= @stopasgroup %>
 <% end -%>
-<% if @killasgroup -%>
+<% if @killasgroup != nil -%>
 killasgroup=<%= @killasgroup %>
 <% end -%>
 <% if @user -%>
 user=<%= @user %>
 <% end -%>
-<% if @redirect_stderr -%>
+<% if @redirect_stderr != nil -%>
 redirect_stderr=<%= @redirect_stderr %>
 <% end -%>
 <% if @stdout_logfile -%>
@@ -64,7 +64,7 @@ stdout_logfile_backups=<%= @stdout_logfile_backups %>
 <% if @stdout_capture_maxbytes -%>
 stdout_capture_maxbytes=<%= @stdout_capture_maxbytes %>
 <% end -%>
-<% if @stdout_events_enabled -%>
+<% if @stdout_events_enabled != nil -%>
 stdout_events_enabled=<%= @stdout_events_enabled %>
 <% end -%>
 <% if @stderr_logfile -%>
@@ -79,7 +79,7 @@ stderr_logfile_backups=<%= @stderr_logfile_backups %>
 <% if @stderr_capture_maxbytes -%>
 stderr_capture_maxbytes=<%= @stderr_capture_maxbytes %>
 <% end -%>
-<% if @stderr_events_enabled -%>
+<% if @stderr_events_enabled != nil -%>
 stderr_events_enabled=<%= @stderr_events_enabled %>
 <% end -%>
 <% if @env_string -%>
