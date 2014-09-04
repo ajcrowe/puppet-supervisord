@@ -132,6 +132,7 @@ class supervisord(
   Anchor['supervisord::begin'] ->
   Class['supervisord::install'] ->
   Class['supervisord::config'] ~>
+  Class['supervisord::reload'] ->
   Class['supervisord::service'] ->
   Anchor['supervisord::end']
 
