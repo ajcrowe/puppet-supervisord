@@ -31,7 +31,8 @@ class supervisord::config inherits supervisord {
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${::osfamily}/init.erb")
+      content => template("supervisord/init/${::osfamily}/init.erb"),
+      notify  => Class['supervisord::service'],
     }
 
     if $supervisord::init_defaults {
@@ -39,7 +40,8 @@ class supervisord::config inherits supervisord {
         ensure  => present,
         owner   => 'root',
         mode    => '0755',
-        content => template("supervisord/init/${::osfamily}/defaults.erb")
+        content => template("supervisord/init/${::osfamily}/defaults.erb"),
+        notify  => Class['supervisord::service'],
       }
     }
   }
