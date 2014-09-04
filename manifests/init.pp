@@ -28,6 +28,7 @@ class supervisord(
   $minfds               = $supervisord::params::minfds,
   $minprocs             = $supervisord::params::minprocs,
   $config_include       = $supervisord::params::config_include,
+  $config_include_purge = false,
   $config_file          = $supervisord::params::config_file,
   $config_dirs          = undef,
   $umask                = $supervisord::params::umask,

@@ -5,9 +5,11 @@
 class supervisord::config inherits supervisord {
 
   file { $supervisord::config_include:
-    ensure => directory,
-    owner  => 'root',
-    mode   => '0755'
+    ensure  => directory,
+    owner   => 'root',
+    mode    => '0755',
+    recurse => $config_include_purge,
+    purge   => $config_include_purge,
   }
 
   file { $supervisord::log_path:
