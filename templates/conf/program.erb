@@ -12,7 +12,7 @@ numprocs_start=<%= @numprocs_start %>
 <% if @priority -%>
 priority=<%= @priority %>
 <% end -%>
-<% if @autostart -%>
+<% if @autostart != :undef -%>
 autostart=<%= @autostart %>
 <% end -%>
 <% if @autorestart -%>
