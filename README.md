@@ -90,6 +90,14 @@ supervisord::group { 'mygroup':
 }
 ```
 
+### Configure a ctlplugin
+
+```ruby
+supervisord::ctlplugin { 'laforge':
+  ctl_factory => 'mr.laforge.controllerplugin:make_laforge_controllerplugin'
+}
+```
+
 ### Configure an eventlistener
 
 ```ruby
