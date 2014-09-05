@@ -22,7 +22,6 @@ define supervisord::ctlplugin(
     target  => $supervisord::config_file,
     content => template('supervisord/conf/ctlplugin.erb'),
     order   => 70,
-    notify  => Class['supervisord::reload'], # this isn't really needed
   }
 
 }
