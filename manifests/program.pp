@@ -82,7 +82,7 @@ define supervisord::program(
   }
 
   if ($stderr_logfile == "NONE" or $stderr_logfile == "AUTO") {
-    $stdout_logfile_path = $stderr_logfile
+    $stderr_logfile_path = $stderr_logfile
   } else {
     $stderr_logfile_path = "${supervisord::log_path}/${stderr_logfile}"
   }
