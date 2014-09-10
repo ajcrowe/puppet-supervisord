@@ -101,6 +101,14 @@ supervisord::eventlistener { 'mylistener':
 }
 ```
 
+### Configure an rpcinterface
+
+```ruby
+supervisord::rpcinterface { 'laforge':
+  rpcinterface_factory => 'mr.laforge.rpcinterface:make_laforge_rpcinterface'
+}
+```
+
 ### Run supervisorctl Commands
 
 Should you need to run a sequence of command with `supervisorctl` you can use the define type `supervisord::supervisorctl`
