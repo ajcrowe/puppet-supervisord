@@ -5,7 +5,7 @@ nodaemon=<%= @nodaemon %>
 minfds=<%= @minfds %>
 minprocs=<%= @minprocs %>
 umask=<%= @umask %>
-<% if @strip_ansi -%>
+<% if @strip_ansi != nil -%>
 strip_ansi=<%= @strip_ansi %>
 <% end -%>
 <% if @user -%>
