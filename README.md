@@ -1,5 +1,6 @@
 # Puppet Supervisord
 
+[![Puppet Forge](http://img.shields.io/puppetforge/v/ajcrowe/supervisord.svg)](https://forge.puppetlabs.com/ajcrowe/supervisord)
 [![Build Status](https://travis-ci.org/ajcrowe/puppet-supervisord.png?branch=master)](https://travis-ci.org/ajcrowe/puppet-supervisord)
 
 Puppet module to manage the [supervisord](http://supervisord.org/) process control system.
