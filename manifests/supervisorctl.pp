@@ -17,7 +17,7 @@ define supervisord::supervisorctl(
     $cmd = join([$supervisorctl, $command, $process], ' ')
   }
   else {
-    $cmd = join([$supervisorctl, $command])
+    $cmd = join([$supervisorctl, $command], ' ')
   }
 
   exec { "supervisorctl_command_${name}":
