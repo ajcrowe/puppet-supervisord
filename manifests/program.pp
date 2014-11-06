@@ -90,7 +90,7 @@ define supervisord::program(
   file { $conf:
     ensure  => $ensure,
     owner   => 'root',
-    mode    => '0755',
+    mode    => '0644',
     content => template('supervisord/conf/program.erb'),
     notify  => Class['supervisord::reload']
   }

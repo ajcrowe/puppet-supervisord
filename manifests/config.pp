@@ -7,20 +7,20 @@ class supervisord::config inherits supervisord {
   file { $supervisord::config_include:
     ensure => directory,
     owner  => 'root',
-    mode   => '0755'
+    mode   => '0644'
   }
 
   file { $supervisord::log_path:
     ensure => directory,
     owner  => 'root',
-    mode   => '0755'
+    mode   => '0644'
   }
 
   if $supervisord::run_path != '/var/run' {
     file { $supervisord::run_path:
       ensure => directory,
       owner  => 'root',
-      mode   => '0755'
+      mode   => '0644'
     }
   }
 
@@ -28,7 +28,7 @@ class supervisord::config inherits supervisord {
     file { '/etc/init.d/supervisord':
       ensure  => present,
       owner   => 'root',
-      mode    => '0755',
+      mode    => '0644',
       content => template("supervisord/init/${::osfamily}/init.erb")
     }
 
@@ -36,7 +36,7 @@ class supervisord::config inherits supervisord {
       file { $supervisord::init_defaults:
         ensure  => present,
         owner   => 'root',
-        mode    => '0755',
+        mode    => '0644',
         content => template("supervisord/init/${::osfamily}/defaults.erb")
       }
     }
@@ -45,7 +45,7 @@ class supervisord::config inherits supervisord {
   concat { $supervisord::config_file:
     owner => 'root',
     group => '0',
-    mode  => '0755'
+    mode  => '0644'
   }
 
   if $supervisord::unix_socket {

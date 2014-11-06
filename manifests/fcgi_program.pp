@@ -94,7 +94,7 @@ define supervisord::fcgi_program(
   file { $conf:
     ensure  => $ensure,
     owner   => 'root',
-    mode    => '0755',
+    mode    => '0644',
     content => template('supervisord/conf/fcgi_program.erb'),
     notify  => Class['supervisord::reload']
   }
