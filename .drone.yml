@@ -1,0 +1,18 @@
+image: dockerfile/ruby
+script:
+  - ruby -v
+  - gem -v 
+  - bundle install --without development
+  - bundle exec rake test
+notify:
+  email:
+    recipients:
+      - ops@pancentric.com
+#  slack:
+#    username:
+#    token:
+#    team:
+#    channel:
+#    on_started: false
+#    on_success: true
+#    on_failure: true
