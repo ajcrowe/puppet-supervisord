@@ -28,7 +28,7 @@ Install supervisord and install pip if not available.
 
 ```ruby
 class supervisord {
-  $install_pip  => true,
+  install_pip  => true,
 }
 ```
 
