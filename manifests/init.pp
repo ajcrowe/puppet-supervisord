@@ -108,7 +108,7 @@ class supervisord(
 
   if $config_dirs {
     validate_array($config_dirs)
-    $config_include_string = join($config_dirs, " ")
+    $config_include_string = join($config_dirs, ' ')
   }
   else {
     $config_include_string = "${config_include}/*.conf"
