@@ -50,27 +50,27 @@ define supervisord::eventlistener(
   validate_re($buffer_size, '^\d+')
   if $events { validate_array($events) }
   if $result_handler { validate_string($result_handler) }
-  if $numprocs { validate_re($numprocs, '^\d+')}
-  if $numprocs_start { validate_re($numprocs_start, '^\d+')}
-  if $priority { validate_re($priority, '^\d+') }
+  if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
+  if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
+  if $priority { if !is_integer($priority) { validate_re($priority, '^\d+') } }
   if $autostart { validate_bool($autostart) }
   if $autorestart { validate_re($autorestart, ['true', 'false', 'unexpected']) }
-  if $startsecs { validate_re($startsecs, '^\d+')}
-  if $startretries { validate_re($startretries, '^\d+')}
+  if $startsecs { if !is_integer($startsecs) { validate_re($startsecs, '^\d+')} }
+  if $startretries { if !is_integer($startretries) { validate_re($startretries, '^\d+')} }
   if $exitcodes { validate_string($exitcodes)}
   if $stopsignal { validate_re($stopsignal, ['TERM', 'HUP', 'INT', 'QUIT', 'KILL', 'USR1', 'USR2']) }
-  if $stopwaitsecs { validate_re($stopwaitsecs, '^\d+')}
+  if $stopwaitsecs { if !is_integer($stopwaitsecs) { validate_re($stopwaitsecs, '^\d+')} }
   if $stopasgroup { validate_bool($stopasgroup) }
   if $killasgroup { validate_bool($killasgroup) }
   if $user { validate_string($user) }
   if $redirect_stderr { validate_bool($redirect_stderr) }
   validate_string($stdout_logfile)
   if $stdout_logfile_maxbytes { validate_string($stdout_logfile_maxbytes) }
-  if $stdout_logfile_backups { validate_re($stdout_logfile_backups, '^\d+')}
+  if $stdout_logfile_backups { if !is_integer($stdout_logfile_backups) { validate_re($stdout_logfile_backups, '^\d+')} }
   if $stdout_events_enabled { validate_bool($stdout_events_enabled) }
   validate_string($stderr_logfile)
   if $stderr_logfile_maxbytes { validate_string($stderr_logfile_maxbytes) }
-  if $stderr_logfile_backups { validate_re($stderr_logfile_backups, '^\d+')}
+  if $stderr_logfile_backups { if !is_integer($stderr_logfile_backups) { validate_re($stderr_logfile_backups, '^\d+')} }
   if $stderr_events_enabled { validate_bool($stderr_events_enabled) }
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }

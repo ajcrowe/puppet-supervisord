@@ -15,7 +15,7 @@ define supervisord::group (
 
   # parameter validation
   validate_array($programs)
-  if $priority { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") }
+  if $priority { if !is_integer($priority) { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") } }
 
   $progstring = array2csv($programs)
   $conf = "${supervisord::config_include}/group_${name}.conf"
