@@ -8,8 +8,8 @@ class supervisord::config inherits supervisord {
     ensure  => directory,
     owner   => 'root',
     mode    => '0755',
-    recurse => $config_include_purge,
-    purge   => $config_include_purge,
+    recurse => $supervisord::config_include_purge,
+    purge   => $supervisord::config_include_purge,
   }
 
   file { $supervisord::log_path:
