@@ -5,9 +5,11 @@
 class supervisord::config inherits supervisord {
 
   file { $supervisord::config_include:
-    ensure => directory,
-    owner  => 'root',
-    mode   => '0644'
+    ensure  => directory,
+    owner   => 'root',
+    mode    => '0755',
+    recurse => $config_include_purge,
+    purge   => $config_include_purge,
   }
 
   file { $supervisord::log_path:
@@ -28,16 +30,18 @@ class supervisord::config inherits supervisord {
     file { '/etc/init.d/supervisord':
       ensure  => present,
       owner   => 'root',
-      mode    => '0644',
-      content => template("supervisord/init/${::osfamily}/init.erb")
+      mode    => '0755',
+      content => template("supervisord/init/${::osfamily}/init.erb"),
+      notify  => Class['supervisord::service'],
     }
 
     if $supervisord::init_defaults {
       file { $supervisord::init_defaults:
         ensure  => present,
         owner   => 'root',
-        mode    => '0644',
-        content => template("supervisord/init/${::osfamily}/defaults.erb")
+        mode    => '0755',
+        content => template("supervisord/init/${::osfamily}/defaults.erb"),
+        notify  => Class['supervisord::service'],
       }
     }
   }
