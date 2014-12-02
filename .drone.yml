@@ -8,11 +8,3 @@ notify:
   email:
     recipients:
       - ops@pancentric.com
-#  slack:
-#    username:
-#    token:
-#    team:
-#    channel:
-#    on_started: false
-#    on_success: true
-#    on_failure: true
