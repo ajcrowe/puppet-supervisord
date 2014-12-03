@@ -1,5 +1,7 @@
 [program:<%= @name %>]
 command=<%= @command %>
+stdout_logfile=<%= @stdout_logfile_path %>
+stderr_logfile=<%= @stderr_logfile_path %>
 <% if @process_name -%>
 process_name=<%= @process_name %>
 <% end -%>
@@ -45,9 +47,6 @@ user=<%= @user %>
 <% if @redirect_stderr != nil -%>
 redirect_stderr=<%= @redirect_stderr %>
 <% end -%>
-<% if @stdout_logfile -%>
-stdout_logfile=<%= scope.lookupvar('supervisord::log_path') %>/<%= @stdout_logfile %>
-<% end -%>
 <% if @stdout_logfile_maxbytes -%>
 stdout_logfile_maxbytes=<%= @stdout_logfile_maxbytes %>
 <% end -%>
@@ -59,9 +58,6 @@ stdout_capture_maxbytes=<%= @stdout_capture_maxbytes %>
 <% end -%>
 <% if @stdout_events_enabled != nil -%>
 stdout_events_enabled=<%= @stdout_events_enabled %>
-<% end -%>
-<% if @stderr_logfile -%>
-stderr_logfile=<%= scope.lookupvar('supervisord::log_path') %>/<%= @stderr_logfile %>
 <% end -%>
 <% if @stderr_logfile_maxbytes -%>
 stderr_logfile_maxbytes=<%= @stderr_logfile_maxbytes %>
