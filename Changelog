@@ -2,22 +2,26 @@
 
 Fixes:
 
-- Fixed template boolean checks, now checks agains nil to allow for 'false' to
+- Fixed template boolean checks, now checks against 'nil' to allow for 'false' to
 be used.
 - Logs files now correctly use 'NONE' and 'AUTO' values.
-- Fixed supervisorctl define type to have correct spacing.
+- Fixed 'supervisord::supervisorctl' define type to have correct spacing.
 - Corrected permissions for created conf files.
-- Fixed unix username and password socket template variables
+- Fixed 'unix_username' and 'unix_password' use in 'unix_http_server' config
 - Corrected README example class.
 
 Enchancements:
 
-- config_include location can now be purged with the config_include_purge
-variable.
-- rpcinterface and ctlplugin are now available define types.
+- The 'config_include' location can now be purged with the 'config_include_purge'
+boolean.
+- 'supervisord::rpcinterface' and 'supervisord::ctlplugin' are now available define types.
 - boolean define type params can now be both strings and booleans
-- supervisord changes will now use supervisorctl to reread and update all
+- supervisord changes will now use 'supervisord::supervisorctl' to reread and update all
 resources
+
+Notes:
+
+- Bumped 'stdlib' to version '4.4'
 
 Many thanks for the PRs from @kitchen, @jsok, @kamholz, @rayl, @fridim,
 @pavelsmolka and @dol
