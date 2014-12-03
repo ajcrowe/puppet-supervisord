@@ -11,6 +11,7 @@ Functions available to configure
 * [groups](http://supervisord.org/configuration.html#group-x-section-settings)
 * [fcgi-programs](http://supervisord.org/configuration.html#fcgi-program-x-section-settings)
 * [eventlisteners](http://supervisord.org/configuration.html#eventlistener-x-section-settings)
+* [rpcinterface](http://supervisord.org/configuration.html#rpcinterface-x-section-settings)
 
 ## Examples
 
@@ -18,7 +19,7 @@ Functions available to configure
 
 Install supervisord with pip and install an init script if available
 
-```ruby
+```puppet
 include supervisord
 ```
 
@@ -26,8 +27,8 @@ include supervisord
 
 Install supervisord and install pip if not available.
 
-```ruby
-class supervisord {
+```puppet
+class { supervisord:
   install_pip  => true,
 }
 ```
@@ -46,7 +47,7 @@ Note: Only Debian and RedHat families have an init script currently.
 
 ### Configure a program
 
-```ruby
+```puppet
 supervisord::program { 'myprogram':
   command     => 'command --args',
   priority    => '100',
@@ -60,7 +61,7 @@ supervisord::program { 'myprogram':
 
 You may also specify a variable for a hiera lookup to retreive your environment hash. This allows you to reuse existing environment variable hashes.
 
-```ruby
+```puppet
 supervisord::program { 'myprogram':
   command  => 'command --args',
   priority => '100',
@@ -84,7 +85,7 @@ supervisord::programs:
 
 ### Configure a group
 
-```ruby
+```puppet
 supervisord::group { 'mygroup':
   priority => 100,
   programs  => ['program1', 'program2', 'program3']
@@ -93,7 +94,7 @@ supervisord::group { 'mygroup':
 
 ### Configure a ctlplugin
 
-```ruby
+```puppet
 supervisord::ctlplugin { 'laforge':
   ctl_factory => 'mr.laforge.controllerplugin:make_laforge_controllerplugin'
 }
@@ -101,7 +102,7 @@ supervisord::ctlplugin { 'laforge':
 
 ### Configure an eventlistener
 
-```ruby
+```puppet
 supervisord::eventlistener { 'mylistener':
   command  => 'command --args',
   events   => ['PROCESS_STATE', 'PROCESS_STATE_START']
@@ -112,7 +113,7 @@ supervisord::eventlistener { 'mylistener':
 
 ### Configure an rpcinterface
 
-```ruby
+```puppet
 supervisord::rpcinterface { 'laforge':
   rpcinterface_factory => 'mr.laforge.rpcinterface:make_laforge_rpcinterface'
 }
@@ -122,7 +123,7 @@ supervisord::rpcinterface { 'laforge':
 
 Should you need to run a sequence of command with `supervisorctl` you can use the define type `supervisord::supervisorctl`
 
-```ruby
+```puppet
 supervisord::supervisorctl { 'restart_myapp':
   command => 'restart',
   process => 'myapp'

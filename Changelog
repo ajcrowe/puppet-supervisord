@@ -1,3 +1,27 @@
+2014-12-03 - v0.5.0
+
+Fixes:
+
+- Fixed template boolean checks, now checks agains nil to allow for 'false' to
+be used.
+- Logs files now correctly use 'NONE' and 'AUTO' values.
+- Fixed supervisorctl define type to have correct spacing.
+- Corrected permissions for created conf files.
+- Fixed unix username and password socket template variables
+- Corrected README example class.
+
+Enchancements:
+
+- config_include location can now be purged with the config_include_purge
+variable.
+- rpcinterface and ctlplugin are now available define types.
+- boolean define type params can now be both strings and booleans
+- supervisord changes will now use supervisorctl to reread and update all
+resources
+
+Many thanks for the PRs from @kitchen, @jsok, @kamholz, @rayl, @fridim,
+@pavelsmolka and @dol
+
 2014-08-04 - v0.4.2
 
 Fixes:
