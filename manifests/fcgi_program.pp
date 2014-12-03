@@ -78,6 +78,19 @@ define supervisord::fcgi_program(
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
 
+  # create the correct log variables
+  if ($stdout_logfile == "NONE" or $stdout_logfile == "AUTO") {
+    $stdout_logfile_path = $stdout_logfile
+  } else {
+    $stdout_logfile_path = "${supervisord::log_path}/${stdout_logfile}"
+  }
+
+  if ($stderr_logfile == "NONE" or $stderr_logfile == "AUTO") {
+    $stderr_logfile_path = $stderr_logfile
+  } else {
+    $stderr_logfile_path = "${supervisord::log_path}/${stderr_logfile}"
+  }
+
   # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)

@@ -74,7 +74,7 @@ define supervisord::program(
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
 
-
+  # create the correct log variables
   if ($stdout_logfile == "NONE" or $stdout_logfile == "AUTO") {
     $stdout_logfile_path = $stdout_logfile
   } else {
@@ -87,7 +87,7 @@ define supervisord::program(
     $stderr_logfile_path = "${supervisord::log_path}/${stderr_logfile}"
   }
 
-# convert environment data into a csv
+  # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)
