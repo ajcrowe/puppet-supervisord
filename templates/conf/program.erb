@@ -2,6 +2,8 @@
 command=<%= @command %>
 <% if @process_name -%>
 process_name=<%= @process_name %>
+<% elsif @numprocs.to_i > 1 -%>
+process_name=%(program_name)s_%(process_num)02d
 <% end -%>
 <% if @numprocs -%>
 numprocs=<%= @numprocs %>
