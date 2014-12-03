@@ -20,7 +20,7 @@ Functions available to configure
 Install supervisord with pip and install an init script if available
 
 ```puppet
-include supervisord
+include ::supervisord
 ```
 
 ### Install supervisord and pip
@@ -28,8 +28,8 @@ include supervisord
 Install supervisord and install pip if not available.
 
 ```puppet
-class { supervisord:
-  install_pip  => true,
+class { 'supervisord':
+  install_pip => true,
 }
 ```
 
@@ -88,7 +88,7 @@ supervisord::programs:
 ```puppet
 supervisord::group { 'mygroup':
   priority => 100,
-  programs  => ['program1', 'program2', 'program3']
+  programs => ['program1', 'program2', 'program3']
 }
 ```
 
