@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'supervisord::program', :type => :define do
   let(:title) {'foo'}
   let(:facts) {{ :concat_basedir => '/var/lib/puppet/concat' }}
-  let(:default_params) do 
+  let(:default_params) do
     {
       :command                 => 'bar',
       :process_name            => '%(process_num)s',
@@ -82,5 +82,16 @@ describe 'supervisord::program', :type => :define do
   context 'ensure_process_removed' do
     let(:params) { default_params.merge({ :ensure_process => 'removed' }) }
     it { should contain_supervisord__supervisorctl('remove_foo') }
+  end
+
+  context 'change_process_name_on_numprocs_gt_1' do
+    let(:params) do
+    {
+      :command  => 'bar',
+      :numprocs => '2',
+    }
+    end
+    it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/numprocs=2/) }
+    it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/process_name=\%\(program_name\)s_\%\(process_num\)02d/) }
   end
 end
