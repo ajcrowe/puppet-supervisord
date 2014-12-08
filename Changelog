@@ -1,3 +1,9 @@
+2014-12-08 - v0.5.1
+
+Enhancements:
+
+- Added correct process naming when 'numprocs' is greater than '1' thanks to @dol  for this
+
 2014-12-03 - v0.5.0
 
 Fixes:
