@@ -1,0 +1,33 @@
+{
+  "name": "ajcrowe-supervisord",
+  "version": "0.5.1",
+  "author": "Alex Crowe",
+  "license": "MIT",
+  "summary": "supervisord class and functions",
+  "source": "https://github.com/ajcrowe/puppet-supervisord",
+  "project_page": "https://forge.puppetlabs.com/ajcrowe/supervisord",
+  "issues_url": "https://github.com/ajcrowe/puppet-supervisord/issues",
+  "tags": ["supervisor", "supervisord", "process", "control", "python", "pip", "ubuntu", "redhat", "centos", "debian", "rhel"],
+  "operatingsystem_support": [
+    {
+    "operatingsystem":"RedHat",
+    "operatingsystemrelease":[ "5.0", "6.0" ]
+    },
+    {
+    "operatingsystem":"CentOS",
+    "operatingsystemrelease":[ "5.0", "6.0" ]
+    },
+    {
+    "operatingsystem": "Ubuntu",
+    "operatingsystemrelease": [ "14.04", "12.04", "10.04" ]
+    },
+    {
+    "operatingsystem": "Debian",
+    "operatingsystemrelease": [ "6.0", "7.0" ]
+    }
+   ],
+  "dependencies": [
+    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.4.0" },
+    { "name": "puppetlabs/concat", "version_requirement": ">= 1.0.0 <2.0.0" }
+  ]
+}
