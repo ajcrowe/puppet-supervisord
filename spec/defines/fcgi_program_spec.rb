@@ -85,16 +85,4 @@ describe 'supervisord::fcgi_program', :type => :define do
     let(:params) { default_params.merge({ :ensure_process => 'removed' }) }
     it { should contain_supervisord__supervisorctl('remove_foo') }
   end
-
-  context 'change_process_name_on_numprocs_gt_1' do
-    let(:params) do
-    {
-      :numprocs => '2',
-      :command  => 'bar',
-      :socket   => 'tcp://localhost:1000',
-    }
-    end
-    it { should contain_file('/etc/supervisor.d/fcgi-program_foo.conf').with_content(/numprocs=2/) }
-    it { should contain_file('/etc/supervisor.d/fcgi-program_foo.conf').with_content(/process_name=\%\(program_name\)s_\%\(process_num\)02d/) }
-  end
 end
