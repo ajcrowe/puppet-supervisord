@@ -3,7 +3,7 @@
   "version": "0.5.1",
   "author": "Alex Crowe",
   "license": "MIT",
-  "summary": "supervisord class and functions",
+  "summary": "Module supervisord class and functions",
   "source": "https://github.com/ajcrowe/puppet-supervisord",
   "project_page": "https://forge.puppetlabs.com/ajcrowe/supervisord",
   "issues_url": "https://github.com/ajcrowe/puppet-supervisord/issues",
@@ -11,11 +11,11 @@
   "operatingsystem_support": [
     {
     "operatingsystem":"RedHat",
-    "operatingsystemrelease":[ "5.0", "6.0" ]
+    "operatingsystemrelease":[ "5", "6" ]
     },
     {
     "operatingsystem":"CentOS",
-    "operatingsystemrelease":[ "5.0", "6.0" ]
+    "operatingsystemrelease":[ "5", "6" ]
     },
     {
     "operatingsystem": "Ubuntu",
@@ -23,7 +23,7 @@
     },
     {
     "operatingsystem": "Debian",
-    "operatingsystemrelease": [ "6.0", "7.0" ]
+    "operatingsystemrelease": [ "6", "7" ]
     }
    ],
   "dependencies": [
