@@ -15,7 +15,10 @@ class supervisord(
   $executable_path      = $supervisord::params::executable_path,
   $executable           = $supervisord::params::executable,
   $executable_ctl       = $supervisord::params::executable_ctl,
-
+  
+  $scl_enabled          = $supervisord::params::scl_enabled,
+  $scl_script           = $supervisord::params::scl_script,
+ 
   $log_path             = $supervisord::params::log_path,
   $log_file             = $supervisord::params::log_file,
   $log_level            = $supervisord::params::log_level,

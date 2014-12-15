@@ -16,6 +16,10 @@
 # pidfile: <%= @run_path %>/<%= @pid_file %>
 #
 
+<% if @scl_enabled -%>
+[ -e <%= @scl_script %> ] && . <%= @scl_script %>
+<% end -%>
+
 # source function library
 . /etc/rc.d/init.d/functions
 
