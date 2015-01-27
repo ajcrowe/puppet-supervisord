@@ -68,8 +68,8 @@ class supervisord(
   $groups               = {},
   $programs             = {}
 
-) inherits supervisord::params {
-
+) {
+  include supervisord::params
   validate_bool($install_pip)
   validate_bool($install_init)
   validate_bool($nodaemon)
