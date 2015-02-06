@@ -94,4 +94,13 @@ describe 'supervisord::program', :type => :define do
     it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/numprocs=2/) }
     it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/process_name=\%\(program_name\)s_\%\(process_num\)02d/) }
   end
+
+  context 'absolute_log_paths' do
+    let(:params) { default_params.merge({
+      :stdout_logfile => '/path/to/program_foo.log',
+      :stderr_logfile => '/path/to/program_foo.error',
+    }) }
+    it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/stdout_logfile=\/path\/to\/program_foo.log/) }
+    it { should contain_file('/etc/supervisor.d/program_foo.conf').with_content(/stderr_logfile=\/path\/to\/program_foo.error/) }
+  end
 end
