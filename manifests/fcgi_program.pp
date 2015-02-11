@@ -81,11 +81,13 @@ define supervisord::fcgi_program(
   # create the correct log variables
   $stdout_logfile_path = $stdout_logfile ? {
         /(NONE|AUTO|syslog)/ => $stdout_logfile,
+        /^\//                => $stdout_logfile,
         default              => "${supervisord::log_path}/${stdout_logfile}",
   }
 
   $stderr_logfile_path = $stderr_logfile ? {
         /(NONE|AUTO|syslog)/ => $stderr_logfile,
+        /^\//                => $stderr_logfile,
         default              => "${supervisord::log_path}/${stderr_logfile}",
   }
 
