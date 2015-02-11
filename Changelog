@@ -1,3 +1,19 @@
+2015-02-11 - v0.5.2
+
+Enhancements:
+
+- Added RHEL to enable SCL Py27 support, thanks to @dmglab
+- Enchanged logfile options to allow `syslog`, `NONE`, `AUTO` and custom full qualified
+locations, thanks to @honzik666 and @SteveMaddison for these enhancements
+- Added `FUTURE_PARSER` testing for forward compatibility testing
+
+Fixes:
+
+- Missing slash on `pid_file` in redhat init script, thanks to @coreone
+- Fixed ordering where define type configuration was being written before configuration
+directories were created, thanks to @mcrumm for the bug report
+- Minor lint fixes
+
 2014-12-08 - v0.5.1
 
 Enhancements:
