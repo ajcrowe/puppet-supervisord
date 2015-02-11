@@ -16,15 +16,15 @@ class supervisord::pip inherits supervisord {
   }
 
   exec { 'install_pip':
-    command     => 'easy_install pip',
-    unless      => 'which pip'
+    command => 'easy_install pip',
+    unless  => 'which pip'
   }
 
   if $::osfamily == 'RedHat' {
     exec { 'pip_provider_name_fix':
-      command     => 'alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
-      subscribe   => Exec['install_pip'],
-      unless      => 'which pip-python'
+      command   => 'alternatives --install /usr/bin/pip-python pip-python /usr/bin/pip 1',
+      subscribe => Exec['install_pip'],
+      unless    => 'which pip-python'
     }
   }
 }
