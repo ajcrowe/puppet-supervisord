@@ -4,7 +4,7 @@ group :test do
   gem 'rake'
   gem 'puppet-lint'
   gem 'puppet-syntax'
-  gem 'puppetlabs_spec_helper'
+  gem 'puppetlabs_spec_helper', '0.8.2'
   gem 'rspec-puppet', '2.0.0'
   gem 'rspec', '2.14.1'
 end
