@@ -6,7 +6,7 @@ password=<%= @inet_password %>
 <% end -%>
 
 [supervisorctl]
-serverurl=http://<%= @inet_hostname%>:<%= @inet_server_port %>
+serverurl=http://<%= @inet_server_hostname %>:<%= @inet_server_port %>
 <% if @inet_auth -%>
 username=<%= @inet_username %>
 password=<%= @inet_password %>
