@@ -8,7 +8,14 @@ class supervisord::params {
       $init_defaults     = '/etc/sysconfig/supervisord'
       $unix_socket_group = 'nobody'
       $install_init      = true
-      $executable_path   = '/usr/bin'
+      case $::operatingsystem {
+        'Amazon':{
+          $executable_path   = '/usr/local/bin'
+        }
+        default: {
+          $executable_path   = '/usr/bin'
+        }
+      }
     }
     'Debian': {
       $init_defaults     = '/etc/default/supervisor'
