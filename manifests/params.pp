@@ -100,6 +100,8 @@ class supervisord::params {
   $config_file_mode        = '0644'
   $setuptools_url          = 'https://bootstrap.pypa.io/ez_setup.py'
 
+  $autoreload_programs = true
+
   $ctl_socket              = 'unix'
 
   $unix_socket             = true
@@ -117,5 +119,5 @@ class supervisord::params {
   $inet_username           = undef
   $inet_password           = undef
 
-  
+
 }
