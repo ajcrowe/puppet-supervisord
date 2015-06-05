@@ -1,4 +1,4 @@
-image: dockerfile/ruby
+image: ruby:2.1
 script:
   - ruby -v
   - gem -v 
