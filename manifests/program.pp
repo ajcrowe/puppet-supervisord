@@ -115,7 +115,10 @@ define supervisord::program(
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/program.erb'),
-    if $supervisord::autoreload_programs {
+  }
+
+  if $supervisord::autoreload_programs {
+    File[$conf] {
       notify  => Class['supervisord::reload']
     }
   }
