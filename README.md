@@ -41,9 +41,9 @@ You can pass a specific url with `$setuptools_url = 'url'`
 
 If you want to use your system package manager you can specify that with `supervisord::package_provider`.
 
-You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian or Redhat OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
+You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian, Redhat or Suse OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
 
-Note: Only Debian and RedHat families have an init script currently.
+Note: Only Debian, RedHat and Suse families have an init script currently.
 
 ### Configure a program
 
@@ -143,3 +143,4 @@ If you submit a pull please try and include tests for the new functionality/fix.
 
 * Debian init script sourced from the system package.
 * RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts
+* Suse init script modiefied from RedHat/Centos script

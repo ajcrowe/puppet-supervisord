@@ -41,6 +41,10 @@ describe 'supervisord' do
       let(:facts) {{ :osfamily => 'RedHat', :concat_basedir => concatdir }}
       it { should contain_exec('pip_provider_name_fix') }
     end
+    context 'true and package_install_options not specified' do
+      let(:params) {{ :install_pip => true, :package_install_options => false  }}
+      it { should contain_package('supervisor').with_install_options(false) }
+    end
   end
 
   describe '#env_var' do
@@ -81,6 +85,12 @@ describe 'supervisord' do
         let(:facts) {{ :osfamily => 'RedHat', :concat_basedir => concatdir }}
         it { should contain_file('/etc/init.d/supervisord') }
         it { should contain_file('/etc/sysconfig/supervisord') }
+      end
+
+      context 'with Suse' do
+        let(:facts) {{ :osfamily => 'Suse', :concat_basedir => concatdir }}
+        it { should contain_file('/etc/init.d/supervisord') }
+        it { should contain_file('/etc/sysconfig/supervisor') }
       end
     end
   end
