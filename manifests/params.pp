@@ -67,4 +67,5 @@ class supervisord::params {
   $inet_server_hostname = '127.0.0.1'
   $inet_server_port     = '9001'
   $inet_auth            = false
+  $init_template        = "supervisord/init/${::osfamily}/defaults.erb"
 }

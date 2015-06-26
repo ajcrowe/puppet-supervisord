@@ -45,6 +45,19 @@ You'll also likely need to adjust the `supervisord::service_name` to match that 
 
 Note: Only Debian and RedHat families have an init script currently.
 
+### Override sysconfig template
+
+If `supervisord::install_init` is true (the default), then an init script will be installed, and that script will source the contents of the `templates/init/${::osfamily}/defaults.erb` file.  If you want to override that template, you can set `supervisord::init_template` to the path of an alternative template:
+
+```puppet
+class { 'supervisord':
+  install_pip   => true,
+  init_template => 'my/supervisord/${::osfamily}/defaults.erb'
+}
+```
+
+You almost certainly want to copy and add to the original templates, as they contain important settings.
+
 ### Configure a program
 
 ```puppet
