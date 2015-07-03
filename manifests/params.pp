@@ -58,13 +58,20 @@ class supervisord::params {
   $config_file          = '/etc/supervisord.conf'
   $setuptools_url       = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
 
+  $ctl_socket           = 'unix'
+
   $unix_socket          = true
   $unix_socket_file     = 'supervisor.sock'
   $unix_socket_mode     = '0700'
   $unix_socket_owner    = 'nobody'
+  $unix_auth            = false
+  $unix_username        = undef
+  $unix_password        = undef
 
   $inet_server          = false
   $inet_server_hostname = '127.0.0.1'
   $inet_server_port     = '9001'
   $inet_auth            = false
+  $inet_username        = undef
+  $inet_password        = undef
 }
