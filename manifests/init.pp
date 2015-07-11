@@ -11,6 +11,7 @@ class supervisord(
   $install_init         = $supervisord::params::install_init,
   $install_pip          = false,
   $init_defaults        = $supervisord::params::init_defaults,
+  $init_template        = $supervisord::params::init_template,
   $setuptools_url       = $supervisord::params::setuptools_url,
   $executable_path      = $supervisord::params::executable_path,
   $executable           = $supervisord::params::executable,

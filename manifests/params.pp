@@ -74,4 +74,6 @@ class supervisord::params {
   $inet_auth            = false
   $inet_username        = undef
   $inet_password        = undef
+
+  $init_template        = "supervisord/init/${::osfamily}/defaults.erb"
 }
