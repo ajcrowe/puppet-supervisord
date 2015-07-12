@@ -17,6 +17,12 @@ class supervisord::params {
         }
       }
     }
+    'Suse': {
+      $init_defaults     = '/etc/sysconfig/supervisor'
+      $unix_socket_group = 'nobody'
+      $install_init      = true
+      $executable_path   = '/usr/local/bin'
+    }
     'Debian': {
       $init_defaults     = '/etc/default/supervisor'
       $unix_socket_group = 'nogroup'
@@ -34,6 +40,7 @@ class supervisord::params {
   # default supervisord params
   $package_ensure       = 'installed'
   $package_provider     = 'pip'
+  $package_install_options = undef
   $service_ensure       = 'running'
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
