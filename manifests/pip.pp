@@ -8,11 +8,14 @@ class supervisord::pip inherits supervisord {
     path => '/usr/local/bin:/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/sbin'
   }
 
+  ensure_packages('curl')
+
   exec { 'install_setuptools':
     command => "curl ${supervisord::setuptools_url} | python",
     cwd     => '/tmp',
     unless  => 'which easy_install',
-    before  => Exec['install_pip']
+    before  => Exec['install_pip'],
+    require => Package['curl']
   }
 
   exec { 'install_pip':
@@ -27,4 +30,5 @@ class supervisord::pip inherits supervisord {
       unless    => 'which pip-python'
     }
   }
+
 }
