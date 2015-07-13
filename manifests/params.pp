@@ -44,8 +44,8 @@ class supervisord::params {
   $service_ensure       = 'running'
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
-  $executable           = "${::supervisord::executable_path}/supervisord"
-  $executable_ctl       = "${::supervisord::executable_path}/supervisorctl"
+  $executable           = "${executable_path}/supervisord"
+  $executable_ctl       = "${executable_path}/supervisorctl"
 
   $scl_enabled          = false
   $scl_script           = '/opt/rh/python27/enable'

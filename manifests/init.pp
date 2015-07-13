@@ -14,7 +14,6 @@ class supervisord(
   $init_defaults        = $supervisord::params::init_defaults,
   $init_template        = $supervisord::params::init_template,
   $setuptools_url       = $supervisord::params::setuptools_url,
-  $executable_path      = $supervisord::params::executable_path,
   $executable           = $supervisord::params::executable,
   $executable_ctl       = $supervisord::params::executable_ctl,
 
