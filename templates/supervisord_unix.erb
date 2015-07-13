@@ -7,9 +7,3 @@ username=<%= @unix_username %>
 password=<%= @unix_password %>
 <% end -%>
 
-[supervisorctl]
-serverurl=unix://<%= @run_path %>/<%= @unix_socket_file %>
-<% if @unix_auth -%>
-username=<%= @unix_username %>
-password=<%= @unix_password %>
-<% end -%>

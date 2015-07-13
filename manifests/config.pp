@@ -40,7 +40,7 @@ class supervisord::config inherits supervisord {
         ensure  => present,
         owner   => 'root',
         mode    => '0755',
-        content => template("supervisord/init/${::osfamily}/defaults.erb"),
+        content => template($supervisord::init_template),
         notify  => Class['supervisord::service'],
       }
     }
@@ -68,9 +68,17 @@ class supervisord::config inherits supervisord {
     }
   }
 
+  if $supervisord::use_ctl_socket {
+    concat::fragment { 'supervisord_ctl':
+      target  => $supervisord::config_file,
+      content => template('supervisord/supervisord_ctl.erb'),
+      order   => 02
+    }
+  }
+
   concat::fragment { 'supervisord_main':
     target  => $supervisord::config_file,
     content => template('supervisord/supervisord_main.erb'),
-    order   => 02
+    order   => 03
   }
 }

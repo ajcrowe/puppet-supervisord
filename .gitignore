@@ -3,5 +3,7 @@ pkg/*
 spec/fixtures
 .rspec_system/
 .rvmrc
+.ruby-version
+.ruby-gemset
 .vagrant
 .bundle

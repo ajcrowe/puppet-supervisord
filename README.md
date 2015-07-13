@@ -41,9 +41,81 @@ You can pass a specific url with `$setuptools_url = 'url'`
 
 If you want to use your system package manager you can specify that with `supervisord::package_provider`.
 
-You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian or Redhat OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
+You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian, Redhat or Suse OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
 
-Note: Only Debian and RedHat families have an init script currently.
+Note: Only Debian, RedHat and Suse families have an init script currently.
+
+### HTTP servers
+
+As of version 3.0a3, Supervisor provides an HTTP server that can listen on a Unix socket, an inet socket, or both.  By default, this module enables the Unix socket HTTP server.  `supervisorctl` issues commands to the HTTP server, and it must be configured to talk to either the Unix socket or the inet socket.  If only one HTTP server is enabled, this module will configure `supervisorctl` to use that HTTP server.  If both HTTP servers are enabled, the Unix socket HTTP server will be used by default.  To use the inet socket instead, set `ctl_socket` to `inet` (its default is `unix`).
+
+#### Configure the Unix HTTP server
+
+The Unix HTTP server is enabled by default.  Its parameters are:
+
+```puppet
+class { 'supervisord':
+  unix_socket       => true,
+  run_path          => '/var/run',
+  unix_socket_mode  => '0700',
+  unix_socket_owner => 'nobody',
+  unix_socket_group => 'nobody',
+  unix_auth         => false,
+  unix_username     => undef,
+  unix_password     => undef,
+}
+```
+
+This results in the following config sections:
+
+```
+[unix_http_server]
+file=/var/run/supervisor.sock
+chmod=0700
+chown=nobody:nobody
+
+[supervisorctl]
+serverurl=unix:///var/run/supervisor.sock
+```
+
+#### Configure the Inet HTTP server
+
+The Inet HTTP server is disabled by default.  Its parameters are:
+
+```puppet
+class { 'supervisord':
+  unix_socket          => false,
+  inet_server          => true,
+  inet_server_hostname => '127.0.0.1',
+  inet_server_port     => '9001',
+  inet_auth            => false,
+  inet_username        => undef,
+  inet_password        => undef,
+}
+```
+
+This results in the following config sections:
+
+```
+[inet_http_server]
+port=127.0.0.1:9001
+
+[supervisorctl]
+serverurl=http://127.0.0.1:9001
+```
+
+### Override sysconfig template
+
+If `supervisord::install_init` is true (the default), then an init script will be installed, and that script will source the contents of the `templates/init/${::osfamily}/defaults.erb` file.  If you want to override that template, you can set `supervisord::init_template` to the path of an alternative template:
+
+```puppet
+class { 'supervisord':
+  install_pip   => true,
+  init_template => 'my/supervisord/${::osfamily}/defaults.erb'
+}
+```
+
+You almost certainly want to copy and add to the original templates, as they contain important settings.
 
 ### Configure a program
 
@@ -143,3 +215,4 @@ If you submit a pull please try and include tests for the new functionality/fix.
 
 * Debian init script sourced from the system package.
 * RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts
+* Suse init script modiefied from RedHat/Centos script
