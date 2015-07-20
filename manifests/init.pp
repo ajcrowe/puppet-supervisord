@@ -7,6 +7,7 @@ class supervisord(
   $package_name         = $supervisord::params::package_name,
   $package_provider     = $supervisord::params::package_provider,
   $package_install_options = $supervisord::params::package_install_options,
+  $service_manage       = $supervisord::params::service_manage,
   $service_ensure       = $supervisord::params::service_ensure,
   $service_enable       = $supervisord::params::service_enable,
   $service_name         = $supervisord::params::service_name,

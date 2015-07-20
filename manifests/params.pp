@@ -41,7 +41,12 @@ class supervisord::params {
   $package_ensure       = 'installed'
   $package_provider     = 'pip'
   $package_install_options = undef
-  $service_ensure       = 'running'
+  $service_manage       = true
+  if ($::service_manage == true) {
+    $service_ensure       = 'running'
+  } else {
+    $service_ensure       = undef
+  }
   $service_enable       = true
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
