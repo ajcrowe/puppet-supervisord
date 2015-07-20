@@ -34,6 +34,7 @@ class supervisord(
   $nodaemon             = $supervisord::params::nodaemon,
   $minfds               = $supervisord::params::minfds,
   $minprocs             = $supervisord::params::minprocs,
+  $manage_config        = $supervisord::params::manage_config,
   $config_include       = $supervisord::params::config_include,
   $config_include_purge = false,
   $config_file          = $supervisord::params::config_file,
