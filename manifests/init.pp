@@ -11,7 +11,7 @@ class supervisord(
   $service_ensure       = $supervisord::params::service_ensure,
   $service_enable       = $supervisord::params::service_enable,
   $service_name         = $supervisord::params::service_name,
-  $service_hasrestart   = $supervisord::params::service_hasrestart,
+  $service_hasstatus    = $supervisord::params::service_hasstatus,
   $install_init         = $supervisord::params::install_init,
   $install_pip          = false,
   $init_defaults        = $supervisord::params::init_defaults,
