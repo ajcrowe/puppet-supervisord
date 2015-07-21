@@ -48,7 +48,7 @@ class supervisord::params {
     $service_ensure       = undef
   }
   $service_enable       = true
-  $service_name         = 'supervisord
+  $service_name         = 'supervisord'
   $service_hasrestart   = true
   $package_name         = 'supervisor'
   $executable           = "${executable_path}/supervisord"
