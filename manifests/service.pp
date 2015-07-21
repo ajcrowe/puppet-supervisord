@@ -7,6 +7,7 @@ class supervisord::service inherits supervisord  {
     ensure     => $supervisord::service_ensure,
     enable     => $supervisord::service_enable,
     hasrestart => true,
-    hasstatus  => $supervisord::service_hasstatus,
+    hasstatus  => true,
+    restart    => $supervisord::service_restart,
   }
 }
