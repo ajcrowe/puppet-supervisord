@@ -42,7 +42,7 @@ class supervisord::params {
   $package_provider     = 'pip'
   $package_install_options = undef
   $service_manage       = true
-  if ($::service_manage == true) {
+  if ($supervisord::service_manage == true) {
     $service_ensure       = 'running'
   } else {
     $service_ensure       = undef
