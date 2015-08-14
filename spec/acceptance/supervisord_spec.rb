@@ -29,10 +29,10 @@ describe 'supervisord::program' do
 
       pp = <<-EOS
         include supervisord
-        supervisord::program { 'test': 
-          command => 'echo', 
-          priority => '100', 
-          environment => { 
+        supervisord::program { 'test':
+          command => 'echo',
+          priority => '100',
+          program_environment => {
             'HOME' => '/root',
             'PATH' => '/bin',
           }
@@ -52,7 +52,7 @@ describe 'supervisord::program' do
       expect(shell(cmd).exit_code).to eq(0)
     end
   end
-end 
+end
 
 describe 'supervisord::fcgi-program' do
   context 'create fcgi-program config' do
@@ -61,10 +61,10 @@ describe 'supervisord::fcgi-program' do
       pp = <<-EOS
         include supervisord
         supervisord::fcgi_program { 'test':
-          socket  => 'tcp://localhost:1000',
-          command => 'echo',
-          priority => '100',
-          environment => {
+          socket              => 'tcp://localhost:1000',
+          command             => 'echo',
+          priority            => '100',
+          program_environment => {
             'HOME' => '/root',
             'PATH' => '/bin',
           }

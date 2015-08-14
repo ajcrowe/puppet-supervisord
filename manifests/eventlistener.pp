@@ -37,6 +37,7 @@ define supervisord::eventlistener(
   $stderr_logfile_backups  = undef,
   $stderr_events_enabled   = undef,
   $environment             = undef,
+  $event_environment       = undef,
   $directory               = undef,
   $umask                   = undef,
   $serverurl               = undef
@@ -88,15 +89,21 @@ define supervisord::eventlistener(
         default              => "${supervisord::log_path}/${stderr_logfile}",
   }
 
+  # Handle deprecated $environment variable
+  $_event_environment = $event_environment ? {
+    undef   => $environment,
+    default => $event_environment
+  }
+
   # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)
     $env_string = hash2csv($env_hash)
   }
-  elsif $environment {
-    validate_hash($environment)
-    $env_string = hash2csv($environment)
+  elsif $_event_environment {
+    validate_hash($_event_environment)
+    $env_string = hash2csv($_event_environment)
   }
 
   if $events {

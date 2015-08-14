@@ -54,12 +54,12 @@ describe 'supervisord' do
     end
   end
 
-  describe '#environment' do
+  describe '#global_environment' do
     context 'default' do
       it { should contain_class('supervisord').without_env_string }
     end
     context 'is specified' do
-      let(:params) {{ :environment => { 'key1' => 'value1', 'key2' => 'value2' } }}
+      let(:params) {{ :global_environment => { 'key1' => 'value1', 'key2' => 'value2' } }}
       it { should contain_concat__fragment('supervisord_main')\
         .with_content(/environment=key1='value1',key2='value2'/) }
     end
@@ -70,7 +70,7 @@ describe 'supervisord' do
       it { should_not contain_file('/etc/init.d/supervisord') }
     end
 
-    context 'false' do 
+    context 'false' do
       it { should_not contain_file('/etc/init.d/supervisord') }
     end
 
@@ -94,7 +94,7 @@ describe 'supervisord' do
       end
     end
   end
-      
+
   describe '#unix_socket' do
     context 'default' do
       it { should contain_concat__fragment('supervisord_unix')}
