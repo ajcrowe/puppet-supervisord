@@ -42,6 +42,7 @@ class supervisord::params {
   $package_provider     = 'pip'
   $package_install_options = undef
   $service_ensure       = 'running'
+  $service_enable       = 'true'
   $service_name         = 'supervisord'
   $package_name         = 'supervisor'
   $executable           = "${executable_path}/supervisord"
