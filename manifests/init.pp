@@ -127,13 +127,13 @@ class supervisord(
   }
 
   if $unix_auth {
-    validte_string($unix_username)
-    validte_string($unix_password)
+    validate_string($unix_username)
+    validate_string($unix_password)
   }
 
   if $inet_auth {
-    validte_string($inet_username)
-    validte_string($inet_password)
+    validate_string($inet_username)
+    validate_string($inet_password)
   }
 
   if $env_var {
