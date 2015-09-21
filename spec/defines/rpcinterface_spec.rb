@@ -10,17 +10,17 @@ describe 'supervisord::rpcinterface', :type  => :define do
   context 'default' do
     let(:params) { default_params }
     it { should contain_supervisord__rpcinterface('foo') }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').with_content(/\[rpcinterface:foo\]/) }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').with_content(/supervisor\.rpcinterface_factory = bar:baz/) }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').without_content(/retries/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').with_content(/\[rpcinterface:foo\]/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').with_content(/supervisor\.rpcinterface_factory = bar:baz/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').without_content(/retries/) }
   end
 
   context 'retries' do
     let(:params) { { :retries => 2 }.merge(default_params) }
     it { should contain_supervisord__rpcinterface('foo') }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').with_content(/\[rpcinterface:foo\]/) }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').with_content(/supervisor\.rpcinterface_factory = bar:baz/) }
-    it { should contain_file('/etc/supervisor.d/rpcinterface_foo.conf').with_content(/retries = 2/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').with_content(/\[rpcinterface:foo\]/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').with_content(/supervisor\.rpcinterface_factory = bar:baz/) }
+    it { should contain_file('/etc/supervisord.d/rpcinterface_foo.conf').with_content(/retries = 2/) }
   end
 
 end

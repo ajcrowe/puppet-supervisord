@@ -159,7 +159,7 @@ describe 'supervisord' do
 
   describe '#config_dirs' do
     context 'is specified' do
-      let(:params) {{ :config_dirs => ['/etc/supervisor.d/*.conf', '/opt/supervisor.d/*', '/usr/share/supervisor.d/*.config'] }}
+      let(:params) {{ :config_dirs => ['/etc/supervisord.d/*.conf', '/opt/supervisor.d/*', '/usr/share/supervisor.d/*.config'] }}
       it { should contain_concat__fragment('supervisord_main') \
         .with_content(/files=\/etc\/supervisor.d\/\*.conf \/opt\/supervisor.d\/\* \/usr\/share\/supervisor.d\/\*.config$/) }
     end
