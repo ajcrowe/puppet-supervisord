@@ -145,7 +145,7 @@ describe 'supervisord' do
 
   describe '#config_include' do
     context 'default' do
-      it { should contain_file('/etc/supervisor.d') }
+      it { should contain_file('/etc/supervisord.d') }
       it { should contain_concat__fragment('supervisord_main') \
         .with_content(/files=\/etc\/supervisor.d\/\*.conf$/) }
     end
