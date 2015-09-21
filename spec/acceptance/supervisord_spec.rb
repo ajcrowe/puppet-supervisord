@@ -44,11 +44,11 @@ describe 'supervisord::program' do
     end
 
     it 'should contain the correct values' do
-      cmd='grep command=echo /etc/supervisor.d/program_test.conf'
+      cmd='grep command=echo /etc/supervisord.d/program_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
-      cmd='grep priority=100 /etc/supervisor.d/program_test.conf'
+      cmd='grep priority=100 /etc/supervisord.d/program_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
-      cmd='grep "environment=" /etc/supervisor.d/program_test.conf'
+      cmd='grep "environment=" /etc/supervisord.d/program_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
     end
   end
@@ -76,13 +76,13 @@ describe 'supervisord::fcgi-program' do
     end
 
     it 'should contain the correct values' do
-      cmd='grep socket=tcp://localhost:1000 /etc/supervisor.d/fcgi-program_test.conf'
+      cmd='grep socket=tcp://localhost:1000 /etc/supervisord.d/fcgi-program_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
-      cmd="grep command=echo /etc/supervisor.d/fcgi-program_test.conf"
+      cmd="grep command=echo /etc/supervisord.d/fcgi-program_test.conf"
       expect(shell(cmd).exit_code).to eq(0)
-      cmd="grep priority=100 /etc/supervisor.d/fcgi-program_test.conf"
+      cmd="grep priority=100 /etc/supervisord.d/fcgi-program_test.conf"
       expect(shell(cmd).exit_code).to eq(0)
-      cmd='grep "environment=" /etc/supervisor.d/fcgi-program_test.conf'
+      cmd='grep "environment=" /etc/supervisord.d/fcgi-program_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
     end
   end
@@ -105,9 +105,9 @@ describe 'supervisord::group' do
     end
 
     it 'should contain the correct values' do
-      cmd='grep "programs=test" /etc/supervisor.d/group_test.conf'
+      cmd='grep "programs=test" /etc/supervisord.d/group_test.conf'
       expect(shell(cmd).exit_code).to eq(0)
-      cmd="grep priority=100 /etc/supervisor.d/group_test.conf"
+      cmd="grep priority=100 /etc/supervisord.d/group_test.conf"
       expect(shell(cmd).exit_code).to eq(0)
     end
   end
