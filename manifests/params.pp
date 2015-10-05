@@ -41,8 +41,15 @@ class supervisord::params {
   $package_ensure       = 'installed'
   $package_provider     = 'pip'
   $package_install_options = undef
-  $service_ensure       = 'running'
+  $service_manage       = true
+  if ($supervisord::service_manage == true) {
+    $service_ensure       = 'running'
+  } else {
+    $service_ensure       = undef
+  }
+  $service_enable       = true
   $service_name         = 'supervisord'
+  $service_restart      = undef
   $package_name         = 'supervisor'
   $executable           = "${executable_path}/supervisord"
   $executable_ctl       = "${executable_path}/supervisorctl"
@@ -61,6 +68,7 @@ class supervisord::params {
   $minfds               = '1024'
   $minprocs             = '200'
   $umask                = '022'
+  $manage_config        = true
   $config_include       = '/etc/supervisor.d'
   $config_file          = '/etc/supervisord.conf'
   $setuptools_url       = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
