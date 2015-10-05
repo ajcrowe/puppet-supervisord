@@ -110,7 +110,7 @@ class supervisord(
     $use_ctl_socket = 'unix'
   }
   elsif $inet_server {
-    $use_unix_socket = 'inet'
+    $use_ctl_socket = 'inet'
   }
 
   if $use_ctl_socket == 'unix' {
