@@ -32,7 +32,7 @@ describe 'supervisord::fcgi_program', :type => :define do
       :stderr_logfile_backups  => '10',
       :stderr_capture_maxbytes => '0',
       :stderr_events_enabled   => true,
-      :environment             => { 'env1' => 'value1', 'env2' => 'value2' },
+      :program_environment     => { 'env1' => 'value1', 'env2' => 'value2' },
       :directory               => '/opt/supervisord/chroot',
       :umask                   => '022',
       :serverurl               => 'AUTO'
