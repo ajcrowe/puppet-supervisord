@@ -13,6 +13,12 @@ Functions available to configure
 * [eventlisteners](http://supervisord.org/configuration.html#eventlistener-x-section-settings)
 * [rpcinterface](http://supervisord.org/configuration.html#rpcinterface-x-section-settings)
 
+## Deprecation warning
+
+To avoid conflict with puppet master's $environment variable, the *environment* parameter of supervisord::program resource is being renamed *program_environment* and old name will be removed in future version.
+
+#### Examples
+
 ## Examples
 
 ### Configuring supervisord with defaults
@@ -121,9 +127,9 @@ You almost certainly want to copy and add to the original templates, as they con
 
 ```puppet
 supervisord::program { 'myprogram':
-  command     => 'command --args',
-  priority    => '100',
-  environment => {
+  command             => 'command --args',
+  priority            => '100',
+  program_environment => {
     'HOME'   => '/home/myuser',
     'PATH'   => '/bin:/sbin:/usr/bin:/usr/sbin',
     'SECRET' => 'mysecret'
@@ -149,7 +155,7 @@ supervisord::programs:
     command: 'command --args'
     autostart: yes
     autorestart: 'true'
-    environment:
+    program_environment:
       HOME: '/home/myuser'
       PATH: '/bin:/sbin:/usr/bin:/usr/sbin'
       SECRET: 'mysecret'

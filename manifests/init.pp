@@ -63,6 +63,7 @@ class supervisord(
   $identifier           = undef,
   $childlogdir          = undef,
   $environment          = undef,
+  $global_environment   = undef,
   $env_var              = undef,
   $directory            = undef,
   $strip_ansi           = false,
@@ -140,14 +141,20 @@ class supervisord(
     validate_string($inet_password)
   }
 
+  # Handle deprecated $environment variable
+  $_global_environment = $global_environment ? {
+    undef   => $environment,
+    default => $global_environment
+  }
+
   if $env_var {
     validate_hash($env_var)
     $env_hash = hiera($env_var)
     $env_string = hash2csv($env_hash)
   }
-  elsif $environment {
-    validate_hash($environment)
-    $env_string = hash2csv($environment)
+  elsif $_global_environment {
+    validate_hash($_global_environment)
+    $env_string = hash2csv($_global_environment)
   }
 
   if $config_dirs {

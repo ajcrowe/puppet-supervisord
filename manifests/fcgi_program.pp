@@ -39,6 +39,7 @@ define supervisord::fcgi_program(
   $stderr_capture_maxbytes = undef,
   $stderr_events_enabled   = undef,
   $environment             = undef,
+  $program_environment     = undef,
   $directory               = undef,
   $umask                   = undef,
   $serverurl               = undef
@@ -91,15 +92,21 @@ define supervisord::fcgi_program(
         default              => "${supervisord::log_path}/${stderr_logfile}",
   }
 
+  # Handle deprecated $environment variable
+  $_program_environment = $program_environment ? {
+    undef   => $environment,
+    default => $program_environment
+  }
+
   # convert environment data into a csv
   if $env_var {
     $env_hash = hiera_hash($env_var)
     validate_hash($env_hash)
     $env_string = hash2csv($env_hash)
   }
-  elsif $environment {
-    validate_hash($environment)
-    $env_string = hash2csv($environment)
+  elsif $_program_environment {
+    validate_hash($_program_environment)
+    $env_string = hash2csv($_program_environment)
   }
 
   $conf = "${supervisord::config_include}/fcgi-program_${name}.conf"

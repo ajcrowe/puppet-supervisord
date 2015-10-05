@@ -31,7 +31,7 @@ describe 'supervisord::eventlistener', :type => :define do
       :stderr_logfile_maxbytes => '50MB',
       :stderr_logfile_backups  => '10',
       :stderr_events_enabled   => true,
-      :environment             => { 'env1' => 'value1', 'env2' => 'value2' },
+      :event_environment       => { 'env1' => 'value1', 'env2' => 'value2' },
       :directory               => '/opt/supervisord/chroot',
       :umask                   => '022',
       :serverurl               => 'AUTO'
