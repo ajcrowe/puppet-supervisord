@@ -128,6 +128,19 @@ define supervisord::program(
         process => $name
       }
     }
+    'running': {
+      supervisord::supervisorctl { "running_${name}":
+        command     => 'start',
+        process     => $name,
+        refreshonly => true
+      }
+      exec { "test_if_start_needed_for_${name}":
+        command => 'echo "noop" > /dev/null',
+        notify  =>  Supervisord::Supervisorctl["running_${name}"],
+        path    => [ '/bin', '/usr/bin' ],
+        unless  => "test `${::supervisord::executable_ctl} status ${name} | awk {'print \$2'}` = 'RUNNING'"
+      }
+    }
     default: { }
   }
 }
