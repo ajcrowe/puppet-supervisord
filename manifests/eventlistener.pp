@@ -47,7 +47,7 @@ define supervisord::eventlistener(
   # parameter validation
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed'])
-  validate_re($buffer_size, '^\d+')
+  if !is_integer($buffer_size) { validate_re($buffer_size, '^\d+')}
   if $events { validate_array($events) }
   if $result_handler { validate_string($result_handler) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
