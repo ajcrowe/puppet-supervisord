@@ -5,7 +5,8 @@
 define supervisord::supervisorctl(
   $command,
   $process       = undef,
-  $refreshonly   = false
+  $refreshonly   = false,
+  $unless        = undef
 ) {
 
   validate_string($command)
@@ -20,8 +21,16 @@ define supervisord::supervisorctl(
     $cmd = join([$supervisorctl, $command], ' ')
   }
 
+  if $unless {
+    $unless_cmd = join([$supervisorctl, 'status', $process, '|', 'grep', '-i', $unless], ' ')
+  }
+  else {
+    $unless_cmd = undef
+  }
+
   exec { "supervisorctl_command_${name}":
     command     => $cmd,
-    refreshonly => $refreshonly
+    refreshonly => $refreshonly,
+    unless      => $unless_cmd
   }
 }
