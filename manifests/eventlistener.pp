@@ -133,6 +133,13 @@ define supervisord::eventlistener(
         process => $name
       }
     }
+    'running': {
+      supervisord::supervisorctl { "start_${name}":
+        command => 'start',
+        process => $name,
+        unless  => 'running'
+      }
+    }
     default: { }
   }
 }
