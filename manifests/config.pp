@@ -50,9 +50,10 @@ class supervisord::config inherits supervisord {
 
   if ($supervisord::manage_config) {
     concat { $supervisord::config_file:
-      owner => 'root',
-      group => '0',
-      mode  => '0644'
+      owner  => 'root',
+      group  => '0',
+      mode   => '0644',
+      notify => Class['supervisord::service']
     }
 
     if $supervisord::unix_socket {
