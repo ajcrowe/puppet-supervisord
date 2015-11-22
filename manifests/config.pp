@@ -29,11 +29,11 @@ class supervisord::config inherits supervisord {
   }
 
   if $supervisord::install_init {
-    file { '/etc/init.d/supervisord':
+    file { $supervisord::init_script:
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${::osfamily}/init.erb"),
+      content => template("supervisord/init/${::osfamily}/${supervisord::init_type}.erb"),
       notify  => Class['supervisord::service'],
     }
 
@@ -42,7 +42,7 @@ class supervisord::config inherits supervisord {
         ensure  => present,
         owner   => 'root',
         mode    => '0755',
-        content => template($supervisord::init_template),
+        content => template($supervisord::init_defaults_template),
         notify  => Class['supervisord::service'],
       }
     }

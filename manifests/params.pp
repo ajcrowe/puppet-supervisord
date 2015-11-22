@@ -5,26 +5,52 @@
 class supervisord::params {
   case $::osfamily {
     'RedHat': {
-      $init_defaults     = '/etc/sysconfig/supervisord'
       $unix_socket_group = 'nobody'
       $install_init      = true
       case $::operatingsystem {
-        'Amazon':{
+        'Amazon': {
+          $init_type       = 'init'
+          $init_script     = '/etc/init.d/supervisord'
+          $init_defaults   = '/etc/sysconfig/supervisord'
           $executable_path = '/usr/local/bin'
         }
         default: {
+          case $::operatingsystemmajrelease {
+            '7': {
+              $init_type     = 'systemd'
+              $init_script   = '/etc/systemd/system/supervisord.service'
+              $init_defaults = false
+            }
+            default: {
+              $init_type     = 'init'
+              $init_script   = '/etc/init.d/supervisord'
+              $init_defaults = '/etc/sysconfig/supervisord'
+            }
+          }
           $executable_path = '/usr/bin'
         }
       }
     }
     'Suse': {
       $init_defaults     = '/etc/sysconfig/supervisor'
+      $init_script       = '/etc/init.d/supervisord'
       $unix_socket_group = 'nobody'
       $install_init      = true
       $executable_path   = '/usr/local/bin'
     }
     'Debian': {
-      $init_defaults     = '/etc/default/supervisor'
+      case $::operatingsystemmajrelease {
+        '8': {
+          $init_type     = 'systemd'
+          $init_script   = '/etc/systemd/system/supervisord.service'
+          $init_defaults = false
+        }
+        default: {
+          $init_type     = 'init'
+          $init_script   = '/etc/init.d/supervisord'
+          $init_defaults = '/etc/default/supervisor'
+        }
+      }
       $unix_socket_group = 'nogroup'
       $install_init      = true
       $executable_path   = '/usr/local/bin'
@@ -86,5 +112,5 @@ class supervisord::params {
   $inet_username           = undef
   $inet_password           = undef
 
-  $init_template           = "supervisord/init/${::osfamily}/defaults.erb"
+  $init_defaults_template  = "supervisord/init/${::osfamily}/defaults.erb"
 }

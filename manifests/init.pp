@@ -3,31 +3,32 @@
 # This class installs supervisord via pip
 #
 class supervisord(
-  $package_ensure       = $supervisord::params::package_ensure,
-  $package_name         = $supervisord::params::package_name,
-  $package_provider     = $supervisord::params::package_provider,
+  $package_ensure          = $supervisord::params::package_ensure,
+  $package_name            = $supervisord::params::package_name,
+  $package_provider        = $supervisord::params::package_provider,
   $package_install_options = $supervisord::params::package_install_options,
-  $service_manage       = $supervisord::params::service_manage,
-  $service_ensure       = $supervisord::params::service_ensure,
-  $service_enable       = $supervisord::params::service_enable,
-  $service_name         = $supervisord::params::service_name,
-  $service_restart      = $supervisord::params::service_restart,
-  $install_init         = $supervisord::params::install_init,
-  $install_pip          = false,
-  $init_defaults        = $supervisord::params::init_defaults,
-  $init_template        = $supervisord::params::init_template,
-  $setuptools_url       = $supervisord::params::setuptools_url,
-  $executable           = $supervisord::params::executable,
-  $executable_ctl       = $supervisord::params::executable_ctl,
+  $service_manage          = $supervisord::params::service_manage,
+  $service_ensure          = $supervisord::params::service_ensure,
+  $service_enable          = $supervisord::params::service_enable,
+  $service_name            = $supervisord::params::service_name,
+  $service_restart         = $supervisord::params::service_restart,
+  $install_init            = $supervisord::params::install_init,
+  $install_pip             = false,
+  $init_type               = $supervisord::params::init_type,
+  $init_defaults           = $supervisord::params::init_defaults,
+  $init_defaults_template  = $supervisord::params::init_defaults_template,
+  $setuptools_url          = $supervisord::params::setuptools_url,
+  $executable              = $supervisord::params::executable,
+  $executable_ctl          = $supervisord::params::executable_ctl,
 
-  $scl_enabled          = $supervisord::params::scl_enabled,
-  $scl_script           = $supervisord::params::scl_script,
+  $scl_enabled             = $supervisord::params::scl_enabled,
+  $scl_script              = $supervisord::params::scl_script,
 
-  $log_path             = $supervisord::params::log_path,
-  $log_file             = $supervisord::params::log_file,
-  $log_level            = $supervisord::params::log_level,
-  $logfile_maxbytes     = $supervisord::params::logfile_maxbytes,
-  $logfile_backups      = $supervisord::params::logfile_backups,
+  $log_path                = $supervisord::params::log_path,
+  $log_file                = $supervisord::params::log_file,
+  $log_level               = $supervisord::params::log_level,
+  $logfile_maxbytes        = $supervisord::params::logfile_maxbytes,
+  $logfile_backups         = $supervisord::params::logfile_backups,
 
   $run_path             = $supervisord::params::run_path,
   $pid_file             = $supervisord::params::pid_file,
@@ -142,6 +143,7 @@ class supervisord(
   }
 
   # Handle deprecated $environment variable
+  if $environment { notice {"[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment":}}
   $_global_environment = $global_environment ? {
     undef   => $environment,
     default => $global_environment

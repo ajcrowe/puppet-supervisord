@@ -1,16 +1,26 @@
-2015-08-xx - v0.6.0
+2015-11-22 - v0.6.0
 
 Enhancements:
 
--
+- Puppet 4 support
+- Added support for systemd in Debian 8 & RedHat/Centos 7
+- SuSE and Amazon are now supported
+- Added suppor for enabling or disabling configuration management with '$supervisord::manage_config'
+- Added 'running' to '$ensure_process' for define types to make sure they are started by supervisorctl.
+- Added '$package_install_options' for package installation
+- Added '$ctl_socket' param for selecting between 'inet' and 'unix' sockets
+- 'supervisord::supervisorctl' define now accepts an '$unless' param to add a condition to the exec resource
 
 Fixes:
 
--
+- Fixed '$buffer_size' and '$retries' variable validation
+- Fixed 'inet' and 'unix' server inconsistencies
+- Fixed issue where curl might not have been installed.
 
 Changes:
 
 - Removed unneeded executable_path variable
+- '$environment' variable renamed to define type appropriate name such as '$program_environment'. 
 
 2015-02-11 - v0.5.2
 
