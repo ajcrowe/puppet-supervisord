@@ -32,6 +32,7 @@ class supervisord::params {
       }
     }
     'Suse': {
+      $init_type         = 'init'
       $init_defaults     = '/etc/sysconfig/supervisor'
       $init_script       = '/etc/init.d/supervisord'
       $unix_socket_group = 'nobody'
