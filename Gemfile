@@ -4,9 +4,9 @@ group :test do
   gem 'rake'
   gem 'puppet-lint'
   gem 'puppet-syntax'
-  gem 'puppetlabs_spec_helper', '0.8.2'
-  gem 'rspec-puppet', '2.0.0'
-  gem 'rspec', '2.14.1'
+  gem 'puppetlabs_spec_helper', '1.0.1'
+  gem 'rspec-puppet', '2.2.0'
+  gem 'rspec', '2.99.0'
 end
 
 group :development do
@@ -22,5 +22,5 @@ end
 if puppetversion = ENV['PUPPET_VERSION']
   gem 'puppet', puppetversion
 else
-  gem 'puppet', '~> 3.4.0'
+  gem 'puppet', '~> 3.8.0'
 end

@@ -7,3 +7,4 @@ spec/fixtures
 .ruby-gemset
 .vagrant
 .bundle
+log
