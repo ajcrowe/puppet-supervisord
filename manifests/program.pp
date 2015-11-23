@@ -89,7 +89,7 @@ define supervisord::program(
   }
 
   # Handle deprecated $environment variable
-  if $environment { notice {'[supervisord] *** DEPRECATED WARNING ***: $program_environment has replaced $environment':}}
+  if $environment { notify {'[supervisord] *** DEPRECATED WARNING ***: $program_environment has replaced $environment':}}
   $_program_environment = $program_environment ? {
     undef   => $environment,
     default => $program_environment

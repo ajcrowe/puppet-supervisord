@@ -90,7 +90,7 @@ define supervisord::eventlistener(
   }
 
   # Handle deprecated $environment variable
-  if $environment { notice {'[supervisord] *** DEPRECATED WARNING ***: $event_environment has replaced $environment':}}
+  if $environment { notify {'[supervisord] *** DEPRECATED WARNING ***: $event_environment has replaced $environment':}}
   $_event_environment = $event_environment ? {
     undef   => $environment,
     default => $event_environment

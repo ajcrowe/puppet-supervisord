@@ -33,7 +33,7 @@ class supervisord::config inherits supervisord {
       ensure  => present,
       owner   => 'root',
       mode    => '0755',
-      content => template("supervisord/init/${::osfamily}/${supervisord::init_type}.erb"),
+      content => template($supervisord::init_script_template),
       notify  => Class['supervisord::service'],
     }
 

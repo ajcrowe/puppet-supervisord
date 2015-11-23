@@ -3,16 +3,17 @@
 # Default parameters for supervisord
 #
 class supervisord::params {
+  # sort out init params for different OS families
   case $::osfamily {
     'RedHat': {
       $unix_socket_group = 'nobody'
       $install_init      = true
       case $::operatingsystem {
         'Amazon': {
-          $init_type       = 'init'
-          $init_script     = '/etc/init.d/supervisord'
-          $init_defaults   = '/etc/sysconfig/supervisord'
-          $executable_path = '/usr/local/bin'
+          $init_type              = 'init'
+          $init_script            = '/etc/init.d/supervisord'
+          $init_defaults          = '/etc/sysconfig/supervisord'
+          $executable_path        = '/usr/local/bin'
         }
         default: {
           case $::operatingsystemmajrelease {
@@ -63,6 +64,8 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
   }
+  $init_script_template   = "supervisord/init/${::osfamily}/${init_type}.erb"
+  $init_defaults_template = "supervisord/init/${::osfamily}/defaults.erb"
 
   # default supervisord params
   $package_ensure          = 'installed'
@@ -113,5 +116,5 @@ class supervisord::params {
   $inet_username           = undef
   $inet_password           = undef
 
-  $init_defaults_template  = "supervisord/init/${::osfamily}/defaults.erb"
+  
 }

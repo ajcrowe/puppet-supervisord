@@ -12,9 +12,11 @@ class supervisord(
   $service_enable          = $supervisord::params::service_enable,
   $service_name            = $supervisord::params::service_name,
   $service_restart         = $supervisord::params::service_restart,
-  $install_init            = $supervisord::params::install_init,
   $install_pip             = false,
+  $install_init            = $supervisord::params::install_init,
   $init_type               = $supervisord::params::init_type,
+  $init_script             = $supervisord::params::init_script,
+  $init_script_template    = $supervisord::params::init_script_template,
   $init_defaults           = $supervisord::params::init_defaults,
   $init_defaults_template  = $supervisord::params::init_defaults_template,
   $setuptools_url          = $supervisord::params::setuptools_url,
@@ -143,7 +145,7 @@ class supervisord(
   }
 
   # Handle deprecated $environment variable
-  if $environment { notice {'[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment':}}
+  if $environment { notify {'[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment':}}
   $_global_environment = $global_environment ? {
     undef   => $environment,
     default => $global_environment
