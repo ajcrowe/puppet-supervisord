@@ -78,24 +78,24 @@ describe 'supervisord' do
     describe 'on supported OS' do
       describe 'with Debian' do
         context 'Wheezy (7.x)' do
-          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => 7, :concat_basedir => concatdir }}
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => '7', :concat_basedir => concatdir }}
           it { should contain_file('/etc/init.d/supervisord') }
           it { should contain_file('/etc/default/supervisor') }
         end
         context 'Jessie (8.x)' do
-          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => 8, :concat_basedir => concatdir }}
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => '8', :concat_basedir => concatdir }}
           it { should contain_file('/etc/systemd/system/supervisord.service') }
           it { should_not contain_file('/etc/default/supervisor') }
         end
       end
       describe 'with RedHat' do
         context 'Centos 6' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => 6, :concat_basedir => concatdir }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => '6', :concat_basedir => concatdir }}
           it { should contain_file('/etc/init.d/supervisord') }
           it { should contain_file('/etc/sysconfig/supervisord') }
         end
         context 'Centos 7' do
-          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => 7, :concat_basedir => concatdir }}
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => '7', :concat_basedir => concatdir }}
           it { should contain_file('/etc/systemd/system/supervisord.service') }
           it { should_not contain_file('/etc/default/supervisor') }
         end
