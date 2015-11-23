@@ -49,12 +49,23 @@ If you want to use your system package manager you can specify that with `superv
 
 You'll also likely need to adjust the `supervisord::service_name` to match that installed by the system package. If you're using Debian, Redhat or Suse OS families you'll also want to disable the init scripts with `supervisord::install_init = false`.
 
-Note: Only Debian, RedHat and Suse families have an init script currently.
+#### Custom Init Script
+
+Only Debian, RedHat and Suse families have an init script included currently. But you can provide custom scripts like this:
+
+```puppet
+class { 'supervisord':
+  install_init         => true,
+  init_script          => '/path/to/init_file',
+  init_script_template => 'mymodule/template/init.erb',
+  init_defaults        => false
+}
+```
 
 ### HTTP servers
 
 As of version 3.0a3, Supervisor provides an HTTP server that can listen on a Unix socket, an inet socket, or both.  By default, this module enables the Unix socket HTTP server.  `supervisorctl` issues commands to the HTTP server, and it must be configured to talk to either the Unix socket or the inet socket.  If only one HTTP server is enabled, this module will configure `supervisorctl` to use that HTTP server.  If both HTTP servers are enabled, the Unix socket HTTP server will be used by default.  To use the inet socket instead, set `ctl_socket` to `inet` (its default is `unix`).
-
+modified
 #### Configure the Unix HTTP server
 
 The Unix HTTP server is enabled by default.  Its parameters are:
@@ -221,4 +232,4 @@ If you submit a pull please try and include tests for the new functionality/fix.
 
 * Debian init script sourced from the system package.
 * RedHat/Centos init script sourced from https://github.com/Supervisor/initscripts
-* Suse init script modiefied from RedHat/Centos script
+* Suse init script modified from RedHat/Centos script
