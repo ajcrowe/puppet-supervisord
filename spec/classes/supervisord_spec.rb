@@ -66,27 +66,46 @@ describe 'supervisord' do
   end
 
   describe '#install_init' do
-    context 'default' do
-      it { should_not contain_file('/etc/init.d/supervisord') }
-    end
-
     context 'false' do
       it { should_not contain_file('/etc/init.d/supervisord') }
     end
 
+    context 'with custom init script' do
+      let(:params) {{ :init_script => '/etc/init/supervisord', :init_script_template => 'supervisord/init/Debian/systemd.erb', :init_defaults => false, :install_init => true }}
+      it { should contain_file('/etc/init/supervisord')}
+    end
+
     describe 'on supported OS' do
-      context 'with Debian' do
-        let(:facts) {{ :osfamily => 'Debian', :concat_basedir => concatdir }}
-        it { should contain_file('/etc/init.d/supervisord') }
-        it { should contain_file('/etc/default/supervisor') }
+      describe 'with Debian' do
+        context 'Wheezy (7.x)' do
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => 7, :concat_basedir => concatdir }}
+          it { should contain_file('/etc/init.d/supervisord') }
+          it { should contain_file('/etc/default/supervisor') }
+        end
+        context 'Jessie (8.x)' do
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystemmajrelease => 8, :concat_basedir => concatdir }}
+          it { should contain_file('/etc/systemd/system/supervisord.service') }
+          it { should_not contain_file('/etc/default/supervisor') }
+        end
       end
+      describe 'with RedHat' do
+        context 'Centos 6' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => 6, :concat_basedir => concatdir }}
+          it { should contain_file('/etc/init.d/supervisord') }
+          it { should contain_file('/etc/sysconfig/supervisord') }
+        end
+        context 'Centos 7' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => 7, :concat_basedir => concatdir }}
+          it { should contain_file('/etc/systemd/system/supervisord.service') }
+          it { should_not contain_file('/etc/default/supervisor') }
+        end
+        context 'Amazon' do
+          let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Amazon', :concat_basedir => concatdir }}
+            it { should contain_file('/etc/init.d/supervisord') }
+            it { should contain_file('/etc/sysconfig/supervisord') }
+        end
 
-      context 'with RedHat' do
-        let(:facts) {{ :osfamily => 'RedHat', :concat_basedir => concatdir }}
-        it { should contain_file('/etc/init.d/supervisord') }
-        it { should contain_file('/etc/sysconfig/supervisord') }
       end
-
       context 'with Suse' do
         let(:facts) {{ :osfamily => 'Suse', :concat_basedir => concatdir }}
         it { should contain_file('/etc/init.d/supervisord') }
@@ -112,6 +131,18 @@ describe 'supervisord' do
     context 'true' do
       let(:params) {{ :inet_server => true }}
       it { should contain_concat__fragment('supervisord_inet')}
+    end
+  end
+
+  describe '#ctl_socket' do
+    context 'default' do
+      it { should contain_concat__fragment('supervisord_ctl')\
+        .with_content(/serverurl=unix:\/\/\/var\/run\/supervisor.sock$/)}
+    end
+    context 'http' do
+      let(:params) {{ :inet_server => true, :ctl_socket => 'inet'}}
+      it { should contain_concat__fragment('supervisord_ctl')\
+        .with_content(/serverurl=http:\/\/127.0.0.1:9001$/)}
     end
   end
 
