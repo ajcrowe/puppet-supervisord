@@ -97,6 +97,7 @@ class supervisord::params {
   $manage_config           = true
   $config_include          = '/etc/supervisor.d'
   $config_file             = '/etc/supervisord.conf'
+  $config_file_mode        = '0644'
   $setuptools_url          = 'https://bitbucket.org/pypa/setuptools/raw/bootstrap/ez_setup.py'
 
   $ctl_socket              = 'unix'
