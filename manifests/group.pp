@@ -7,8 +7,9 @@
 #
 define supervisord::group (
   $programs,
-  $ensure   = present,
-  $priority = undef
+  $ensure           = present,
+  $priority         = undef,
+  $config_file_mode = '0644'
 ) {
 
   include supervisord
@@ -16,6 +17,7 @@ define supervisord::group (
   # parameter validation
   validate_array($programs)
   if $priority { if !is_integer($priority) { validate_re($priority, '^\d+', "invalid priority value of: ${priority}") } }
+  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
 
   $progstring = array2csv($programs)
   $conf = "${supervisord::config_include}/group_${name}.conf"
@@ -23,7 +25,7 @@ define supervisord::group (
   file { $conf:
     ensure  => $ensure,
     owner   => 'root',
-    mode    => '0644',
+    mode    => $config_file_mode,
     content => template('supervisord/conf/group.erb'),
     notify  => Class['supervisord::reload']
   }

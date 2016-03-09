@@ -9,19 +9,21 @@ define supervisord::rpcinterface (
   $rpcinterface_factory,
   $ensure                = present,
   $retries               = undef,
+  $config_file_mode      = '0644'
 ) {
 
   include supervisord
 
   # parameter validation
   if $retries { if !is_integer($retries) { validate_re($retries, '^\d+')}}
+  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
 
   $conf = "${supervisord::config_include}/rpcinterface_${name}.conf"
 
   file { $conf:
     ensure  => $ensure,
     owner   => 'root',
-    mode    => '0644',
+    mode    => $config_file_mode,
     content => template('supervisord/conf/rpcinterface.erb'),
     notify  => Class['supervisord::reload']
   }
