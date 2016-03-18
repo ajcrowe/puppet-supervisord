@@ -39,7 +39,8 @@ define supervisord::program(
   $environment             = undef,
   $directory               = undef,
   $umask                   = undef,
-  $serverurl               = undef
+  $serverurl               = undef,
+  $config_file_mode        = '0644'
 ) {
 
   include supervisord
@@ -74,6 +75,7 @@ define supervisord::program(
   if $stderr_events_enabled { validate_bool($stderr_events_enabled) }
   if $directory { validate_absolute_path($directory) }
   if $umask { validate_re($umask, '^[0-7][0-7][0-7]$') }
+  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
 
   # create the correct log variables
   $stdout_logfile_path = $stdout_logfile ? {
@@ -111,7 +113,7 @@ define supervisord::program(
   file { $conf:
     ensure  => $ensure,
     owner   => 'root',
-    mode    => '0644',
+    mode    => $config_file_mode,
     content => template('supervisord/conf/program.erb'),
     notify  => Class['supervisord::reload']
   }

@@ -41,6 +41,7 @@ class supervisord(
   $config_include       = $supervisord::params::config_include,
   $config_include_purge = false,
   $config_file          = $supervisord::params::config_file,
+  $config_file_mode     = $supervisord::params::config_file_mode,
   $config_dirs          = undef,
   $umask                = $supervisord::params::umask,
 
@@ -105,6 +106,7 @@ class supervisord(
   validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.")
   validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
   validate_re($ctl_socket, ['^unix$', '^inet$'], "invalid ctl_socket: ${ctl_socket}")
+  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
 
   if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
   if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
