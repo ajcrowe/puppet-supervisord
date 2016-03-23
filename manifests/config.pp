@@ -4,8 +4,8 @@
 #
 class supervisord::config inherits supervisord {
   $owner = $supervisord::user ? {
-     undef   => 'root',
-     default => $supervisord::user,
+    undef   => 'root',
+    default => $supervisord::user,
   }
 
   if ($supervisord::manage_config) {
