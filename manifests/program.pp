@@ -47,7 +47,7 @@ define supervisord::program(
 
 # parameter validation
   validate_string($command)
-  validate_re($ensure_process, ['running', 'stopped', 'removed'])
+  validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
   if $process_name { validate_string($process_name) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
   if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
