@@ -193,9 +193,10 @@ class supervisord(
   Anchor['supervisord::end']
 
   Class['supervisord::config'] ~> Class['supervisord::reload']
-  Class['supervisord::config'] -> Supervisord::Program <| |> -> Supervisord::Group <| |>
-  Class['supervisord::config'] -> Supervisord::Fcgi_program <| |> -> Supervisord::Group <| |>
-  Class['supervisord::config'] -> Supervisord::Eventlistener <| |> -> Supervisord::Group <| |>
+  Class['supervisord::config'] -> Supervisord::Program <| |>
+  Class['supervisord::config'] -> Supervisord::Fcgi_program <| |>
+  Class['supervisord::config'] -> Supervisord::Eventlistener <| |>
+  Class['supervisord::config'] -> Supervisord::Group <| |>
   Class['supervisord::config'] -> Supervisord::Rpcinterface <| |>
   Class['supervisord::reload'] -> Supervisord::Supervisorctl <| |>
 }
