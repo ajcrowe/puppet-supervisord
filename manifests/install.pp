@@ -3,7 +3,7 @@
 # Installs supervisor package (defaults to using pip)
 #
 class supervisord::install inherits supervisord {
-  if $::supervisord::pip_proxy {
+  if $::supervisord::pip_proxy and $::supervisord::package_provider == "pip" {
     exec { 'pip-install-supervisor':
       user        => root,
       path        => ['/usr/bin','/bin'],
