@@ -13,6 +13,7 @@ class supervisord(
   $service_name            = $supervisord::params::service_name,
   $service_restart         = $supervisord::params::service_restart,
   $install_pip             = false,
+  $pip_proxy               = undef,
   $install_init            = $supervisord::params::install_init,
   $init_type               = $supervisord::params::init_type,
   $init_script             = $supervisord::params::init_script,
