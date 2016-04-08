@@ -4,12 +4,12 @@
 #
 class supervisord::install inherits supervisord {
   if $::supervisord::pip_proxy {
-    exec { "pip-install-supervisor":
+    exec { 'pip-install-supervisor':
       user        => root,
-      path        => ["/usr/bin","/bin"],
+      path        => ['/usr/bin','/bin'],
       environment => [ "http_proxy=${supervisord::pip_proxy}", "https_proxy=${supervisord::pip_proxy}" ],
       command     => "pip install ${supervisord::package_name}",
-      unless      => "which supervisorctl",
+      unless      => 'which supervisorctl',
     }
   }
   else {
