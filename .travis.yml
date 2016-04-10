@@ -1,5 +1,6 @@
 ---
 language: ruby
+cache: bundler
 bundler_args: --without development
 script: "bundle exec rake test"
 rvm:
@@ -23,3 +24,4 @@ matrix:
 
 notifications:
   email: false
+sudo: false
