@@ -48,14 +48,14 @@ define supervisord::eventlistener(
 
   # parameter validation
   validate_string($command)
-  validate_re($ensure_process, ['running', 'stopped', 'removed'])
+  validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
   if !is_integer($buffer_size) { validate_re($buffer_size, '^\d+')}
   if $events { validate_array($events) }
   if $result_handler { validate_string($result_handler) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
   if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
   if $priority { if !is_integer($priority) { validate_re($priority, '^\d+') } }
-  if $autostart { validate_bool($autostart) }
+  if $autostart { if !is_bool($autostart) { validate_re($autostart, ['true', 'false']) } }
   if $autorestart { if !is_bool($autorestart) { validate_re($autorestart, ['true', 'false', 'unexpected']) } }
   if $startsecs { if !is_integer($startsecs) { validate_re($startsecs, '^\d+')} }
   if $startretries { if !is_integer($startretries) { validate_re($startretries, '^\d+')} }
