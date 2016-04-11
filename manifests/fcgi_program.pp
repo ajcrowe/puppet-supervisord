@@ -50,7 +50,7 @@ define supervisord::fcgi_program(
 
   # parameter validation
   validate_string($command)
-  validate_re($ensure_process, ['running', 'stopped', 'removed'])
+  validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
   validate_re($socket, ['^tcp:\/\/.*:\d+$', '^unix:\/\/\/'])
   if $process_name { validate_string($process_name) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
