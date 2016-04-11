@@ -52,7 +52,7 @@ define supervisord::program(
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
   if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
   if $priority { if !is_integer($priority) { validate_re($priority, '^\d+') } }
-  if $autostart { validate_bool($autostart) }
+  if $autostart { if !is_bool($autostart) { validate_re($autostart, ['true', 'false']) } }
   if $autorestart { if !is_bool($autorestart) { validate_re($autorestart, ['true', 'false', 'unexpected']) } }
   if $startsecs { if !is_integer($startsecs) { validate_re($startsecs, '^\d+')} }
   if $startretries { if !is_integer($startretries) { validate_re($startretries, '^\d+')} }
