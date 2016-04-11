@@ -1,3 +1,16 @@
+2016-04-10 - v0.6.1
+
+Enhancements:
+
+- Can now set file mode for configuration files
+- Added support for concat versions >2
+
+Fixes:
+
+Changes:
+
+Thanks to
+
 2015-11-22 - v0.6.0
 
 Enhancements:
