@@ -108,7 +108,7 @@ class supervisord(
   validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
   validate_re($ctl_socket, ['^unix$', '^inet$'], "invalid ctl_socket: ${ctl_socket}")
   validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
-  validate_re($pip_proxy, ['^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$'], "invalid pip_proxy: ${pip_proxy}")
+  if $pip_proxy { validate_re($pip_proxy, ['^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)$'], "invalid pip_proxy: ${pip_proxy}") }
 
   if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
   if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
