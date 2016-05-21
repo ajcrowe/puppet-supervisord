@@ -4,12 +4,14 @@ Enhancements:
 
 - Can now set file mode for configuration files
 - Added support for concat versions >2
+- 'autostart' param can now be a 'string' or 'bool'
+- 'ensure_process' can now be set to unmanaged to disable any 'supervisorctl' command being executed
 
 Fixes:
 
-Changes:
+- Fixed dependency loop issue
 
-Thanks to
+Many thanks to @Vincent-- , @rsood-trulia, @walterheck, @davidgubler for all the contributions!
 
 2015-11-22 - v0.6.0
 
@@ -23,7 +25,7 @@ Enhancements:
 - Added '$package_install_options' for package installation.
 - Added '$ctl_socket' param for selecting between 'inet' and 'unix' sockets.
 - Added '$init_script', '$init_script_template', '$init_defaults' and 'init_defaults_template' to allow completely custom init scripts.
-- 'supervisord::supervisorctl' define now accepts an '$unless' param to add a condition to the exec resource for `supervisorctl`.
+- 'supervisord::supervisorctl' define now accepts an '$unless' param to add a condition to the exec resource for 'supervisorctl'.
 
 Fixes:
 
@@ -43,13 +45,13 @@ Thanks to @buzzdeee, @mikeraynham, @md14454, @willaerk, @renepavlik, @maxenced, 
 Enhancements:
 
 - Added RHEL to enable SCL Py27 support, thanks to @dmglab
-- Enchanged logfile options to allow `syslog`, `NONE`, `AUTO` and custom full qualified
+- Enchanged logfile options to allow 'syslog', 'NONE', 'AUTO' and custom full qualified
 locations, thanks to @honzik666 and @SteveMaddison for these enhancements
-- Added `FUTURE_PARSER` testing for forward compatibility testing
+- Added 'FUTURE_PARSER' testing for forward compatibility testing
 
 Fixes:
 
-- Missing slash on `pid_file` in redhat init script, thanks to @coreone
+- Missing slash on 'pid_file' in redhat init script, thanks to @coreone
 - Fixed ordering where define type configuration was being written before configuration
 directories were created, thanks to @mcrumm for the bug report
 - Minor lint fixes
@@ -146,7 +148,7 @@ Fixes:
 - Fixed typo in supervisord config with minfds and minprocs, thanks to @peefourtee
 - Typo in README fixed thanks to @hopkinsth
 - Removed refreshonly from pip_install exec resource
-- Number of syntax fixes thanks to `puppet lint`
+- Number of syntax fixes thanks to 'puppet lint'
 
 Important Changes:
 

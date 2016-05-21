@@ -1,6 +1,6 @@
 {
   "name": "ajcrowe-supervisord",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "author": "Alex Crowe",
   "license": "MIT",
   "summary": "Module supervisord class and functions",
