@@ -7,7 +7,8 @@ class supervisord::config inherits supervisord {
   if ($supervisord::manage_config) {
     file { $supervisord::config_include:
       ensure  => directory,
-      owner   => 'root',
+      owner   => $supervisord::user,
+      group   => $supervisord::group,
       mode    => '0755',
       recurse => $supervisord::config_include_purge,
       purge   => $supervisord::config_include_purge,
