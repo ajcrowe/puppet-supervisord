@@ -16,14 +16,16 @@ class supervisord::config inherits supervisord {
 
   file { $supervisord::log_path:
     ensure => directory,
-    owner  => 'root',
+    owner  => $supervisord::user,
+    group  => $supervisord::group,
     mode   => '0644'
   }
 
   if $supervisord::run_path != '/var/run' {
     file { $supervisord::run_path:
       ensure => directory,
-      owner  => 'root',
+      owner  => $supervisord::user,
+      group  => $supervisord::group,
       mode   => '0644'
     }
   }

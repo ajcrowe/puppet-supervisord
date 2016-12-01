@@ -116,6 +116,8 @@ class supervisord::params {
   $inet_auth               = false
   $inet_username           = undef
   $inet_password           = undef
-
+  
+  $user                    = 'root'
+  $group                   = 'root'
   
 }
