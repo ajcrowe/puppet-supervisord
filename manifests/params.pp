@@ -42,7 +42,7 @@ class supervisord::params {
     }
     'Debian': {
       case $::operatingsystemmajrelease {
-        '8': {
+        '8', '16.04': {
           $init_type     = 'systemd'
           $init_script   = '/etc/systemd/system/supervisord.service'
           $init_defaults = false
