@@ -3,11 +3,15 @@
 # Configuration class for supervisor init and conf directories
 #
 class supervisord::config inherits supervisord {
+  $owner = $supervisord::user ? {
+    undef   => 'root',
+    default => $supervisord::user,
+  }
 
   if ($supervisord::manage_config) {
     file { $supervisord::config_include:
       ensure  => directory,
-      owner   => 'root',
+      owner   => $owner,
       mode    => '0755',
       recurse => $supervisord::config_include_purge,
       purge   => $supervisord::config_include_purge,
@@ -16,7 +20,7 @@ class supervisord::config inherits supervisord {
 
   file { $supervisord::log_path:
     ensure => directory,
-    owner  => 'root',
+    owner  => $owner,
     mode   => '0644'
   }
 
