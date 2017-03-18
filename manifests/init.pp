@@ -23,6 +23,8 @@ class supervisord(
   $executable              = $supervisord::params::executable,
   $executable_ctl          = $supervisord::params::executable_ctl,
 
+  $autoreload_programs  = $supervisord::params::autoreload_programs,
+
   $scl_enabled             = $supervisord::params::scl_enabled,
   $scl_script              = $supervisord::params::scl_script,
 
