@@ -13,6 +13,7 @@ class supervisord(
   $service_name            = $supervisord::params::service_name,
   $service_restart         = $supervisord::params::service_restart,
   $install_pip             = false,
+  $pip_proxy               = undef,
   $install_init            = $supervisord::params::install_init,
   $init_type               = $supervisord::params::init_type,
   $init_script             = $supervisord::params::init_script,
@@ -108,6 +109,7 @@ class supervisord(
   validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
   validate_re($ctl_socket, ['^unix$', '^inet$'], "invalid ctl_socket: ${ctl_socket}")
   validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
+  if $pip_proxy { validate_re($pip_proxy, ['^https?:\/\/.*$'], "invalid pip_proxy: ${pip_proxy}") }
 
   if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
   if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
