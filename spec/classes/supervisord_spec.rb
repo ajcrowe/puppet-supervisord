@@ -111,6 +111,18 @@ describe 'supervisord' do
         it { should contain_file('/etc/init.d/supervisord') }
         it { should contain_file('/etc/sysconfig/supervisor') }
       end
+      describe 'with Ubuntu' do
+        context 'Trusty (14.04)' do
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystem => 'Ubuntu', :operatingsystemmajrelease => '14.04', :concat_basedir => concatdir }}
+          it { should contain_file('/etc/init.d/supervisord') }
+          it { should contain_file('/etc/default/supervisor') }
+        end
+        context 'Xenial (16.04)' do
+          let(:facts) {{ :osfamily => 'Debian', :operatingsystem => 'Ubuntu', :operatingsystemmajrelease => '16.04', :concat_basedir => concatdir }}
+          it { should contain_file('/etc/systemd/system/supervisord.service') }
+          it { should_not contain_file('/etc/default/supervisor') }
+        end
+      end
     end
   end
 

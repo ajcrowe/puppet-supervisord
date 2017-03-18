@@ -41,16 +41,31 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
     'Debian': {
-      case $::operatingsystemmajrelease {
-        '8', '16.04': {
-          $init_type     = 'systemd'
-          $init_script   = '/etc/systemd/system/supervisord.service'
-          $init_defaults = false
+      case $::operatingsystem {
+        'Ubuntu': {
+          if versioncmp($::operatingsystemmajrelease, '15.10') > 0 {
+            $init_type     = 'systemd'
+            $init_script   = '/etc/systemd/system/supervisord.service'
+            $init_defaults = false
+          } else {
+            $init_type     = 'init'
+            $init_script   = '/etc/init.d/supervisord'
+            $init_defaults = '/etc/default/supervisor'
+          }
         }
         default: {
-          $init_type     = 'init'
-          $init_script   = '/etc/init.d/supervisord'
-          $init_defaults = '/etc/default/supervisor'
+          case $::operatingsystemmajrelease {
+            '8': {
+              $init_type     = 'systemd'
+              $init_script   = '/etc/systemd/system/supervisord.service'
+              $init_defaults = false
+            }
+            default: {
+              $init_type     = 'init'
+              $init_script   = '/etc/init.d/supervisord'
+              $init_defaults = '/etc/default/supervisor'
+            }
+          }
         }
       }
       $unix_socket_group = 'nogroup'
@@ -117,5 +132,5 @@ class supervisord::params {
   $inet_username           = undef
   $inet_password           = undef
 
-  
+
 }
