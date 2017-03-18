@@ -63,7 +63,8 @@ class supervisord(
   $inet_username        = $supervisord::params::inet_username,
   $inet_password        = $supervisord::params::inet_password,
 
-  $user                 = undef,
+  $user                 = $supervisord::params::user,
+  $group                = $supervisord::params::group,
   $identifier           = undef,
   $childlogdir          = undef,
   $environment          = undef,
