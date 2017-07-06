@@ -63,7 +63,7 @@ class supervisord::config inherits supervisord {
       concat::fragment { 'supervisord_unix':
         target  => $supervisord::config_file,
         content => template('supervisord/supervisord_unix.erb'),
-        order   => 01
+        order   => '01'
       }
     }
 
@@ -71,7 +71,7 @@ class supervisord::config inherits supervisord {
       concat::fragment { 'supervisord_inet':
         target  => $supervisord::config_file,
         content => template('supervisord/supervisord_inet.erb'),
-        order   => 01
+        order   => '01'
       }
     }
 
@@ -79,14 +79,14 @@ class supervisord::config inherits supervisord {
       concat::fragment { 'supervisord_ctl':
         target  => $supervisord::config_file,
         content => template('supervisord/supervisord_ctl.erb'),
-        order   => 02
+        order   => '02'
       }
     }
 
     concat::fragment { 'supervisord_main':
       target  => $supervisord::config_file,
       content => template('supervisord/supervisord_main.erb'),
-      order   => 03
+      order   => '03'
     }
   }
 }
