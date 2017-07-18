@@ -1,5 +1,8 @@
 [supervisord]
 logfile=<%= @log_path %>/<%= @log_file %>
+logfile_maxbytes=<%= @logfile_maxbytes %>
+logfile_backups=<%= @logfile_backups %>
+loglevel=<%= @log_level %>
 pidfile=<%= @run_path %>/<%= @pid_file %>
 nodaemon=<%= @nodaemon %>
 minfds=<%= @minfds %>
