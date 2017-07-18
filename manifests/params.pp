@@ -79,6 +79,16 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
   }
+
+  case $init_type {
+    'systemd': {
+      $init_mode = '0644'
+    }
+    'init', default: {
+      $init_mode = '0755'
+    }
+  }
+
   $init_script_template   = "supervisord/init/${::osfamily}/${init_type}.erb"
   $init_defaults_template = "supervisord/init/${::osfamily}/defaults.erb"
 
