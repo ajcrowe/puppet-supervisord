@@ -16,6 +16,7 @@ class supervisord(
   $pip_proxy               = undef,
   $install_init            = $supervisord::params::install_init,
   $init_type               = $supervisord::params::init_type,
+  $init_mode               = $supervisord::params::init_mode,
   $init_script             = $supervisord::params::init_script,
   $init_script_template    = $supervisord::params::init_script_template,
   $init_defaults           = $supervisord::params::init_defaults,
