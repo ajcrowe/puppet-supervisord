@@ -80,13 +80,10 @@ class supervisord::params {
     }
   }
 
-  case $init_type {
-    'systemd': {
-      $init_mode = '0644'
-    }
-    'init', default: {
-      $init_mode = '0755'
-    }
+  $init_mode = $init_type ? {
+    'systemd' => '0644',
+    'init'    => '0755',
+    default   => '0755'
   }
 
   $init_script_template   = "supervisord/init/${::osfamily}/${init_type}.erb"
