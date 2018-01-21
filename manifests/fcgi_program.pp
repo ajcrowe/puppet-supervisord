@@ -77,7 +77,7 @@ define supervisord::fcgi_program(
   if $stderr_logfile_backups { if $stderr_logfile_backups !~ Integer { validate_legacy('Optional[String]', 'validate_re', $stderr_logfile_backups, ['^\d+'])} }
   if $stderr_capture_maxbytes { validate_legacy(String, 'validate_string', $stderr_capture_maxbytes) }
   if $stderr_events_enabled { validate_legacy(Boolean, 'validate_bool', $stderr_events_enabled) }
-  if $directory { validate_absolute_path($directory) }
+  if $directory { validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $directory) }
   if $umask { validate_legacy('Optional[String]', 'validate_re', $umask, ['^[0-7][0-7][0-7]$']) }
   validate_legacy('Optional[String]', 'validate_re', $config_file_mode, ['^0[0-7][0-7][0-7]$'])
 

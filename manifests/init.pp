@@ -98,11 +98,11 @@ class supervisord(
   validate_legacy(Hash, 'validate_hash', $groups)
   validate_legacy(Hash, 'validate_hash', $programs)
 
-  validate_absolute_path($config_include)
-  validate_absolute_path($log_path)
-  validate_absolute_path($run_path)
-  if $childlogdir { validate_absolute_path($childlogdir) }
-  if $directory { validate_absolute_path($directory) }
+  validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $config_include)
+  validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $log_path)
+  validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $run_path)
+  if $childlogdir { validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $childlogdir) }
+  if $directory { validate_legacy(Stdlib::Compat::Absolute_Path, 'validate_absolute_path', $directory) }
 
   $log_levels = ['^critical$', '^error$', '^warn$', '^info$', '^debug$', '^trace$', '^blather$']
   validate_legacy('Optional[String]', 'validate_re', $log_level, $log_levels)
