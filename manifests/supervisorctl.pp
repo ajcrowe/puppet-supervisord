@@ -9,8 +9,8 @@ define supervisord::supervisorctl(
   $unless        = undef
 ) {
 
-  validate_string($command)
-  validate_string($process)
+  validate_legacy(String, 'validate_string', $command)
+  validate_legacy(String, 'validate_string', $process)
 
   $supervisorctl = $::supervisord::executable_ctl
 
