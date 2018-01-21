@@ -15,8 +15,8 @@ define supervisord::rpcinterface (
   include supervisord
 
   # parameter validation
-  if $retries { if !is_integer($retries) { validate_re($retries, '^\d+')}}
-  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
+  if $retries { if $retries !~ Integer { validate_legacy('Optional[String]', 'validate_re', $retries, ['^\d+'])}}
+  validate_legacy('Optional[String]', 'validate_re', $config_file_mode, ['^0[0-7][0-7][0-7]$'])
 
   $conf = "${supervisord::config_include}/rpcinterface_${name}.conf"
 

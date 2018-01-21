@@ -16,7 +16,7 @@ define supervisord::ctlplugin(
   include supervisord
 
   # parameter validation
-  validate_string($ctl_factory)
+  validate_legacy(String, 'validate_string', $ctl_factory)
 
   concat::fragment { "ctlplugin:${name}":
     target  => $supervisord::config_file,
