@@ -9,6 +9,7 @@ define supervisord::eventlistener(
   $command,
   $ensure                  = present,
   $ensure_process          = 'running',
+  $cfgreload               = undef,
   $buffer_size             = 10,
   $events                  = undef,
   $result_handler          = undef,
@@ -49,6 +50,7 @@ define supervisord::eventlistener(
   # parameter validation
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
+  if $cfgreload { validate_bool($cfgreload) }
   if !is_integer($buffer_size) { validate_re($buffer_size, '^\d+')}
   if $events { validate_array($events) }
   if $result_handler { validate_string($result_handler) }
@@ -109,6 +111,12 @@ define supervisord::eventlistener(
     $env_string = hash2csv($_event_environment)
   }
 
+  # Reload default with override
+  $_cfgreload = $cfgreload ? {
+    undef   => $supervisord::cfgreload_eventlistener,
+    default => $cfgreload
+  }
+
   if $events {
     $events_string = array2csv($events)
   }
@@ -120,7 +128,12 @@ define supervisord::eventlistener(
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/eventlistener.erb'),
-    notify  => Class['supervisord::reload']
+  }
+
+  if $_cfgreload {
+    File[$conf] {
+      notify => Class['supervisord::reload'],
+    }
   }
 
   case $ensure_process {

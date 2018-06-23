@@ -122,6 +122,11 @@ class supervisord::params {
   $config_file_mode        = '0644'
   $setuptools_url          = 'https://bootstrap.pypa.io/ez_setup.py'
 
+  $cfgreload_program       = true
+  $cfgreload_fcgi_program  = true
+  $cfgreload_eventlistener = true
+  $cfgreload_rpcinterface  = true
+
   $ctl_socket              = 'unix'
 
   $unix_socket             = true
