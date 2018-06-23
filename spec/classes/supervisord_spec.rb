@@ -98,6 +98,7 @@ describe 'supervisord' do
           let(:facts) {{ :osfamily => 'RedHat', :operatingsystemmajrelease => '7', :concat_basedir => concatdir }}
           it { should contain_file('/etc/systemd/system/supervisord.service') }
           it { should_not contain_file('/etc/default/supervisor') }
+          it { should contain_file('/etc/systemd/system/supervisord.service').with_content(/LimitNOFILE=1024$/) }
         end
         context 'Amazon' do
           let(:facts) {{ :osfamily => 'RedHat', :operatingsystem => 'Amazon', :concat_basedir => concatdir }}
