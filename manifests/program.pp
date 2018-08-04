@@ -131,23 +131,30 @@ define supervisord::program(
     }
   }
 
+  if ($numprocs != 1 ) {
+    $pname = "${name}:*"
+  }
+  else {
+    $pname = $name
+  }
+
   case $ensure_process {
     'stopped': {
       supervisord::supervisorctl { "stop_${name}":
         command => 'stop',
-        process => $name
+        process => $pname
       }
     }
     'removed': {
       supervisord::supervisorctl { "remove_${name}":
         command => 'remove',
-        process => $name
+        process => $pname
       }
     }
     'running': {
       supervisord::supervisorctl { "start_${name}":
         command => 'start',
-        process => $name,
+        process => $pname,
         unless  => 'running'
       }
     }
