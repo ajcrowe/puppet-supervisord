@@ -34,6 +34,11 @@ class supervisord(
   $logfile_maxbytes        = $supervisord::params::logfile_maxbytes,
   $logfile_backups         = $supervisord::params::logfile_backups,
 
+  $cfgreload_program       = $supervisord::params::cfgreload_program,
+  $cfgreload_fcgi_program  = $supervisord::params::cfgreload_fcgi_program,
+  $cfgreload_eventlistener = $supervisord::params::cfgreload_eventlistener,
+  $cfgreload_rpcinterface  = $supervisord::params::cfgreload_rpcinterface,
+
   $run_path             = $supervisord::params::run_path,
   $pid_file             = $supervisord::params::pid_file,
   $nodaemon             = $supervisord::params::nodaemon,

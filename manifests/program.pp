@@ -9,6 +9,7 @@ define supervisord::program(
   $command,
   $ensure                  = present,
   $ensure_process          = 'running',
+  $cfgreload               = undef,
   $env_var                 = undef,
   $process_name            = undef,
   $numprocs                = undef,
@@ -48,6 +49,7 @@ define supervisord::program(
 # parameter validation
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
+  if $cfgreload { validate_bool($cfgreload) }
   if $process_name { validate_string($process_name) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
   if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
@@ -108,6 +110,12 @@ define supervisord::program(
     $env_string = hash2csv($_program_environment)
   }
 
+  # Reload default with override
+  $_cfgreload = $cfgreload ? {
+    undef   => $supervisord::cfgreload_program,
+    default => $cfgreload
+  }
+
   $conf = "${supervisord::config_include}/program_${name}.conf"
 
   file { $conf:
@@ -115,7 +123,12 @@ define supervisord::program(
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/program.erb'),
-    notify  => Class['supervisord::reload']
+  }
+
+  if $_cfgreload {
+    File[$conf] {
+      notify => Class['supervisord::reload'],
+    }
   }
 
   case $ensure_process {
