@@ -12,6 +12,7 @@ class supervisord::config inherits supervisord {
       mode    => '0755',
       recurse => $supervisord::config_include_purge,
       purge   => $supervisord::config_include_purge,
+      notify  => Class['supervisord::reload'],
     }
   }
 
