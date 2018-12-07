@@ -12,6 +12,7 @@ Type=forking
 ExecStart=<%= @executable %> -c <%= @config_file %>
 ExecReload=<%= @executable_ctl %> reload
 ExecStop=<%= @executable_ctl %> shutdown
+LimitNOFILE=<%= @minfds %>
 
 [Install]
 WantedBy=multi-user.target

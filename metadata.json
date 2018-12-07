@@ -19,7 +19,7 @@
     },
     {
     "operatingsystem": "Ubuntu",
-    "operatingsystemrelease": [ "14.04", "12.04", "10.04" ]
+    "operatingsystemrelease": [ "16.04", "14.04", "12.04", "10.04" ]
     },
     {
     "operatingsystem": "Debian",
@@ -28,6 +28,6 @@
    ],
   "dependencies": [
     { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.4.0 <5.0.0" },
-    { "name": "puppetlabs/concat", "version_requirement": ">= 1.0.0 <3.0.0" }
+    { "name": "puppetlabs/concat", "version_requirement": ">= 1.0.0 <5.0.0" }
   ]
 }
