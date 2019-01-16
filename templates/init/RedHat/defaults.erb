@@ -1,8 +1,18 @@
-# this is sourced by the supervisord init script
-# written by jkoppe
+# Configuration file for the supervisord service
+#
+# Author: Jason Koppe <jkoppe@indeed.com>
+#             orginal work
+#         Erwan Queffelec <erwan.queffelec@gmail.com>
+#             adjusted to new LSB-compliant init script
 
-set -a 
+# WARNING: change these wisely! for instance, adding -d, --nodaemon
+# here will lead to a very undesirable (blocking) behavior
+#OPTIONS="-c <%= @config_file %>"
+#PIDFILE=<%= @run_path %>/<%= @pid_file %>
+#LOCKFILE=/var/lock/subsys/supervisord
 
-# should probably put both of these options as runtime arguments 
-OPTIONS="-c <%= @config_file %>"
-PIDFILE=<%= @run_path %>/<%= @pid_file %>
+# Path to the supervisord binary
+#SUPERVISORD=<%= @executable %>
+
+# How long should we wait before forcefully killing the supervisord process ?
+#STOP_TIMEOUT=60
