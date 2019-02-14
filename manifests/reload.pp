@@ -8,12 +8,10 @@ class supervisord::reload inherits supervisord {
   exec { 'supervisorctl_reread':
     command     => "${supervisorctl} reread",
     refreshonly => true,
-    require     => Service[$::supervisord::service_name],
   }
   exec { 'supervisorctl_update':
     command     => "${supervisorctl} update",
     refreshonly => true,
-    require     => Service[$::supervisord::service_name],
   }
 }
 
