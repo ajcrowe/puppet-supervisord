@@ -43,7 +43,7 @@ class supervisord::params {
     'Debian': {
       case $::operatingsystem {
         'Ubuntu': {
-          if versioncmp($::operatingsystemmajrelease, '15.10') > 0 {
+          if versioncmp($::operatingsystemmajrelease, "15.10") > 0 {
             $init_type     = 'systemd'
             $init_script   = '/etc/systemd/system/supervisord.service'
             $init_defaults = false
