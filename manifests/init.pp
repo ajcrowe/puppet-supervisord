@@ -29,6 +29,7 @@ class supervisord(
   $scl_script              = $supervisord::params::scl_script,
 
   $log_path                = $supervisord::params::log_path,
+  $log_path_mode           = $supervisord::params::log_path_mode,
   $log_file                = $supervisord::params::log_file,
   $log_level               = $supervisord::params::log_level,
   $logfile_maxbytes        = $supervisord::params::logfile_maxbytes,

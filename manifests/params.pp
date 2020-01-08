@@ -8,6 +8,7 @@ class supervisord::params {
     'RedHat': {
       $unix_socket_group = 'nobody'
       $install_init      = true
+      $log_path_mode     = '0770'
       case $::operatingsystem {
         'Amazon': {
           $init_type              = 'init'
@@ -71,12 +72,14 @@ class supervisord::params {
       $unix_socket_group = 'nogroup'
       $install_init      = true
       $executable_path   = '/usr/local/bin'
+      $log_path_mode     = '0755'
     }
     default:  {
       $init_defaults     = false
       $unix_socket_group = 'nogroup'
       $install_init      = false
       $executable_path   = '/usr/local/bin'
+      $log_path_mode     = '0755'
     }
   }
 

@@ -20,7 +20,7 @@ class supervisord::config inherits supervisord {
     ensure => directory,
     owner  => $supervisord::user,
     group  => $supervisord::group,
-    mode   => '0644'
+    mode   => $supervisord::log_path_mode
   }
 
   if $supervisord::run_path != '/var/run' {
