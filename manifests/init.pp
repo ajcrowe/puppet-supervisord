@@ -13,8 +13,10 @@ class supervisord(
   $service_name            = $supervisord::params::service_name,
   $service_restart         = $supervisord::params::service_restart,
   $install_pip             = false,
+  $pip_proxy               = undef,
   $install_init            = $supervisord::params::install_init,
   $init_type               = $supervisord::params::init_type,
+  $init_mode               = $supervisord::params::init_mode,
   $init_script             = $supervisord::params::init_script,
   $init_script_template    = $supervisord::params::init_script_template,
   $init_defaults           = $supervisord::params::init_defaults,
@@ -31,6 +33,11 @@ class supervisord(
   $log_level               = $supervisord::params::log_level,
   $logfile_maxbytes        = $supervisord::params::logfile_maxbytes,
   $logfile_backups         = $supervisord::params::logfile_backups,
+
+  $cfgreload_program       = $supervisord::params::cfgreload_program,
+  $cfgreload_fcgi_program  = $supervisord::params::cfgreload_fcgi_program,
+  $cfgreload_eventlistener = $supervisord::params::cfgreload_eventlistener,
+  $cfgreload_rpcinterface  = $supervisord::params::cfgreload_rpcinterface,
 
   $run_path             = $supervisord::params::run_path,
   $pid_file             = $supervisord::params::pid_file,
@@ -63,7 +70,8 @@ class supervisord(
   $inet_username        = $supervisord::params::inet_username,
   $inet_password        = $supervisord::params::inet_password,
 
-  $user                 = undef,
+  $user                 = $supervisord::params::user,
+  $group                = $supervisord::params::group,
   $identifier           = undef,
   $childlogdir          = undef,
   $environment          = undef,
@@ -103,10 +111,12 @@ class supervisord(
 
   $log_levels = ['^critical$', '^error$', '^warn$', '^info$', '^debug$', '^trace$', '^blather$']
   validate_re($log_level, $log_levels, "invalid log_level: ${log_level}")
+  validate_re($logfile_maxbytes,'^[0-9]*(?:KB|MB|GB)?', "invalid logfile_maxbytes: ${$logfile_maxbytes}")
   validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.")
   validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
   validate_re($ctl_socket, ['^unix$', '^inet$'], "invalid ctl_socket: ${ctl_socket}")
   validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
+  if $pip_proxy { validate_re($pip_proxy, ['^https?:\/\/.*$'], "invalid pip_proxy: ${pip_proxy}") }
 
   if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
   if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}

@@ -41,16 +41,31 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
     'Debian': {
-      case $::operatingsystemmajrelease {
-        '8': {
-          $init_type     = 'systemd'
-          $init_script   = '/etc/systemd/system/supervisord.service'
-          $init_defaults = false
+      case $::operatingsystem {
+        'Ubuntu': {
+          if versioncmp($::operatingsystemmajrelease, '15.10') > 0 {
+            $init_type     = 'systemd'
+            $init_script   = '/etc/systemd/system/supervisord.service'
+            $init_defaults = false
+          } else {
+            $init_type     = 'init'
+            $init_script   = '/etc/init.d/supervisord'
+            $init_defaults = '/etc/default/supervisor'
+          }
         }
         default: {
-          $init_type     = 'init'
-          $init_script   = '/etc/init.d/supervisord'
-          $init_defaults = '/etc/default/supervisor'
+          case $::operatingsystemmajrelease {
+            '8': {
+              $init_type     = 'systemd'
+              $init_script   = '/etc/systemd/system/supervisord.service'
+              $init_defaults = false
+            }
+            default: {
+              $init_type     = 'init'
+              $init_script   = '/etc/init.d/supervisord'
+              $init_defaults = '/etc/default/supervisor'
+            }
+          }
         }
       }
       $unix_socket_group = 'nogroup'
@@ -64,6 +79,13 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
   }
+
+  $init_mode = $init_type ? {
+    'systemd' => '0644',
+    'init'    => '0755',
+    default   => '0755'
+  }
+
   $init_script_template   = "supervisord/init/${::osfamily}/${init_type}.erb"
   $init_defaults_template = "supervisord/init/${::osfamily}/defaults.erb"
 
@@ -100,6 +122,11 @@ class supervisord::params {
   $config_file_mode        = '0644'
   $setuptools_url          = 'https://bootstrap.pypa.io/ez_setup.py'
 
+  $cfgreload_program       = true
+  $cfgreload_fcgi_program  = true
+  $cfgreload_eventlistener = true
+  $cfgreload_rpcinterface  = true
+
   $ctl_socket              = 'unix'
 
   $unix_socket             = true
@@ -116,6 +143,6 @@ class supervisord::params {
   $inet_auth               = false
   $inet_username           = undef
   $inet_password           = undef
-
-  
+  $user                    = 'root'
+  $group                   = 'root'
 }

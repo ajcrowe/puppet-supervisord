@@ -22,7 +22,7 @@ define supervisord::supervisorctl(
   }
 
   if $unless {
-    $unless_cmd = join([$supervisorctl, 'status', $process, '|', 'grep', '-i', $unless], ' ')
+    $unless_cmd = join([$supervisorctl, 'status', $process, '|', 'awk', '{\'print $2\'}', '|', 'grep', '-i', $unless], ' ')
   }
   else {
     $unless_cmd = undef

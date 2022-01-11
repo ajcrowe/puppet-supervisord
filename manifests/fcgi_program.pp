@@ -10,6 +10,7 @@ define supervisord::fcgi_program(
   $socket,
   $ensure                  = present,
   $ensure_process          = 'running',
+  $cfgreload               = undef,
   $socket_owner            = undef,
   $socket_mode             = undef,
   $env_var                 = undef,
@@ -52,6 +53,7 @@ define supervisord::fcgi_program(
   validate_string($command)
   validate_re($ensure_process, ['running', 'stopped', 'removed', 'unmanaged'])
   validate_re($socket, ['^tcp:\/\/.*:\d+$', '^unix:\/\/\/'])
+  if $cfgreload { validate_bool($cfgreload) }
   if $process_name { validate_string($process_name) }
   if $numprocs { if !is_integer($numprocs) { validate_re($numprocs, '^\d+')} }
   if $numprocs_start { if !is_integer($numprocs_start) { validate_re($numprocs_start, '^\d+')} }
@@ -112,6 +114,12 @@ define supervisord::fcgi_program(
     $env_string = hash2csv($_program_environment)
   }
 
+  # Reload default with override
+  $_cfgreload = $cfgreload ? {
+    undef   => $supervisord::cfgreload_fcgi_program,
+    default => $cfgreload
+  }
+
   $conf = "${supervisord::config_include}/fcgi-program_${name}.conf"
 
   file { $conf:
@@ -119,7 +127,12 @@ define supervisord::fcgi_program(
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/fcgi_program.erb'),
-    notify  => Class['supervisord::reload']
+  }
+
+  if $_cfgreload {
+    File[$conf] {
+      notify => Class['supervisord::reload'],
+    }
   }
 
   case $ensure_process {
