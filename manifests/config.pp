@@ -23,14 +23,14 @@ class supervisord::config inherits supervisord {
     mode   => '0644'
   }
 
-  if $supervisord::run_path != '/var/run' {
-    file { $supervisord::run_path:
-      ensure => directory,
-      owner  => $supervisord::user,
-      group  => $supervisord::group,
-      mode   => '0644'
-    }
-  }
+#  if $supervisord::run_path != '/var/run' {
+#    file { $supervisord::run_path:
+#      ensure => directory,
+#      owner  => $supervisord::user,
+#      group  => $supervisord::group,
+#      mode   => '0644'
+#    }
+#  }
 
   if $supervisord::install_init {
     file { $supervisord::init_script:
