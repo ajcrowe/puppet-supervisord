@@ -2,127 +2,147 @@
 #
 # This class installs supervisord via pip
 #
-class supervisord(
-  $package_ensure          = $supervisord::params::package_ensure,
-  $package_name            = $supervisord::params::package_name,
-  $package_provider        = $supervisord::params::package_provider,
-  $package_install_options = $supervisord::params::package_install_options,
-  $service_manage          = $supervisord::params::service_manage,
-  $service_ensure          = $supervisord::params::service_ensure,
-  $service_enable          = $supervisord::params::service_enable,
-  $service_name            = $supervisord::params::service_name,
-  $service_restart         = $supervisord::params::service_restart,
-  $install_pip             = false,
-  $pip_proxy               = undef,
-  $install_init            = $supervisord::params::install_init,
-  $init_type               = $supervisord::params::init_type,
-  $init_mode               = $supervisord::params::init_mode,
-  $init_script             = $supervisord::params::init_script,
-  $init_script_template    = $supervisord::params::init_script_template,
-  $init_defaults           = $supervisord::params::init_defaults,
-  $init_defaults_template  = $supervisord::params::init_defaults_template,
-  $setuptools_url          = $supervisord::params::setuptools_url,
-  $executable              = $supervisord::params::executable,
-  $executable_ctl          = $supervisord::params::executable_ctl,
-
-  $scl_enabled             = $supervisord::params::scl_enabled,
-  $scl_script              = $supervisord::params::scl_script,
-
-  $log_path                = $supervisord::params::log_path,
-  $log_file                = $supervisord::params::log_file,
-  $log_level               = $supervisord::params::log_level,
-  $logfile_maxbytes        = $supervisord::params::logfile_maxbytes,
-  $logfile_backups         = $supervisord::params::logfile_backups,
-
-  $cfgreload_program       = $supervisord::params::cfgreload_program,
-  $cfgreload_fcgi_program  = $supervisord::params::cfgreload_fcgi_program,
-  $cfgreload_eventlistener = $supervisord::params::cfgreload_eventlistener,
-  $cfgreload_rpcinterface  = $supervisord::params::cfgreload_rpcinterface,
-
-  $run_path             = $supervisord::params::run_path,
-  $pid_file             = $supervisord::params::pid_file,
-  $nodaemon             = $supervisord::params::nodaemon,
-  $minfds               = $supervisord::params::minfds,
-  $minprocs             = $supervisord::params::minprocs,
-  $manage_config        = $supervisord::params::manage_config,
-  $config_include       = $supervisord::params::config_include,
-  $config_include_purge = false,
-  $config_file          = $supervisord::params::config_file,
-  $config_file_mode     = $supervisord::params::config_file_mode,
-  $config_dirs          = undef,
-  $umask                = $supervisord::params::umask,
-
-  $ctl_socket           = $supervisord::params::ctl_socket,
-
-  $unix_socket          = $supervisord::params::unix_socket,
-  $unix_socket_file     = $supervisord::params::unix_socket_file,
-  $unix_socket_mode     = $supervisord::params::unix_socket_mode,
-  $unix_socket_owner    = $supervisord::params::unix_socket_owner,
-  $unix_socket_group    = $supervisord::params::unix_socket_group,
-  $unix_auth            = $supervisord::params::unix_auth,
-  $unix_username        = $supervisord::params::unix_username,
-  $unix_password        = $supervisord::params::unix_password,
-
-  $inet_server          = $supervisord::params::inet_server,
-  $inet_server_hostname = $supervisord::params::inet_server_hostname,
-  $inet_server_port     = $supervisord::params::inet_server_port,
-  $inet_auth            = $supervisord::params::inet_auth,
-  $inet_username        = $supervisord::params::inet_username,
-  $inet_password        = $supervisord::params::inet_password,
-
-  $user                 = $supervisord::params::user,
-  $group                = $supervisord::params::group,
-  $identifier           = undef,
-  $childlogdir          = undef,
-  $environment          = undef,
-  $global_environment   = undef,
-  $env_var              = undef,
-  $directory            = undef,
-  $strip_ansi           = false,
-  $nocleanup            = false,
-
-  $eventlisteners       = {},
-  $fcgi_programs        = {},
-  $groups               = {},
-  $programs             = {}
-
+# @param package_ensure
+# @param package_name
+# @param package_provider
+# @param package_install_options
+# @param service_manage
+# @param service_ensure
+# @param service_enable
+# @param service_name
+# @param service_restart
+# @param install_pip
+# @param pip_proxy
+# @param install_init
+# @param init_type
+# @param init_mode
+# @param init_script
+# @param init_script_template
+# @param init_defaults
+# @param init_defaults_template
+# @param setuptools_url
+# @param executable
+# @param executable_ctl
+# @param scl_enabled
+# @param scl_script
+# @param log_path
+# @param log_file
+# @param log_level
+# @param logfile_maxbytes
+# @param logfile_backups
+# @param run_path
+# @param pid_file
+# @param nodaemon
+# @param minfds
+# @param minprocs
+# @param manage_config
+# @param config_include
+# @param config_include_purge
+# @param config_file
+# @param config_file_mode
+# @param config_dirs
+# @param umask
+# @param ctl_socket
+# @param unix_socket
+# @param unix_socket_file
+# @param unix_socket_mode
+# @param unix_socket_owner
+# @param unix_socket_group
+# @param unix_auth
+# @param unix_username
+# @param unix_password
+# @param inet_server
+# @param inet_server_hostname
+# @param inet_server_port
+# @param inet_auth
+# @param inet_username
+# @param inet_password
+# @param user
+# @param group
+# @param identifier
+# @param childlogdir
+# @param environment
+# @param global_environment
+# @param env_var
+# @param directory
+# @param strip_ansi
+# @param nocleanup
+# @param eventlisteners
+# @param fcgi_programs
+# @param groups
+# @param programs
+#
+class supervisord (
+  String $package_ensure                       = $supervisord::params::package_ensure,
+  String $package_name                         = $supervisord::params::package_name,
+  String $package_provider                     = $supervisord::params::package_provider,
+  Optional[String] $package_install_options    = $supervisord::params::package_install_options,
+  Boolean $service_manage                      = $supervisord::params::service_manage,
+  String $service_ensure                       = $supervisord::params::service_ensure,
+  Boolean $service_enable                      = $supervisord::params::service_enable,
+  String $service_name                         = $supervisord::params::service_name,
+  Optional[String] $service_restart            = $supervisord::params::service_restart,
+  Boolean $install_pip                         = false,
+  Optional[String] $pip_proxy                  = undef,
+  Boolean $install_init                        = $supervisord::params::install_init,
+  String $init_type                            = $supervisord::params::init_type,
+  String $init_mode                            = $supervisord::params::init_mode,
+  String $init_script                          = $supervisord::params::init_script,
+  String $init_script_template                 = $supervisord::params::init_script_template,
+  Variant[String, Boolean] $init_defaults      = $supervisord::params::init_defaults,
+  String $init_defaults_template               = $supervisord::params::init_defaults_template,
+  String $setuptools_url                       = $supervisord::params::setuptools_url,
+  String $executable                           = $supervisord::params::executable,
+  String $executable_ctl                       = $supervisord::params::executable_ctl,
+  Boolean $scl_enabled                         = $supervisord::params::scl_enabled,
+  String $scl_script                           = $supervisord::params::scl_script,
+  String $log_path                             = $supervisord::params::log_path,
+  String $log_file                             = $supervisord::params::log_file,
+  String $log_level                            = $supervisord::params::log_level,
+  String $logfile_maxbytes                     = $supervisord::params::logfile_maxbytes,
+  Integer $logfile_backups                     = $supervisord::params::logfile_backups,
+  String $run_path                             = $supervisord::params::run_path,
+  String $pid_file                             = $supervisord::params::pid_file,
+  Boolean $nodaemon                            = $supervisord::params::nodaemon,
+  Integer $minfds                              = $supervisord::params::minfds,
+  Integer $minprocs                            = $supervisord::params::minprocs,
+  Boolean $manage_config                       = $supervisord::params::manage_config,
+  String $config_include                       = $supervisord::params::config_include,
+  Boolean $config_include_purge                = false,
+  String $config_file                          = $supervisord::params::config_file,
+  String $config_file_mode                     = $supervisord::params::config_file_mode,
+  Optional[Array] $config_dirs                 = undef,
+  String $umask                                = $supervisord::params::umask,
+  String $ctl_socket                           = $supervisord::params::ctl_socket,
+  Boolean $unix_socket                         = $supervisord::params::unix_socket,
+  String $unix_socket_file                     = $supervisord::params::unix_socket_file,
+  String $unix_socket_mode                     = $supervisord::params::unix_socket_mode,
+  String $unix_socket_owner                    = $supervisord::params::unix_socket_owner,
+  String $unix_socket_group                    = $supervisord::params::unix_socket_group,
+  Boolean $unix_auth                           = $supervisord::params::unix_auth,
+  Optional[String] $unix_username              = $supervisord::params::unix_username,
+  Optional[String] $unix_password              = $supervisord::params::unix_password,
+  Boolean $inet_server                         = $supervisord::params::inet_server,
+  String $inet_server_hostname                 = $supervisord::params::inet_server_hostname,
+  Integer $inet_server_port                    = $supervisord::params::inet_server_port,
+  Boolean $inet_auth                           = $supervisord::params::inet_auth,
+  Optional[String] $inet_username              = $supervisord::params::inet_username,
+  Optional[String] $inet_password              = $supervisord::params::inet_password,
+  String $user                                 = $supervisord::params::user,
+  String $group                                = $supervisord::params::group,
+  Optional[String] $identifier                 = undef,
+  Optional[String] $childlogdir                = undef,
+  Optional[Variant[String, Hash]] $environment = undef,
+  Optional[Hash] $global_environment           = undef,
+  Optional[Hash] $env_var                      = undef,
+  Optional[String] $directory                  = undef,
+  Boolean $strip_ansi                          = false,
+  Boolean $nocleanup                           = false,
+  Hash $eventlisteners                         = {},
+  Hash $fcgi_programs                          = {},
+  Hash $groups                                 = {},
+  Hash $programs                               = {},
 ) inherits supervisord::params {
-
-  validate_bool($install_pip)
-  validate_bool($install_init)
-  validate_bool($nodaemon)
-  validate_bool($unix_socket)
-  validate_bool($unix_auth)
-  validate_bool($inet_server)
-  validate_bool($inet_auth)
-  validate_bool($strip_ansi)
-  validate_bool($nocleanup)
-
-  validate_hash($eventlisteners)
-  validate_hash($fcgi_programs)
-  validate_hash($groups)
-  validate_hash($programs)
-
-  validate_absolute_path($config_include)
-  validate_absolute_path($log_path)
-  validate_absolute_path($run_path)
-  if $childlogdir { validate_absolute_path($childlogdir) }
-  if $directory { validate_absolute_path($directory) }
-
-  $log_levels = ['^critical$', '^error$', '^warn$', '^info$', '^debug$', '^trace$', '^blather$']
-  validate_re($log_level, $log_levels, "invalid log_level: ${log_level}")
-  validate_re($logfile_maxbytes,'^[0-9]*(?:KB|MB|GB)?', "invalid logfile_maxbytes: ${$logfile_maxbytes}")
-  validate_re($umask, '^0[0-7][0-7]$', "invalid umask: ${umask}.")
-  validate_re($unix_socket_mode, '^[0-7][0-7][0-7][0-7]$', "invalid unix_socket_mode: ${unix_socket_mode}")
-  validate_re($ctl_socket, ['^unix$', '^inet$'], "invalid ctl_socket: ${ctl_socket}")
-  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
-  if $pip_proxy { validate_re($pip_proxy, ['^https?:\/\/.*$'], "invalid pip_proxy: ${pip_proxy}") }
-
-  if ! is_integer($logfile_backups) { fail("invalid logfile_backups: ${logfile_backups}.")}
-  if ! is_integer($minfds) { fail("invalid minfds: ${minfds}.")}
-  if ! is_integer($minprocs) { fail("invalid minprocs: ${minprocs}.")}
-  if ! is_integer($inet_server_port) { fail("invalid inet_server_port: ${inet_server_port}.")}
-
   if $unix_socket and $inet_server {
     $use_ctl_socket = $ctl_socket
   }
@@ -146,35 +166,22 @@ class supervisord(
     $ctl_password  = $supervisord::inet_password
   }
 
-  if $unix_auth {
-    validate_string($unix_username)
-    validate_string($unix_password)
-  }
-
-  if $inet_auth {
-    validate_string($inet_username)
-    validate_string($inet_password)
-  }
-
   # Handle deprecated $environment variable
-  if $environment { notify {'[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment':}}
+  if $environment { notify { '[supervisord] *** DEPRECATED WARNING ***: $global_environment has replaced $environment': } }
   $_global_environment = $global_environment ? {
     undef   => $environment,
     default => $global_environment
   }
 
   if $env_var {
-    validate_hash($env_var)
     $env_hash = hiera($env_var)
     $env_string = hash2csv($env_hash)
   }
   elsif $_global_environment {
-    validate_hash($_global_environment)
     $env_string = hash2csv($_global_environment)
   }
 
   if $config_dirs {
-    validate_array($config_dirs)
     $config_include_string = join($config_dirs, ' ')
   }
   else {
@@ -193,14 +200,13 @@ class supervisord(
 
   include supervisord::install, supervisord::config, supervisord::service, supervisord::reload
 
-  anchor { 'supervisord::begin': }
-  anchor { 'supervisord::end': }
+  contain 'supervisord::install'
+  contain 'supervisord::config'
+  contain 'supervisord::service'
 
-  Anchor['supervisord::begin']
-  -> Class['supervisord::install']
+  Class['supervisord::install']
   -> Class['supervisord::config']
-  -> Class['supervisord::service']
-  -> Anchor['supervisord::end']
+  ~> Class['supervisord::service']
 
   Class['supervisord::service'] -> Supervisord::Program <| |>
   Class['supervisord::service'] -> Supervisord::Fcgi_program <| |>
@@ -208,5 +214,4 @@ class supervisord(
   Class['supervisord::service'] -> Supervisord::Group <| |>
   Class['supervisord::service'] -> Supervisord::Rpcinterface <| |>
   Class['supervisord::reload']  -> Supervisord::Supervisorctl <| |>
-
 }

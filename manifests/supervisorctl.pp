@@ -2,17 +2,18 @@
 #
 # This define executes command with the supervisorctl tool
 #
-define supervisord::supervisorctl(
-  $command,
-  $process       = undef,
-  $refreshonly   = false,
-  $unless        = undef
+# @param command
+# @param process
+# @param refreshonly
+# @param unless
+#
+define supervisord::supervisorctl (
+  Optional[String] $command = undef,
+  Optional[String] $process = undef,
+  Boolean $refreshonly      = false,
+  Optional[String] $unless  = undef,
 ) {
-
-  validate_string($command)
-  validate_string($process)
-
-  $supervisorctl = $::supervisord::executable_ctl
+  $supervisorctl = $supervisord::executable_ctl
 
   if $process {
     $cmd = join([$supervisorctl, $command, $process], ' ')
@@ -31,6 +32,6 @@ define supervisord::supervisorctl(
   exec { "supervisorctl_command_${name}":
     command     => $cmd,
     refreshonly => $refreshonly,
-    unless      => $unless_cmd
+    unless      => $unless_cmd,
   }
 }
