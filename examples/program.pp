@@ -27,9 +27,9 @@ supervisord::program { 'myprogram':
   environment             => {
     'HOME'   => '/home/myuser',
     'PATH'   => '/bin:/sbin:/usr/bin:/usr/sbin',
-    'SECRET' => 'mysecret'
+    'SECRET' => 'mysecret',
   },
   directory               => undef,
   umask                   => '022',
-  serverurl               => 'AUTO'
+  serverurl               => 'AUTO',
 }

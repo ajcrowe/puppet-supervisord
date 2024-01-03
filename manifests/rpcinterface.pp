@@ -5,26 +5,18 @@
 # Documentation on parameters available at:
 # http://supervisord.org/configuration.html#rpcinterface-x-section-settings
 #
+# @param rpcinterface_factory
+# @param ensure
+# @param retries
+# @param config_file_mode
+#
 define supervisord::rpcinterface (
-  $rpcinterface_factory,
-  $ensure                = present,
-  $cfgreload             = undef,
-  $retries               = undef,
-  $config_file_mode      = '0644'
+  Optional[String] $rpcinterface_factory = undef,
+  String $ensure                         = 'present',
+  Optional[Integer] $retries             = undef,
+  String $config_file_mode               = '0644',
 ) {
-
   include supervisord
-
-  # parameter validation
-  if $retries { if !is_integer($retries) { validate_re($retries, '^\d+')}}
-  validate_re($config_file_mode, '^0[0-7][0-7][0-7]$')
-  if $cfgreload { validate_bool($cfgreload) }
-
-  # Reload default with override
-  $_cfgreload = $cfgreload ? {
-    undef   => $supervisord::cfgreload_rpcinterface,
-    default => $cfgreload
-  }
 
   $conf = "${supervisord::config_include}/rpcinterface_${name}.conf"
 
@@ -33,12 +25,6 @@ define supervisord::rpcinterface (
     owner   => 'root',
     mode    => $config_file_mode,
     content => template('supervisord/conf/rpcinterface.erb'),
+    notify  => Class['supervisord::reload'],
   }
-
-  if $_cfgreload {
-    File[$conf] {
-      notify => Class['supervisord::reload'],
-    }
-  }
-
 }

@@ -4,11 +4,11 @@
 #
 class supervisord::params {
   # sort out init params for different OS families
-  case $::osfamily {
+  case $facts['os']['family'] {
     'RedHat': {
       $unix_socket_group = 'nobody'
       $install_init      = true
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Amazon': {
           $init_type              = 'init'
           $init_script            = '/etc/init.d/supervisord'
@@ -16,7 +16,7 @@ class supervisord::params {
           $executable_path        = '/usr/local/bin'
         }
         default: {
-          case $::operatingsystemmajrelease {
+          case $facts['os']['release']['major'] {
             '7': {
               $init_type     = 'systemd'
               $init_script   = '/etc/systemd/system/supervisord.service'
@@ -41,9 +41,9 @@ class supervisord::params {
       $executable_path   = '/usr/local/bin'
     }
     'Debian': {
-      case $::operatingsystem {
+      case $facts['os']['name'] {
         'Ubuntu': {
-          if versioncmp($::operatingsystemmajrelease, '15.10') > 0 {
+          if versioncmp($facts['os']['release']['major'], '15.10') > 0 {
             $init_type     = 'systemd'
             $init_script   = '/etc/systemd/system/supervisord.service'
             $init_defaults = false
@@ -54,7 +54,7 @@ class supervisord::params {
           }
         }
         default: {
-          case $::operatingsystemmajrelease {
+          case $facts['os']['release']['major'] {
             '8': {
               $init_type     = 'systemd'
               $init_script   = '/etc/systemd/system/supervisord.service'
@@ -86,8 +86,8 @@ class supervisord::params {
     default   => '0755'
   }
 
-  $init_script_template   = "supervisord/init/${::osfamily}/${init_type}.erb"
-  $init_defaults_template = "supervisord/init/${::osfamily}/defaults.erb"
+  $init_script_template   = "supervisord/init/${facts['os']['family']}/${init_type}.erb"
+  $init_defaults_template = "supervisord/init/${facts['os']['family']}/defaults.erb"
 
   # default supervisord params
   $package_ensure          = 'installed'
@@ -110,22 +110,17 @@ class supervisord::params {
   $log_path                = '/var/log/supervisor'
   $log_file                = 'supervisord.log'
   $logfile_maxbytes        = '50MB'
-  $logfile_backups         = '10'
+  $logfile_backups         = 10
   $log_level               = 'info'
   $nodaemon                = false
-  $minfds                  = '1024'
-  $minprocs                = '200'
+  $minfds                  = 1024
+  $minprocs                = 200
   $umask                   = '022'
   $manage_config           = true
   $config_include          = '/etc/supervisor.d'
   $config_file             = '/etc/supervisord.conf'
   $config_file_mode        = '0644'
   $setuptools_url          = 'https://bootstrap.pypa.io/ez_setup.py'
-
-  $cfgreload_program       = true
-  $cfgreload_fcgi_program  = true
-  $cfgreload_eventlistener = true
-  $cfgreload_rpcinterface  = true
 
   $ctl_socket              = 'unix'
 
@@ -139,7 +134,7 @@ class supervisord::params {
 
   $inet_server             = false
   $inet_server_hostname    = '127.0.0.1'
-  $inet_server_port        = '9001'
+  $inet_server_port        = 9001
   $inet_auth               = false
   $inet_username           = undef
   $inet_password           = undef
