@@ -7,6 +7,7 @@
 #
 define supervisord::fcgi_program (
   String $command,
+  $socket,
   $ensure                                                                          = present,
   Enum['running', 'stopped', 'removed', 'unmanaged'] $ensure_process               = 'running',
   Optional[Boolean] $cfgreload                                                     = undef,
@@ -19,7 +20,7 @@ define supervisord::fcgi_program (
   Optional[Integer] $numprocs_start                                                = undef,
   Optional[Integer] $priority                                                      = undef,
   Optional[Boolean] $autostart                                                     = undef,
-  Optional[Boolean] $autorestart                                                   = undef,
+  Optional[Variant[Boolean, Enum['unexpected']]] $autorestart                      = undef,
   Optional[Integer] $startsecs                                                     = undef,
   Optional[Integer] $startretries                                                  = undef,
   Optional[String] $exitcodes                                                      = undef,
@@ -30,23 +31,22 @@ define supervisord::fcgi_program (
   Optional[String] $user                                                           = undef,
   Optional[Boolean] $redirect_stderr                                               = undef,
   String $stdout_logfile                                                           = "eventlistener_${name}.log",
-  Optional[String] $stdout_logfile_maxbytes                                        = undef,
+  Optional[Supervisord::Maxbytes] $stdout_logfile_maxbytes                         = undef,
+  Optional[Supervisord::Maxbytes] $stdout_capture_maxbytes                         = undef,
   Optional[Integer] $stdout_logfile_backups                                        = undef,
   Optional[Boolean] $stdout_events_enabled                                         = undef,
   String $stderr_logfile                                                           = "eventlistener_${name}.error",
-  Optional[String] $stderr_logfile_maxbytes                                        = undef,
+  Optional[Supervisord::Maxbytes] $stderr_logfile_maxbytes                         = undef,
+  Optional[Supervisord::Maxbytes] $stderr_capture_maxbytes                         = undef,
   Optional[Integer] $stderr_logfile_backups                                        = undef,
   Optional[Boolean] $stderr_events_enabled                                         = undef,
   $environment                                                                     = undef,
   $program_environment                                                             = undef,
   Optional[Stdlib::AbsolutePath] $directory                                        = undef,
   Optional[Stdlib::Filemode] $umask                                                = undef,
-  Optional[Variant[Stdlib::HTTPSUrl, Stdlib::HTTPUrl]] $serverurl                  = undef,
+  Optional[String] $serverurl                                                      = undef,
   Stdlib::Filemode $config_file_mode                                               = '0644'
 ) {
-
-  include supervisord
-
   # create the correct log variables
   $stdout_logfile_path = $stdout_logfile ? {
     /(NONE|AUTO|syslog)/ => $stdout_logfile,

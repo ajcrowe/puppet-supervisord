@@ -8,12 +8,9 @@
 define supervisord::group (
   Array $programs,
   $ensure                            = present,
-  Integer $priority                  = undef,
+  Optional[Integer] $priority        = undef,
   Stdlib::Filemode $config_file_mode = '0644'
 ) {
-
-  include supervisord
-
   $progstring = array2csv($programs)
   $conf = "${supervisord::config_include}/group_${name}.conf"
 

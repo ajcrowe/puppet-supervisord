@@ -18,4 +18,3 @@ class supervisord::reload inherits supervisord {
     }
   }
 }
-

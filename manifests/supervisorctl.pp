@@ -2,13 +2,12 @@
 #
 # This define executes command with the supervisorctl tool
 #
-define supervisord::supervisorctl(
+define supervisord::supervisorctl (
   String $command,
-  Optional[String] $process       = undef,
-  $refreshonly   = false,
-  $unless        = undef
+  Optional[String] $process = undef,
+  Boolean $refreshonly      = false,
+  $unless                   = undef
 ) {
-
   $supervisorctl = $::supervisord::executable_ctl
 
   if $process {

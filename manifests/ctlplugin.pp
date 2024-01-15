@@ -9,16 +9,13 @@
 # Documentation on parameters available at:
 # http://supervisord.org/configuration.html#program-x-section-settings
 #
-define supervisord::ctlplugin(
+define supervisord::ctlplugin (
   String $ctl_factory,
-  $ensure      = present,
+  $ensure = present,
 ) {
-  include supervisord
-
   concat::fragment { "ctlplugin:${name}":
     target  => $supervisord::config_file,
     content => template('supervisord/conf/ctlplugin.erb'),
     order   => 70,
   }
-
 }

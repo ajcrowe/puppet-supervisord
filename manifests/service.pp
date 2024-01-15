@@ -2,7 +2,7 @@
 #
 # Class for the supervisord service
 #
-class supervisord::service inherits supervisord  {
+class supervisord::service () inherits supervisord {
   if $::supervisord::service_manage {
     if $::supervisord::init_type == 'systemd' {
       exec { 'refresh_supervisord_unit':

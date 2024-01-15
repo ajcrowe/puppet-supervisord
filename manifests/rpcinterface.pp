@@ -8,13 +8,10 @@
 define supervisord::rpcinterface (
   $rpcinterface_factory,
   $ensure                            = present,
-  Boolean $cfgreload                 = undef,
+  Optional[Boolean] $cfgreload       = undef,
   Optional[Integer] $retries         = undef,
   Stdlib::Filemode $config_file_mode = '0644'
 ) {
-
-  include supervisord
-
   # Reload default with override
   $_cfgreload = $cfgreload ? {
     undef   => $supervisord::cfgreload_rpcinterface,
@@ -35,5 +32,4 @@ define supervisord::rpcinterface (
       notify => Class['supervisord::reload'],
     }
   }
-
 }

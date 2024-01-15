@@ -7,7 +7,13 @@
   "source": "https://github.com/ajcrowe/puppet-supervisord",
   "project_page": "https://forge.puppetlabs.com/ajcrowe/supervisord",
   "issues_url": "https://github.com/ajcrowe/puppet-supervisord/issues",
-  "tags": ["supervisor", "supervisord", "python", "process", "management" ],
+  "tags": [
+    "supervisor",
+    "supervisord",
+    "python",
+    "process",
+    "management"
+  ],
   "requirements": [
     {
       "name": "puppet",
@@ -16,24 +22,44 @@
   ],
   "operatingsystem_support": [
     {
-    "operatingsystem":"RedHat",
-    "operatingsystemrelease":[ "5", "6", "7" ]
+      "operatingsystem": "RedHat",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
     },
     {
-    "operatingsystem":"CentOS",
-    "operatingsystemrelease":[ "5", "6", "7" ]
+      "operatingsystem": "CentOS",
+      "operatingsystemrelease": [
+        "7",
+        "8"
+      ]
     },
     {
-    "operatingsystem": "Ubuntu",
-    "operatingsystemrelease": [ "16.04", "14.04", "12.04", "10.04" ]
+      "operatingsystem": "Ubuntu",
+      "operatingsystemrelease": [
+        "18.04",
+        "20.04",
+        "22.04"
+      ]
     },
     {
-    "operatingsystem": "Debian",
-    "operatingsystemrelease": [ "9", "10", "11", "12" ]
+      "operatingsystem": "Debian",
+      "operatingsystemrelease": [
+        "10",
+        "11",
+        "12"
+      ]
     }
-   ],
+  ],
   "dependencies": [
-    { "name": "puppetlabs/stdlib", "version_requirement": ">= 7.0.0 <10.0.0" },
-    { "name": "puppetlabs/concat", "version_requirement": ">= 1.0.0 <8.0.0" }
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 7.0.0 <10.0.0"
+    },
+    {
+      "name": "puppetlabs/concat",
+      "version_requirement": ">= 1.0.0 <8.0.0"
+    }
   ]
 }
