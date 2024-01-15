@@ -1,0 +1,14 @@
+--relative
+--no-lookup_in_parameter-check
+--no-parameter_documentation-check
+--no-parameter_types-check
+--no-params_empty_string_assignment-check
+--no-relative_classname_inclusion-check
+--no-relative_classname_reference-check
+--no-strict_indent-check
+--no-top_scope_facts-check
+--no-topscope_variable-check
+--no-trailing_comma-check
+--no-selector_inside_resource-check
+--no-documentation-check
+--no-140chars-check

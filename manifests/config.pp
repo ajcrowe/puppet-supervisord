@@ -3,7 +3,6 @@
 # Configuration class for supervisor init and conf directories
 #
 class supervisord::config inherits supervisord {
-
   if ($supervisord::manage_config) {
     file { $supervisord::config_include:
       ensure  => directory,
@@ -34,7 +33,7 @@ class supervisord::config inherits supervisord {
 
   if $supervisord::install_init {
     file { $supervisord::init_script:
-      ensure  => present,
+      ensure  => file,
       owner   => 'root',
       mode    => $supervisord::init_mode,
       content => template($supervisord::init_script_template),
@@ -43,7 +42,7 @@ class supervisord::config inherits supervisord {
 
     if $supervisord::init_defaults {
       file { $supervisord::init_defaults:
-        ensure  => present,
+        ensure  => file,
         owner   => 'root',
         mode    => '0755',
         content => template($supervisord::init_defaults_template),
