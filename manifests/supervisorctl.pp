@@ -3,14 +3,11 @@
 # This define executes command with the supervisorctl tool
 #
 define supervisord::supervisorctl(
-  $command,
-  $process       = undef,
+  String $command,
+  Optional[String] $process       = undef,
   $refreshonly   = false,
   $unless        = undef
 ) {
-
-  validate_string($command)
-  validate_string($process)
 
   $supervisorctl = $::supervisord::executable_ctl
 
